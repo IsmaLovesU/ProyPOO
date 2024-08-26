@@ -1,3 +1,5 @@
+import java.time.LocalTime;
+
 public class Medicamento {
     private String nombre;
     private String descripcion;

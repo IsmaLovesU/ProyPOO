@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Paciente {
     private String nombre;
     private int edad;

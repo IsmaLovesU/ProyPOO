@@ -2,14 +2,59 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Receta {
-    private String nombrePaciente;
+    private String paciente;
+    private String nombreMedico;
+    private String centroMedico;
     private String fecha;
     private List<Medicamento> medicamentos;
 
     public Receta(String nombrePaciente, String fecha) {
-        this.nombrePaciente = nombrePaciente;
+        this.paciente = paciente;
         this.fecha = fecha;
+        this.nombreMedico = nombreMedico;
+        this.centroMedico= centroMedico;
         this.medicamentos = new ArrayList<>();
+    }
+
+    //Getters y setters
+    public String getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(String paciente) {
+        this.paciente = paciente;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public List<Medicamento> getMedicamentos() {
+        return medicamentos;
+    }
+
+    public void setMedicamentos(List<Medicamento> medicamentos) {
+        this.medicamentos = medicamentos;
+    }
+
+    public String getNombreMedico() {
+        return nombreMedico;
+    }
+
+    public void setNombreMedico(String nombreMedico) {
+        this.nombreMedico = nombreMedico;
+    }
+
+    public String getCentroMedico() {
+        return centroMedico;
+    }
+
+    public void setCentroMedico(String centroMedico) {
+        this.centroMedico = centroMedico;
     }
 
     // Método para agregar un medicamento a la receta
@@ -27,5 +72,12 @@ public class Receta {
         return new ArrayList<>(this.medicamentos);
     }
 
+    public void editarReceta (String nuevoPaciente, String nuevaFecha, String nuevoNombreMedico, String nuevoCentroMedico){
+        this.paciente = nuevoPaciente;
+        this.nombreMedico = nuevoNombreMedico;
+        this.centroMedico = nuevoCentroMedico;
+        this.fecha = nuevaFecha;
+    }
+     
 }
 

@@ -21,12 +21,16 @@ public class Suministro {
         this.estado = estado;
     }
 
+    public Suministro(){
+
+    }
+
     //Gettes y setters (Me quede sin imaginacion)
     public int getid() {
         return id;
     }
 
-    public void setid(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 

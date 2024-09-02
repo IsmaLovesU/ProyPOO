@@ -1,11 +1,16 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Paciente {
     private String nombre;
     private int edad;
-    private List<String> condiciones;
-    private List<Medicamento> medicamentos;
+    private ArrayList<String> condiciones;
+    private ArrayList<Medicamento> medicamentos;
     private String informacionAdicional;
+
+    public Paciente(){
+
+    }
 
     public String getNombre() {
         return nombre;
@@ -27,16 +32,16 @@ public class Paciente {
         return condiciones;
     }
 
-    public void setCondiciones(List<String> condiciones) {
-        this.condiciones = condiciones;
+    public void agregarCondiciones(String nuevaCondicion) {
+        condiciones.add(nuevaCondicion);
     }
 
     public List<Medicamento> getMedicamentos() {
         return medicamentos;
     }
 
-    public void setMedicamentos(List<Medicamento> medicamentos) {
-        this.medicamentos = medicamentos;
+    public void agregarMedicamentos(Medicamento nuevoMedicamento) {
+        medicamentos.add(nuevoMedicamento);
     }
 
     public String getInformacionAdicional() {

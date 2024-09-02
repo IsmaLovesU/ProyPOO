@@ -8,12 +8,15 @@ public class Receta {
     private String fecha;
     private List<Medicamento> medicamentos;
 
-    public Receta(String nombrePaciente, String fecha) {
+    public Receta(String paciente, String fecha, String nombreMedico, String centroMedico) {
         this.paciente = paciente;
         this.fecha = fecha;
         this.nombreMedico = nombreMedico;
         this.centroMedico= centroMedico;
         this.medicamentos = new ArrayList<>();
+    }
+    public Receta(){
+        
     }
 
     //Getters y setters

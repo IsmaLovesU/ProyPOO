@@ -1,12 +1,12 @@
 
 import java.time.LocalTime;
 
-public class GuardarInformacacion {
+public class GuardarInformacion {
     private Usuario usuario;
     private Paciente paciente;
     private Medicamento medicamento;
 
-    public GuardarInformacacion(){
+    public GuardarInformacion(){
         usuario= new Usuario();
         paciente= new Paciente();
         medicamento = new Medicamento();

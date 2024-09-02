@@ -6,6 +6,10 @@ public class Usuario {
     private String sexo;
     private String tipoUsuario;
 
+    public Usuario(){
+        
+    }
+
     public String getNombre() {
         return nombre;
     }

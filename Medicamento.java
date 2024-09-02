@@ -8,6 +8,10 @@ public class Medicamento {
     private boolean recetado;
     private float inventario;
 
+    public Medicamento(){
+        
+    }
+
     public String getNombre() {
         return nombre;
     }

@@ -8,8 +8,14 @@ public class Medicamento {
     private boolean recetado;
     private float inventario;
 
-    public Medicamento(){
-        
+    public Medicamento(String nombre, String descripcion, int dosis, LocalTime horarioSuministro, boolean recetado,
+            float inventario) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.dosis = dosis;
+        this.horarioSuministro = horarioSuministro;
+        this.recetado = recetado;
+        this.inventario = inventario;
     }
 
     public String getNombre() {

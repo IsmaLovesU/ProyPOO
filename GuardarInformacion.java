@@ -3,17 +3,17 @@ import java.util.ArrayList;
 import java.time.LocalTime;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.UUID;
 
 public class GuardarInformacion {
     private Usuario usuario;
     private Paciente paciente;
     private Medicamento medicamento;
     private List<Paciente> listaPacientes;
+    private List<Usuario> listaUsuarios;
 
     public GuardarInformacion(){
-        usuario= new Usuario();
-        paciente= new Paciente();
-        medicamento = new Medicamento();
+        listaUsuarios = new ArrayList<>();
         listaPacientes = new ArrayList<>();
     }
 
@@ -26,9 +26,11 @@ public class GuardarInformacion {
     }
 
     public void crearPaciente(String nombre, int edad, String informacionAdicional){
+        paciente.generarId();
         paciente.setNombre(nombre);
         paciente.setEdad(edad);
         paciente.setInformacionAdicional(informacionAdicional);
+        paciente.agregarCondiciones(informacionAdicional);
     }
 
     public List<Paciente> mostrarPacientes() {
@@ -45,9 +47,7 @@ public class GuardarInformacion {
         paciente.agregarMedicamentos(medicamento);
     }
 
-    public void agregarMedicamentos(Paciente paciente, Medicamento medicamento) {
-        paciente.getMedicamentos().add(medicamento);
-    }
+    
 
     public void editarMedicamentos(Paciente paciente, Medicamento medicamentoEditado) {
         List<Medicamento> medicamentos = paciente.getMedicamentos();
@@ -104,4 +104,6 @@ public class GuardarInformacion {
             e.printStackTrace();
         }
     }
+
+    
 }

@@ -1,15 +1,31 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Paciente {
+    private String id;
     private String nombre;
     private int edad;
     private ArrayList<String> condiciones;
     private ArrayList<Medicamento> medicamentos;
     private String informacionAdicional;
 
-    public Paciente(){
+    public Paciente(String id, String nombre, int edad, ArrayList<String> condiciones,
+            ArrayList<Medicamento> medicamentos, String informacionAdicional) {
+        this.id = id;
+        this.nombre = nombre;
+        this.edad = edad;
+        this.condiciones = condiciones;
+        this.medicamentos = medicamentos;
+        this.informacionAdicional = informacionAdicional;
+    }
 
+    public String generarId() {
+        return UUID.randomUUID().toString();
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getNombre() {
@@ -41,7 +57,7 @@ public class Paciente {
     }
 
     public void agregarMedicamentos(Medicamento nuevoMedicamento) {
-        medicamentos.add(nuevoMedicamento);
+        this.medicamentos.add(nuevoMedicamento);
     }
 
     public String getInformacionAdicional() {

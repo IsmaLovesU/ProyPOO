@@ -2,6 +2,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.BufferedReader; //NUEVO
+import java.io.FileReader; //NUEVO
 
 
 public class GuardarInformacion {
@@ -11,6 +13,34 @@ public class GuardarInformacion {
     public GuardarInformacion() {
         listaUsuarios = new ArrayList<>();
         listaPacientes = new ArrayList<>();
+        cargarUsuariosDesdeCSV();  // Nuevo método para cargar los usuarios
+    }
+
+    // Nuevo método para cargar los usuarios desde el CSV al iniciar la aplicación
+    private void cargarUsuariosDesdeCSV() {
+        try (BufferedReader reader = new BufferedReader(new FileReader("Usuarios.csv"))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] datos = linea.split(",");
+                String id = datos[0];
+                String nombre = datos[1];
+                String nombreUsuario = datos[2];
+                String contrasena = datos[3];
+                int edad = Integer.parseInt(datos[4]);
+                String sexo = datos[5];
+                String tipoUsuario = datos[6];
+                
+                Usuario usuario = new Usuario(id, nombre, nombreUsuario, contrasena, edad, sexo, tipoUsuario);
+                listaUsuarios.add(usuario);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Método para obtener usuarios (para comprobaciones adicionales si es necesario)
+    public List<Usuario> getUsuarios() {
+        return listaUsuarios;
     }
 
     public void registroUsuario(String id, String nombre, String nombreUsuario, String contraseña, int edad, String sexo, String tipoUsuario) {

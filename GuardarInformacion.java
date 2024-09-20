@@ -48,6 +48,28 @@ public class GuardarInformacion {
         }
     }
 
+
+//Cargar los archivos desde un archivo CSV, pero no se ha creado el csv todavia y agregar los arryalist
+
+    /**private void cargarPacientesDesdeCSV() {
+        try (BufferedReader reader = new BufferedReader(new FileReader("Nombre del csv de pacientes"))) {
+            String linea;
+            while ((linea = reader.readline()) != null){
+                String[] datos = linea.split(",");
+                    String idUsuario = datos[0];
+                    String idPaciente = datos[1];
+                    String nombre = datos[2];
+                    int edad = Integer.parseInt(datos[3]);
+                    String infomacionAdicional = datos[4];
+                    
+                    Paciente paciente = new Paciente(idUsuario, idPaciente, nombre, edad, infomacionAdicional);
+                    listaPacientes.ADD(paciente);
+            }
+        } 
+    }
+    */
+
+
     /**
      * Obtiene la lista de usuarios registrados.
      * 

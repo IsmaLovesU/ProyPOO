@@ -9,7 +9,7 @@ public class Medicamento {
     private float inventario;
 
     public Medicamento(){
-        
+
     }
 
     public String getNombre() {
@@ -58,5 +58,17 @@ public class Medicamento {
 
     public void setInventario(float inventario) {
         this.inventario = inventario;
+    }
+
+    @Override
+    public String toString() {
+        return "Medicamento{" +
+                "nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", dosis='" + dosis + '\'' +
+                ", horarioSuministro='" + horarioSuministro + '\'' +
+                ", recetado='" + recetado + '\'' +
+                ", inventario='" + inventario + '\'' +
+                '}';
     }
 }

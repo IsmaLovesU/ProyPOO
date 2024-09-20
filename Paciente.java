@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class Paciente {
+    
     private String id;
     private String nombre;
     private int edad;
@@ -10,13 +11,12 @@ public class Paciente {
     private ArrayList<Medicamento> medicamentos;
     private String informacionAdicional;
 
-    public Paciente(String id, String nombre, int edad, ArrayList<String> condiciones,
-            ArrayList<Medicamento> medicamentos, String informacionAdicional) {
+    public Paciente(String id, String nombre, int edad, String informacionAdicional) {
         this.id = id;
         this.nombre = nombre;
         this.edad = edad;
-        this.condiciones = condiciones;
-        this.medicamentos = medicamentos;
+        this.condiciones = new ArrayList<>();
+        this.medicamentos = new ArrayList<>();
         this.informacionAdicional = informacionAdicional;
     }
 

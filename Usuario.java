@@ -80,7 +80,11 @@ public class Usuario {
     }
 
     public void agregarPaciente(Paciente paciente){
-        this.pacientes.add(paciente);
+        pacientes.add(paciente);
+    }
+
+    public List<Paciente> getPacientes() {
+        return pacientes;
     }
 
 

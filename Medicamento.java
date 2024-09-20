@@ -1,6 +1,8 @@
 import java.time.LocalTime;
+import java.util.UUID;
 
 public class Medicamento {
+    private String id;
     private String nombre;
     private String descripcion;
     private int dosis;
@@ -8,8 +10,22 @@ public class Medicamento {
     private boolean recetado;
     private float inventario;
 
-    public Medicamento(){
+    
 
+    public Medicamento(String id, String nombre, String descripcion, int dosis, float inventario) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.dosis = dosis;
+        this.inventario = inventario;
+    }
+
+    public String generarId(){
+        return UUID.randomUUID().toString();
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getNombre() {
@@ -44,7 +60,7 @@ public class Medicamento {
         this.horarioSuministro = horarioSuministro;
     }
 
-    public boolean isRecetado() {
+    public boolean getRecetado() {
         return recetado;
     }
 

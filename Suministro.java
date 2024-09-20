@@ -4,20 +4,20 @@ import java.time.LocalTime;
 public class Suministro {
     //Los atributos baby
     private int id;
-    private String medicamentoMaloshPiumPium;
+    private String medicamento;
     private int cantidad;
-    private LocalDate fechaSuministroUWU;
-    private LocalTime horaSuministroAÑA;
+    private LocalDate fechaSuministro;
+    private LocalTime horaSuministro;
     private String estado;
 
 
     //El bob constructor
-    public Suministro(int id, String medicamentoMaloshPiumPium, int cantidad, LocalDate fechaSuministroUWU, LocalTime horaSuministroAÑA, String estado){
+    public Suministro(int id, String medicamento, int cantidad, LocalDate fechaSuministro, LocalTime horaSuministro, String estado){
         this.id = id;
-        this.medicamentoMaloshPiumPium = medicamentoMaloshPiumPium;
+        this.medicamento = medicamento;
         this.cantidad = cantidad;
-        this.fechaSuministroUWU = fechaSuministroUWU;
-        this.horaSuministroAÑA = horaSuministroAÑA;
+        this.fechaSuministro = fechaSuministro;
+        this.horaSuministro = horaSuministro;
         this.estado = estado;
     }
 
@@ -35,11 +35,11 @@ public class Suministro {
     }
 
     public String getMedicamento() {
-        return medicamentoMaloshPiumPium;
+        return medicamento;
     }
 
-    public void setMedicamento(String medicamentoMaloshPiumPium) {
-        this.medicamentoMaloshPiumPium = medicamentoMaloshPiumPium;
+    public void setMedicamento(String medicamento) {
+        this.medicamento = medicamento;
     }
 
     public int getCantidad() {
@@ -51,19 +51,19 @@ public class Suministro {
     }
 
     public LocalDate getFechaSuministro() {
-        return fechaSuministroUWU;
+        return fechaSuministro;
     }
 
-    public void setFechaSuministro(LocalDate fechaSuministroUWU) {
-        this.fechaSuministroUWU = fechaSuministroUWU;
+    public void setFechaSuministro(LocalDate fechaSuministro) {
+        this.fechaSuministro = fechaSuministro;
     }
 
     public LocalTime getHoraSuministro() {
-        return horaSuministroAÑA;
+        return horaSuministro;
     }
 
-    public void setHoraSuministro(LocalTime horaSuministroAÑA) {
-        this.horaSuministroAÑA = horaSuministroAÑA;
+    public void setHoraSuministro(LocalTime horaSuministro) {
+        this.horaSuministro = horaSuministro;
     }
 
     public String getEstado() {

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 public class Usuario {
     private String nombre;
     private String nombreUsuario;
@@ -5,6 +6,7 @@ public class Usuario {
     private int edad;
     private String sexo;
     private String tipoUsuario;
+    private ArrayList<Paciente> pacientes;
 
     public Usuario(){
         
@@ -56,5 +58,13 @@ public class Usuario {
 
     public void setTipoUsuario(String tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
+    }
+
+    public ArrayList<Paciente> getPacientes(){
+        return pacientes;
+    }
+
+    public void agregarPaciente(Paciente paciente){
+        pacientes.add(paciente);
     }
 }

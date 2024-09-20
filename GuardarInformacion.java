@@ -6,13 +6,13 @@ public class GuardarInformacion {
     private Usuario usuario;
     private Paciente paciente;
     private Medicamento medicamento;
-    private List<Paciente> listaPacientes;
+    private List<Usuario> usuarios;
 
     public GuardarInformacion(){
         usuario= new Usuario();
         paciente= new Paciente();
         medicamento = new Medicamento();
-        listaPacientes = new ArrayList<>();
+        usuarios = new ArrayList<>();
     }
 
     public void registroUsuario(String nombre, String nombreUsuario, String contraseña, int edad, String tipoUsuario){
@@ -23,14 +23,18 @@ public class GuardarInformacion {
         usuario.setTipoUsuario(tipoUsuario);
     }
 
-    public void crearPaciente(String nombre, int edad, String informacionAdicional){
+    public void crearPaciente(String nombre, int edad, String informacionAdicional, Usuario usuario1){
         paciente.setNombre(nombre);
         paciente.setEdad(edad);
         paciente.setInformacionAdicional(informacionAdicional);
+        
+        usuario1.agregarPaciente(paciente);
+
+        paciente = new Paciente();
     }
 
-    public List<Paciente> mostrarPacientes() {
-        return listaPacientes;
+    public List<Paciente> mostrarPacientes(Usuario usuario1) {
+        return usuario1.getPacientes();
     }
 
     public void crearMedicamento(String nombreM, String descripcion, int dosis, LocalTime horaSuministro, boolean recetado, float inventario){
@@ -56,13 +60,9 @@ public class GuardarInformacion {
         }
     }
 
-    public List<Medicamento> mostrarMedicamentos() {
-        List<Medicamento> medicamentos = new ArrayList<>();
-        for (Paciente paciente : listaPacientes) {
-            medicamentos.addAll(paciente.getMedicamentos());
-        }
-        return medicamentos;
-    }
+    // public List<Medicamento> mostrarMedicamentos(Usuario usuario1) {
+    //     return usuario1.getPacientes().
+    // }
 
     public boolean inicioSesion(String nombreUsuario, String contrasena) {
         return usuario.getNombreUsuario().equals(nombreUsuario) && usuario.getContrasena().equals(contrasena);

@@ -52,9 +52,9 @@ public class GuardarInformacion {
         Paciente nuevoPaciente = new Paciente(idUsuario, nombre, edad, informacionAdicional);
         nuevoPaciente.generarId();
 
-        for (Usuario u : listaUsuarios) {
-            if (u.getId().equals(idUsuario)) {
-                u.agregarPaciente(nuevoPaciente);
+        for (Usuario usuario : listaUsuarios) {
+            if (usuario.getId().equals(idUsuario)) {
+                usuario.agregarPaciente(nuevoPaciente);
                 break;
             }
         }
@@ -65,9 +65,9 @@ public class GuardarInformacion {
     public void crearMedicamento(String idPaciente, String nombreM, String descripcion, int dosis, float inventario) {
         Medicamento medicamento = new Medicamento(idPaciente, nombreM, descripcion, dosis, inventario);
 
-        for (Paciente p : listaPacientes) {
-            if (p.getId().equals(idPaciente)) {
-                p.agregarMedicamentos(medicamento);
+        for (Paciente paciente : listaPacientes) {
+            if (paciente.getId().equals(idPaciente)) {
+                paciente.agregarMedicamentos(medicamento);
                 break;
             }
         }
@@ -76,67 +76,67 @@ public class GuardarInformacion {
     // Guardar usuarios (doctores) en CSV
     public void guardarUsuariosCSV() {
         try (FileWriter writer = new FileWriter("Usuarios.csv", true)) {
-            for (Usuario u : listaUsuarios) {
-                writer.append(u.getId())
+            for (Usuario usuario : listaUsuarios) {
+                writer.append(usuario.getId())
                       .append(",")
-                      .append(u.getNombre())
+                      .append(usuario.getNombre())
                       .append(",")
-                      .append(u.getNombreUsuario())
+                      .append(usuario.getNombreUsuario())
                       .append(",")
-                      .append(u.getContrasena())
+                      .append(usuario.getContrasena())
                       .append(",")
-                      .append(String.valueOf(u.getEdad()))
+                      .append(String.valueOf(usuario.getEdad()))
                       .append(",")
-                      .append(u.getSexo())
+                      .append(usuario.getSexo())
                       .append(",")
-                      .append(u.getTipoUsuario())
+                      .append(usuario.getTipoUsuario())
                       .append("\n");
             }
             writer.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
 
     // Guardar pacientes en CSV
     public void guardarPacientesCSV() {
         try (FileWriter writer = new FileWriter("Pacientes.csv", true)) {
-            for (Usuario u : listaUsuarios) {
-                for (Paciente p : u.getPacientes()) {
-                    writer.append(u.getId())
+            for (Usuario usuario : listaUsuarios) {
+                for (Paciente paciente : usuario.getPacientes()) {
+                    writer.append(usuario.getId())
                           .append(",")
-                          .append(p.getId())
+                          .append(paciente.getId())
                           .append(",")
-                          .append(p.getNombre())
+                          .append(paciente.getNombre())
                           .append(",")
-                          .append(String.valueOf(p.getEdad()))
+                          .append(String.valueOf(paciente.getEdad()))
                           .append(",")
-                          .append(p.getInformacionAdicional())
+                          .append(paciente.getInformacionAdicional())
                           .append("\n");
                 }
             }
             writer.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
 
     // Guardar medicamentos en CSV
     public void guardarMedicamentosCSV() {
         try (FileWriter writer = new FileWriter("Medicamentos.csv", true)) {
-            for (Paciente p : listaPacientes) {
-                System.out.println("Paciente: " + p.getNombre());
-                for (Medicamento m : p.getMedicamentos()) {
-                    System.out.println("Medicamento encontrado para el paciente: " + m.getNombre());
-                    System.out.println("Descripción: " + m.getDescripcion());
-                    System.out.println("Dosis: " + m.getDosis());
-                    System.out.println("Inventario: " + m.getInventario());
-                    writer.write(p.getId() + "," + m.getId() + "," + m.getNombre() + "," + m.getDescripcion() + "," + m.getDosis() + "," + m.getInventario() + "\n");
+            for (Paciente paciente : listaPacientes) {
+                System.out.println("Paciente: " + paciente.getNombre());
+                for (Medicamento medicamento : paciente.getMedicamentos()) {
+                    System.out.println("Medicamento encontrado para el paciente: " + medicamento.getNombre());
+                    System.out.println("Descripción: " + medicamento.getDescripcion());
+                    System.out.println("Dosis: " + medicamento.getDosis());
+                    System.out.println("Inventario: " + medicamento.getInventario());
+                    writer.write(paciente.getId() + "," + medicamento.getId() + "," + medicamento.getNombre() + "," + medicamento.getDescripcion() + "," + medicamento.getDosis() + "," + medicamento.getInventario() + "\n");
                 }
             }
             writer.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
 }

@@ -1,6 +1,8 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalTime;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class GuardarInformacion {
     private Usuario usuario;
@@ -40,6 +42,7 @@ public class GuardarInformacion {
         medicamento.setHorarioDeSuministro(horaSuministro);
         medicamento.setRecetado(recetado);
         medicamento.setInventario(inventario);
+        paciente.agregarMedicamentos(medicamento);
     }
 
     public void agregarMedicamentos(Paciente paciente, Medicamento medicamento) {
@@ -68,6 +71,37 @@ public class GuardarInformacion {
         return usuario.getNombreUsuario().equals(nombreUsuario) && usuario.getContrasena().equals(contrasena);
     }
 
-    
+    public void guardarUsuarioCSV() {
+        try (FileWriter escribir = new FileWriter("Usuarios.csv", true)){
+            escribir.append(usuario.getNombre())
+                    .append(",")
+                    .append(usuario.getNombreUsuario())
+                    .append(",")
+                    .append(usuario.getContrasena())
+                    .append(",")
+                    .append(String.valueOf(usuario.getEdad()))
+                    .append(",")
+                    .append(usuario.getTipoUsuario())
+                    .append("\n");
+            escribir.flush();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 
+    public void guardarPacientesCSV() {
+        try (FileWriter escribir = new FileWriter("Pacientes.csv", true)){
+            for (Paciente paciente : listaPacientes){
+                escribir.append(paciente.getNombre())
+                        .append(",")
+                        .append(String.valueOf(paciente.getEdad()))
+                        .append(",")
+                        .append(paciente.getInformacionAdicional())
+                        .append("\n");
+            }
+            escribir.flush();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 }

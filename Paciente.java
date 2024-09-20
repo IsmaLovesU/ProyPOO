@@ -7,7 +7,6 @@ public class Paciente {
     private ArrayList<String> condiciones;
     private ArrayList<Medicamento> medicamentos;
     private String informacionAdicional;
-    private int numero;
 
     public Paciente(){
 

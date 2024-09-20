@@ -7,6 +7,7 @@ public class GuardarInformacion {
     private Paciente paciente;
     private Medicamento medicamento;
     private List<Usuario> usuarios;
+    private ArrayList<Paciente> listaPacientes;
 
     public GuardarInformacion(){
         usuario= new Usuario();
@@ -60,9 +61,13 @@ public class GuardarInformacion {
         }
     }
 
-    // public List<Medicamento> mostrarMedicamentos(Usuario usuario1) {
-    //     return usuario1.getPacientes().
-    // }
+    public List<Medicamento> mostrarMedicamentos(Usuario usuario1) {
+        List<Medicamento> medicamentos = new ArrayList<>();
+        for (Paciente paciente : listaPacientes) {
+            medicamentos.addAll(paciente.getMedicamentos());
+        }
+        return medicamentos;
+    }
 
     public boolean inicioSesion(String nombreUsuario, String contrasena) {
         return usuario.getNombreUsuario().equals(nombreUsuario) && usuario.getContrasena().equals(contrasena);

@@ -1,76 +1,39 @@
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.List;
 
 public class Suministro {
-    //Los atributos baby
-    private int id;
-    private String medicamento;
-    private int cantidad;
-    private LocalDate fechaSuministro;
-    private LocalTime horaSuministro;
-    private String estado;
+    private Paciente paciente;
 
-
-    //El bob constructor
-    public Suministro(int id, String medicamento, int cantidad, LocalDate fechaSuministro, LocalTime horaSuministro, String estado){
-        this.id = id;
-        this.medicamento = medicamento;
-        this.cantidad = cantidad;
-        this.fechaSuministro = fechaSuministro;
-        this.horaSuministro = horaSuministro;
-        this.estado = estado;
+    //Metodo Constructor
+    public Suministro(Paciente paciente) {
+        this.paciente = paciente;
     }
 
-    public Suministro(){
-
+    //Metodo para obtener la cantidad de medicamentos que el paciente debe tomar
+    public int inventarioSuministros() {
+        List<Medicamento> medicamentos = paciente.getMedicamentos();
+        return medicamentos.size();
     }
 
-    //Gettes y setters (Me quede sin imaginacion)
-    public int getid() {
-        return id;
+    //Metodo para obtener los recordatorios de los medicamentos y la dosis que tiene que tomar el
+    public String medicamentoRecordatorio() {
+        StringBuilder recordatorio = new StringBuilder();
+        List<Medicamento> medicamentos = paciente.getMedicamentos();
+        
+        for (Medicamento medicamento : medicamentos) {
+            recordatorio.append("Medicamento: ").append(medicamento.getNombre())
+                        .append("\nDosis: ").append(medicamento.getDosis())
+                        .append("\nHorario de suministro: ").append(medicamento.getHorarioDeSuministro());
+        }
+        
+        return recordatorio.toString();
     }
 
-    public void setId(int id) {
-        this.id = id;
+    // Getters y Setters
+    public Paciente getPaciente() {
+        return paciente;
     }
 
-    public String getMedicamento() {
-        return medicamento;
-    }
-
-    public void setMedicamento(String medicamento) {
-        this.medicamento = medicamento;
-    }
-
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public LocalDate getFechaSuministro() {
-        return fechaSuministro;
-    }
-
-    public void setFechaSuministro(LocalDate fechaSuministro) {
-        this.fechaSuministro = fechaSuministro;
-    }
-
-    public LocalTime getHoraSuministro() {
-        return horaSuministro;
-    }
-
-    public void setHoraSuministro(LocalTime horaSuministro) {
-        this.horaSuministro = horaSuministro;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
     }
 }

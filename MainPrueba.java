@@ -55,7 +55,7 @@ public class MainPrueba {
                     break;
 
                 case 3:
-                    System.out.print("Ingrese ID del Paciente: ");
+                    System.out.print("Ingrese ID de usuario: ");
                     String idPaciente = scanner.nextLine();
                     System.out.print("Ingrese Nombre del Medicamento: ");
                     String nombreMedicamento = scanner.nextLine();

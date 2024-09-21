@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.UUID;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -32,14 +33,14 @@ public class GuardarInformacion {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                String id = datos[0];
+                String id = UUID.randomUUID().toString(); // Generar un nuevo ID
                 String nombre = datos[1];
                 String nombreUsuario = datos[2];
                 String contrasena = datos[3];
                 int edad = Integer.parseInt(datos[4]);
                 String sexo = datos[5];
                 String tipoUsuario = datos[6];
-                
+
                 Usuario usuario = new Usuario(id, nombre, nombreUsuario, contrasena, edad, sexo, tipoUsuario);
                 listaUsuarios.add(usuario);
             }
@@ -58,37 +59,39 @@ public class GuardarInformacion {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                String idPaciente = datos[0];
+                String idPaciente = UUID.randomUUID().toString(); // Generar nuevo ID para el paciente
                 String nombre = datos[1];
                 int edad = Integer.parseInt(datos[2]);
                 String informacionAdicional = datos[3];
-                
-                // Crea el objeto Paciente y lo añade a la lista
+    
                 Paciente paciente = new Paciente(idPaciente, nombre, edad, informacionAdicional);
                 listaPacientes.add(paciente);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }    
+    }
     
     /**
-     * Carga los medicamentos desde un archivo CSV (no creado aun) y los almacena en la lista de medicamento.
-     * El archivo debe tener el formato: .....
+     * Carga los medicamentos desde un archivo CSV y los almacena en la lista de medicamento.
+     * El archivo debe tener el formato: idMedicamento, nombreMedicamento, descripcion, dosis, horarioSuministro, recesatado, inventario
      */
     public void cargarMedicamentosDesdeCSV() {
         try (BufferedReader reader = new BufferedReader(new FileReader("Medicamentos.csv"))) {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                String idPaciente = datos[0];
+                String idMedicamento = UUID.randomUUID().toString(); // Generar nuevo ID para el medicamento
+                String idPaciente = datos[0]; // Obtener el ID del paciente
                 String nombreMedicamento = datos[1];
-                String dosis = datos[2];
+                String descripcion = datos[2];
+                int dosis = Integer.parseInt(datos[3]);
+                float inventario = Float.parseFloat(datos[4]);
+    
+                // Crear el objeto Medicamento
+                Medicamento medicamento = new Medicamento(idMedicamento, nombreMedicamento, descripcion, dosis, inventario);
                 
-                // Crea el objeto Medicamento
-                Medicamento medicamento = new Medicamento(Luego lo hago, igual es mi Branch de prueba);
-                
-                // Busca el paciente correspondiente por el idPaciente
+                // Buscar el paciente correspondiente por el idPaciente
                 for (Paciente paciente : listaPacientes) {
                     if (paciente.getId().equals(idPaciente)) {
                         // Asocia el medicamento con el paciente
@@ -101,6 +104,7 @@ public class GuardarInformacion {
             e.printStackTrace();
         }
     }
+    
     
 
     /**
@@ -224,10 +228,36 @@ public class GuardarInformacion {
         }
     }
 
+    //Luego lo docuemnto
+    public void guardarMedicamentosCSV() {
+        try (FileWriter writer = new FileWriter("Medicamentos.csv", true)) {
+            for (Paciente paciente : listaPacientes) {
+                for (Medicamento medicamento : paciente.getMedicamentos()) {
+                    writer.append(paciente.getId())
+                          .append(",")
+                          .append(medicamento.getId())
+                          .append(",")
+                          .append(medicamento.getNombre())
+                          .append(",")
+                          .append(medicamento.getDescripcion())
+                          .append(",")
+                          .append(String.valueOf(medicamento.getDosis()))
+                          .append(",")
+                          .append(String.valueOf(medicamento.getInventario()))
+                          .append("\n");
+                }
+            }
+            writer.flush();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+    
+
     /**
      * Guarda los medicamentos en un archivo CSV. Los datos se guardan en el formato:
      * idPaciente, idMedicamento, nombreMedicamento, descripcion, dosis, inventario.
-     */
+     
     public void guardarMedicamentosCSV() {
         try (FileWriter writer = new FileWriter("Medicamentos.csv", true)) {
             for (Paciente paciente : listaPacientes) {
@@ -245,4 +275,6 @@ public class GuardarInformacion {
             System.out.println(e);
         }
     }
+    */
+
 }

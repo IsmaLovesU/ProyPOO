@@ -49,26 +49,59 @@ public class GuardarInformacion {
     }
 
 
-//Cargar los archivos desde un archivo CSV, pero no se ha creado el csv todavia y agregar los arryalist
-
-    /**private void cargarPacientesDesdeCSV() {
-        try (BufferedReader reader = new BufferedReader(new FileReader("Nombre del csv de pacientes"))) {
+    /**
+     * Carga los pacientes desde un archivo CSV y los almacena en la lista de pacientes.
+     * El archivo debe tener el formato: idPaciente, nombre, edad, informacionAdicional.
+     */
+    public void cargarPacientesDesdeCSV() {
+        try (BufferedReader reader = new BufferedReader(new FileReader("Pacientes.csv"))) {
             String linea;
-            while ((linea = reader.readline()) != null){
+            while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                    String idUsuario = datos[0];
-                    String idPaciente = datos[1];
-                    String nombre = datos[2];
-                    int edad = Integer.parseInt(datos[3]);
-                    String infomacionAdicional = datos[4];
-                    
-                    Paciente paciente = new Paciente(idUsuario, idPaciente, nombre, edad, infomacionAdicional);
-                    listaPacientes.ADD(paciente);
+                String idPaciente = datos[0];
+                String nombre = datos[1];
+                int edad = Integer.parseInt(datos[2]);
+                String informacionAdicional = datos[3];
+                
+                // Crea el objeto Paciente y lo añade a la lista
+                Paciente paciente = new Paciente(idPaciente, nombre, edad, informacionAdicional);
+                listaPacientes.add(paciente);
             }
-        } 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }    
+    
+    /**
+     * Carga los medicamentos desde un archivo CSV (no creado aun) y los almacena en la lista de medicamento.
+     * El archivo debe tener el formato: .....
+     */
+    public void cargarMedicamentosDesdeCSV() {
+        try (BufferedReader reader = new BufferedReader(new FileReader("Medicamentos.csv"))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] datos = linea.split(",");
+                String idPaciente = datos[0];
+                String nombreMedicamento = datos[1];
+                String dosis = datos[2];
+                
+                // Crea el objeto Medicamento
+                Medicamento medicamento = new Medicamento(Luego lo hago, igual es mi Branch de prueba);
+                
+                // Busca el paciente correspondiente por el idPaciente
+                for (Paciente paciente : listaPacientes) {
+                    if (paciente.getId().equals(idPaciente)) {
+                        // Asocia el medicamento con el paciente
+                        paciente.agregarMedicamentos(medicamento);
+                        break;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    */
-
+    
 
     /**
      * Obtiene la lista de usuarios registrados.

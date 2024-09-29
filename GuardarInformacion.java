@@ -36,12 +36,14 @@ public class GuardarInformacion {
                 String id = UUID.randomUUID().toString(); // Generar un nuevo ID
                 String nombre = datos[1];
                 String nombreUsuario = datos[2];
-                String contrasena = datos[3];
+                // Descifrar la contraseña
+                String contrasenaCifrada = datos[3];
+                String contrasenaDescifrada = AESUtil.decrypt(contrasenaCifrada);
                 int edad = Integer.parseInt(datos[4]);
                 String sexo = datos[5];
                 String tipoUsuario = datos[6];
 
-                Usuario usuario = new Usuario(id, nombre, nombreUsuario, contrasena, edad, sexo, tipoUsuario);
+                Usuario usuario = new Usuario(id, nombre, nombreUsuario, contrasenaCifrada, edad, sexo, tipoUsuario);
                 listaUsuarios.add(usuario);
             }
         } catch (IOException e) {

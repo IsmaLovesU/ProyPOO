@@ -4,7 +4,7 @@ import java.util.Base64;
 
 public class AESUtil {
     private static final String ALGORITHM = "AES";
-    private static final byte[] keyValue = "MotoMamibrrrrrrr".getBytes(); // Llave de 128 bits (16 bytes)
+    private static final byte[] keyValue = "MotoMamibrrrrrrr".getBytes(); // ¡¡¡¡¡¡¡¡Llave de 128 bits (16 bytes)!!!!!!!!
 
     // Método para cifrar
     public static String encrypt(String data) throws Exception {

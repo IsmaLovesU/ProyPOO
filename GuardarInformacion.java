@@ -36,21 +36,23 @@ public class GuardarInformacion {
                 String id = UUID.randomUUID().toString(); // Generar un nuevo ID
                 String nombre = datos[1];
                 String nombreUsuario = datos[2];
+        
                 // Descifrar la contraseña
                 String contrasenaCifrada = datos[3];
                 String contrasenaDescifrada = AESUtil.decrypt(contrasenaCifrada);
+                
                 int edad = Integer.parseInt(datos[4]);
                 String sexo = datos[5];
                 String tipoUsuario = datos[6];
-
-                Usuario usuario = new Usuario(id, nombre, nombreUsuario, contrasenaCifrada, edad, sexo, tipoUsuario);
+    
+                Usuario usuario = new Usuario(id, nombre, nombreUsuario, contrasenaDescifrada, edad, sexo, tipoUsuario);
                 listaUsuarios.add(usuario);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
+    
 
     /**
      * Carga los pacientes desde un archivo CSV y los almacena en la lista de pacientes.
@@ -65,7 +67,7 @@ public class GuardarInformacion {
                 String nombre = datos[1];
                 int edad = Integer.parseInt(datos[2]);
                 String informacionAdicional = datos[3];
-    
+
                 Paciente paciente = new Paciente(idPaciente, nombre, edad, informacionAdicional);
                 listaPacientes.add(paciente);
             }
@@ -73,10 +75,10 @@ public class GuardarInformacion {
             e.printStackTrace();
         }
     }
-    
+
     /**
      * Carga los medicamentos desde un archivo CSV y los almacena en la lista de medicamento.
-     * El archivo debe tener el formato: idMedicamento, nombreMedicamento, descripcion, dosis, horarioSuministro, recesatado, inventario
+     * El archivo debe tener el formato: idMedicamento, nombreMedicamento, descripcion, dosis, horarioSuministro, recesatado, inventario.
      */
     public void cargarMedicamentosDesdeCSV() {
         try (BufferedReader reader = new BufferedReader(new FileReader("Medicamentos.csv"))) {
@@ -89,10 +91,10 @@ public class GuardarInformacion {
                 String descripcion = datos[2];
                 int dosis = Integer.parseInt(datos[3]);
                 float inventario = Float.parseFloat(datos[4]);
-    
+
                 // Crear el objeto Medicamento
                 Medicamento medicamento = new Medicamento(idMedicamento, nombreMedicamento, descripcion, dosis, inventario);
-                
+
                 // Buscar el paciente correspondiente por el idPaciente
                 for (Paciente paciente : listaPacientes) {
                     if (paciente.getId().equals(idPaciente)) {
@@ -106,8 +108,6 @@ public class GuardarInformacion {
             e.printStackTrace();
         }
     }
-    
-    
 
     /**
      * Obtiene la lista de usuarios registrados.
@@ -129,11 +129,23 @@ public class GuardarInformacion {
      * @param sexo El sexo del usuario.
      * @param tipoUsuario El tipo de usuario (doctor, administrador, etc.).
      */
-    public void registroUsuario(String id, String nombre, String nombreUsuario, String contraseña, int edad, String sexo, String tipoUsuario) {
+     public void registroUsuario(String id, String nombre, String nombreUsuario, String contraseña, int edad, String sexo, String tipoUsuario) {
+        if (contraseña == null) {
+            System.out.println("Error: La contraseña no puede ser nula.");
+            return; // Salir del método si la contraseña es nula
+        }
+    
+        try {
+            contraseña = AESUtil.encrypt(contraseña); // Cifrar la contraseña
+        } catch (Exception e) {
+            e.printStackTrace(); // Manejo de excepciones
+            return; // Salir del método si hay un error
+        }
+    
         Usuario usuario = new Usuario(id, nombre, nombreUsuario, contraseña, edad, sexo, tipoUsuario);
         listaUsuarios.add(usuario);
     }
-
+    
     /**
      * Crea un nuevo paciente asociado a un usuario y lo agrega a la lista de pacientes.
      * 
@@ -200,7 +212,7 @@ public class GuardarInformacion {
             }
             writer.flush();
         } catch (IOException e) {
-            System.out.println(e);
+            System.out.println("Error al guardar usuarios en CSV: " + e.getMessage());
         }
     }
 
@@ -230,7 +242,10 @@ public class GuardarInformacion {
         }
     }
 
-    //Luego lo docuemnto
+    /**
+     * Guarda los medicamentos en un archivo CSV. Los datos se guardan en el formato:
+     * idPaciente, idMedicamento, nombreMedicamento, descripcion, dosis, inventario.
+     */
     public void guardarMedicamentosCSV() {
         try (FileWriter writer = new FileWriter("Medicamentos.csv", true)) {
             for (Paciente paciente : listaPacientes) {
@@ -254,29 +269,4 @@ public class GuardarInformacion {
             System.out.println(e);
         }
     }
-    
-
-    /**
-     * Guarda los medicamentos en un archivo CSV. Los datos se guardan en el formato:
-     * idPaciente, idMedicamento, nombreMedicamento, descripcion, dosis, inventario.
-     
-    public void guardarMedicamentosCSV() {
-        try (FileWriter writer = new FileWriter("Medicamentos.csv", true)) {
-            for (Paciente paciente : listaPacientes) {
-                System.out.println("Paciente: " + paciente.getNombre());
-                for (Medicamento medicamento : paciente.getMedicamentos()) {
-                    System.out.println("Medicamento encontrado para el paciente: " + medicamento.getNombre());
-                    System.out.println("Descripción: " + medicamento.getDescripcion());
-                    System.out.println("Dosis: " + medicamento.getDosis());
-                    System.out.println("Inventario: " + medicamento.getInventario());
-                    writer.write(paciente.getId() + "," + medicamento.getId() + "," + medicamento.getNombre() + "," + medicamento.getDescripcion() + "," + medicamento.getDosis() + "," + medicamento.getInventario() + "\n");
-                }
-            }
-            writer.flush();
-        } catch (IOException e) {
-            System.out.println(e);
-        }
-    }
-    */
-
 }

@@ -78,8 +78,8 @@ public class Main {
                 opcion = scanner.nextInt();
                 scanner.nextLine();  // Consumir la nueva línea
 
-                if (opcion == 1) {
-                } else if (opcion == 1) {
+                
+                 if (opcion == 1) {
                     System.out.println("Crear paciente:");
                     System.out.print("ID del usuario (doctor): ");
                     String idUsuario = scanner.nextLine();

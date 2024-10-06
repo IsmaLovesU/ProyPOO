@@ -73,6 +73,42 @@ public class GuardarInformacion {
         return false;
     }
 
+    public boolean verificarContraseña(String contraseña){
+        
+        if(contraseña.length() < 10){
+            return false;
+        }
+
+        boolean minuscula= false;
+        boolean mayuscula = false;
+        boolean numero = false;
+
+        for(char c: contraseña.toCharArray()){
+
+            if (Character.isUpperCase(c)){
+                mayuscula = true;
+            }
+
+            if (Character.isLowerCase(c)){
+                minuscula = true;
+            }
+            
+            if (Character.isDigit(c)){
+                numero = true;
+            }
+
+            if (!Character.isLetterOrDigit(c)){
+                return false;
+            }
+        }
+
+        if (!mayuscula || !minuscula || !numero){
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * Registra un nuevo usuario en el sistema.
      * 
@@ -86,16 +122,22 @@ public class GuardarInformacion {
      */
     public String registroUsuario(String id, String nombre, String nombreUsuario, String contraseña, int edad, String sexo, String tipoUsuario) {
 
-        boolean verificar = verificarUsuario(id);
+        boolean verificarId = verificarUsuario(id);
 
-        if (!verificar){
+        boolean verificarContraseña= verificarContraseña(contraseña);
+
+        if (!verificarId && verificarContraseña){
             Usuario usuario = new Usuario(id, nombre, nombreUsuario, contraseña, edad, sexo, tipoUsuario);
             listaUsuarios.add(usuario);
 
             return "Registro de usuario exitoso";
+        } else if(verificarId){
+            return "El id de usuario ya existe.";
+  
+        } else if (!verificarContraseña){
+            return "La contraseña no aceptada";
         }
 
-        return "El id de usuario ya existe.";
     }
 
     /**
@@ -215,4 +257,16 @@ public class GuardarInformacion {
             System.out.println(e);
         }
     }
+
+
+    public Usuario obtenerUsuario(String id){
+        for (Usuario usuario: listaUsuarios){
+            if(usuario.getId().equals(id)){
+                return usuario;
+            }
+        }
+
+        return null;
+    }
+
 }

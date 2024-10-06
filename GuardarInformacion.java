@@ -269,4 +269,27 @@ public class GuardarInformacion {
         return null;
     }
 
+    public String editarNombre(String id, String nuevoNombre){
+        for(Usuario usuario: listaUsuarios){
+            if(usuario.getId().equals(id)){
+                usuario.setNombre(nuevoNombre);
+
+                return "El nombre se cambió correctamente";
+            }
+        }
+
+        return null;
+    }
+
+    public String editarNombreUsuario(String id, String nuevoNombreU){
+        for(Usuario usuario: listaUsuarios){
+            if (usuario.getId().equals(id)){
+                usuario.setNombreUsuario(nuevoNombreU);
+
+                return "El nombre de usuario se cambió correctamente";
+            }
+        }
+
+        return null;
+    }
 }

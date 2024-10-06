@@ -36,7 +36,8 @@ public class Main {
 
                 inicio= true;
             }
-        } else if(respuesta.equals("no")){
+        } 
+        else if(respuesta.equals("no")){
             System.out.println("----- Registro de usuario-----");
             System.out.println("Registro de usuario:");
             System.out.print("ID: ");
@@ -79,7 +80,6 @@ public class Main {
                 scanner.nextLine();  // Consumir la nueva línea
 
                 if (opcion == 1) {
-                } else if (opcion == 1) {
                     System.out.println("Crear paciente:");
                     System.out.print("ID del usuario (doctor): ");
                     String idUsuario = scanner.nextLine();
@@ -92,7 +92,7 @@ public class Main {
                     String infoAdicional = scanner.nextLine();
 
                     gestor.crearPaciente(idUsuario, nombrePaciente, edadPaciente, infoAdicional);
-                                    System.out.println("Guardando usuarios en CSV...");
+                    System.out.println("Guardando usuarios en CSV...");
                     gestor.guardarUsuariosCSV();
 
 

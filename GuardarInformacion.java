@@ -135,7 +135,7 @@ public class GuardarInformacion {
             return "El id de usuario ya existe.";
   
         } else if (!verificarContraseña){
-            return "La contraseña no aceptada";
+            return "La contraseña no cumple con todos los requsítos";
         }
 
     }
@@ -291,5 +291,22 @@ public class GuardarInformacion {
         }
 
         return null;
+    }
+
+    public String cambioContraseña(String id, String cotraseña){
+        for (Usuario usuario: listaUsuarios){
+            if(usuario.getId().equals(id)){
+
+                boolean verificarContraseña= verificarContraseña(cotraseña);
+
+                if( verificarContraseña){
+                    usuario.setContrasena(cotraseña);
+
+                    return "Cambio de contraseña exitoso";
+                } else {
+                    return "La contraseña no cumple con todos los requisitos";
+                }
+            }
+        }
     }
 }

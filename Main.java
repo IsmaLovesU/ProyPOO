@@ -64,7 +64,7 @@ public class Main {
             inicio= true;
         }
 
-        if (inicio){
+        if (!inicio){
             int opcion = 0;
 
             while (opcion != 6) {
@@ -79,6 +79,8 @@ public class Main {
                 opcion = scanner.nextInt();
                 scanner.nextLine();  // Consumir la nueva línea
 
+                
+                
                 if (opcion == 1) {
                     System.out.println("Crear paciente:");
                     System.out.print("ID del usuario (doctor): ");
@@ -130,9 +132,13 @@ public class Main {
                 }
             }
             
-            scanner.close();
         }
-    }
+        scanner.close();
 
+   }
 }
+
+
+
+
 

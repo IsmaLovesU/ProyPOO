@@ -138,6 +138,7 @@ public class GuardarInformacion {
             return "La contraseña no cumple con todos los requsítos";
         }
 
+        return null;
     }
 
     /**
@@ -306,7 +307,9 @@ public class GuardarInformacion {
                 } else {
                     return "La contraseña no cumple con todos los requisitos";
                 }
-            }
+            } 
         }
+
+        return null;
     }
 }

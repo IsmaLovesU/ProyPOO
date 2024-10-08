@@ -196,7 +196,7 @@ public class GuardarInformacion {
      * contiene el ID del medicamento que coincide con el proporcionado como parámetro.
      * Luego, reescribe el archivo con las líneas actualizadas que no contienen el medicamento eliminado.
      * 
-     * @param idMedicamentoAEliminar El ID del medicamento que se desea eliminar del archivo CSV.
+     * @param NombreMedicamentoAEliminar El nombre del medicamento que se desea eliminar del archivo CSV.
      * 
      * @throws IOException Si ocurre un error al leer o escribir en el archivo CSV.
      */
@@ -208,8 +208,8 @@ public class GuardarInformacion {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                String idMedicamento = datos[2]; // El segundo campo es el ID del medicamento
-                if (!idMedicamento.equals(NombreMedicamentoAEliminar)) {
+                String NombreMedicamento = datos[2]; // El segundo campo es el ID del medicamento
+                if (!NombreMedicamento.equals(NombreMedicamentoAEliminar)) {
                     lineasActualizadas.add(linea); // Solo guardar las líneas que no sean el medicamento a eliminar
                 }
             }

@@ -11,9 +11,7 @@ public class MainPrueba {
             System.out.println("1. Registrar Usuario");
             System.out.println("2. Crear Paciente");
             System.out.println("3. Agregar Medicamento");
-            System.out.println("4. Guardar Usuarios en CSV");
-            System.out.println("5. Guardar Pacientes en CSV");
-            System.out.println("6. Guardar Medicamentos en CSV");
+            System.out.println("4. Eliminar medicamento");
             System.out.println("0. Salir");
             System.out.print("Seleccione una opción: ");
             opcion = scanner.nextInt();
@@ -38,6 +36,8 @@ public class MainPrueba {
                     String tipoUsuario = scanner.nextLine();
                     sistema.registroUsuario(id, nombre, nombreUsuario, contrasena, edad, sexo, tipoUsuario);
                     System.out.println("Usuario registrado exitosamente.");
+                    sistema.guardarUsuariosCSV();
+                    System.out.println("Usuarios guardados en CSV.");
                     break;
 
                 case 2:
@@ -52,6 +52,8 @@ public class MainPrueba {
                     String infoAdicional = scanner.nextLine();
                     sistema.crearPaciente(idUsuario, nombrePaciente, edadPaciente, infoAdicional);
                     System.out.println("Paciente creado exitosamente.");
+                    sistema.guardarPacientesCSV();
+                    System.out.println("Pacientes guardados en CSV.");
                     break;
 
                 case 3:
@@ -67,21 +69,15 @@ public class MainPrueba {
                     float inventario = scanner.nextFloat();
                     sistema.crearMedicamento(idPaciente, nombreMedicamento, descripcion, dosis, inventario);
                     System.out.println("Medicamento agregado exitosamente.");
+                    sistema.guardarMedicamentosCSV();
+                    System.out.println("Medicamentos guardados en CSV.");
                     break;
 
                 case 4:
-                    sistema.guardarUsuariosCSV();
-                    System.out.println("Usuarios guardados en CSV.");
-                    break;
-
-                case 5:
-                    sistema.guardarPacientesCSV();
-                    System.out.println("Pacientes guardados en CSV.");
-                    break;
-
-                case 6:
-                    sistema.guardarMedicamentosCSV();
-                    System.out.println("Medicamentos guardados en CSV.");
+                    System.out.print("Ingrese el nombre del Medicamento a eliminar: ");
+                    String idMedicamentoAEliminar = scanner.nextLine();
+                    sistema.eliminarMedicamentoCSV(idMedicamentoAEliminar);
+                    System.out.println("Medicamento eliminado del CSV.");
                     break;
 
                 case 0:

@@ -156,16 +156,17 @@ public class GuardarInformacion {
      */
     public void crearPaciente(String idUsuario, String nombre, int edad, String informacionAdicional) {
         Paciente nuevoPaciente = new Paciente(idUsuario, nombre, edad, informacionAdicional);
-        nuevoPaciente.generarId();
-
+        nuevoPaciente.generarId(); // Generar ID para el nuevo paciente
+    
         for (Usuario usuario : listaUsuarios) {
             if (usuario.getId().equals(idUsuario)) {
-                usuario.agregarPaciente(nuevoPaciente);
+                usuario.agregarPaciente(nuevoPaciente); // Agregar paciente al usuario
                 break;
             }
         }
-
-        listaPacientes.add(nuevoPaciente);  
+    
+        listaPacientes.add(nuevoPaciente); // Agregar paciente a la lista general
+        //guardarPacientesCSV(); // Guardar el paciente en el archivo CSV
     }
 
     /**
@@ -187,6 +188,45 @@ public class GuardarInformacion {
             }
         }
     }
+
+    /**
+     * Elimina un medicamento del archivo CSV "Medicamentos.csv" basado en el ID proporcionado.
+     * 
+     * Este método lee todas las líneas del archivo "Medicamentos.csv" y elimina la línea que
+     * contiene el ID del medicamento que coincide con el proporcionado como parámetro.
+     * Luego, reescribe el archivo con las líneas actualizadas que no contienen el medicamento eliminado.
+     * 
+     * @param idMedicamentoAEliminar El ID del medicamento que se desea eliminar del archivo CSV.
+     * 
+     * @throws IOException Si ocurre un error al leer o escribir en el archivo CSV.
+     */
+    public void eliminarMedicamentoCSV(String NombreMedicamentoAEliminar) {
+        String archivoMedicamentos = "Medicamentos.csv";
+        List<String> lineasActualizadas = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivoMedicamentos))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] datos = linea.split(",");
+                String idMedicamento = datos[2]; // El segundo campo es el ID del medicamento
+                if (!idMedicamento.equals(NombreMedicamentoAEliminar)) {
+                    lineasActualizadas.add(linea); // Solo guardar las líneas que no sean el medicamento a eliminar
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Guardar de nuevo el archivo CSV sin el medicamento eliminado
+        try (FileWriter writer = new FileWriter(archivoMedicamentos)) {
+            for (String linea : lineasActualizadas) {
+                writer.write(linea + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Guarda los usuarios en un archivo CSV. Los datos se guardan en el formato:

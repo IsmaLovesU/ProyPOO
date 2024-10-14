@@ -13,6 +13,7 @@ import java.io.FileReader;
 public class GuardarInformacion {
     private List<Usuario> listaUsuarios;
     private List<Paciente> listaPacientes;
+    private List<Medicamento> listaMedicamentos; 
 
     /**
      * Constructor que inicializa las listas de usuarios y pacientes.
@@ -21,7 +22,10 @@ public class GuardarInformacion {
     public GuardarInformacion() {
         listaUsuarios = new ArrayList<>();
         listaPacientes = new ArrayList<>();
-        cargarUsuariosDesdeCSV();  // Nuevo método para cargar los usuarios
+        listaMedicamentos = new ArrayList<>();
+        cargarMedicamentosDesdeCSV(); // Nuevo método para cargar los medicamentos.
+        cargarUsuariosDesdeCSV(); // Nuevo método para cargar los usuarios.
+        cargarPacientesDesdeCSV();  // Nuevo método para cargar los pacientes.
     }
 
     /**
@@ -64,10 +68,10 @@ public class GuardarInformacion {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                String idPaciente = UUID.randomUUID().toString(); // Generar nuevo ID para el paciente
-                String nombre = datos[1];
-                int edad = Integer.parseInt(datos[2]);
-                String informacionAdicional = datos[3];
+                String idPaciente = datos[1]; 
+                String nombre = datos[2];
+                int edad = Integer.parseInt(datos[3]);
+                String informacionAdicional = datos[4];
 
                 Paciente paciente = new Paciente(idPaciente, nombre, edad, informacionAdicional);
                 listaPacientes.add(paciente);

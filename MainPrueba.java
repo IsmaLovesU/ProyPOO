@@ -81,7 +81,6 @@ public class MainPrueba {
                     break;
 
                 case 0:
-                    System.out.println("Saliendo...");
                     break;
 
                 default:

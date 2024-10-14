@@ -33,7 +33,8 @@ public class GuardarInformacion {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                String id = UUID.randomUUID().toString(); // Generar un nuevo ID
+                // Nota: En lugar de generar un nuevo ID, usa el ID que ya está en el archivo CSV, sino luego se duplican los usuarios ayiyiyiyiyi
+                String id = datos[0];  // Usar el ID existente del CSV
                 String nombre = datos[1];
                 String nombreUsuario = datos[2];
         
@@ -46,7 +47,7 @@ public class GuardarInformacion {
                 String tipoUsuario = datos[6];
     
                 Usuario usuario = new Usuario(id, nombre, nombreUsuario, contrasenaDescifrada, edad, sexo, tipoUsuario);
-                listaUsuarios.add(usuario);
+                listaUsuarios.add(usuario);  // Agregar el usuario a la lista
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -141,7 +142,16 @@ public class GuardarInformacion {
             e.printStackTrace(); // Manejo de excepciones
             return; // Salir del método si hay un error
         }
-    
+
+        // Verificar si el usuario ya existe
+        for (Usuario usuario : listaUsuarios) {
+            if (usuario.getId().equals(id) || usuario.getNombreUsuario().equals(nombreUsuario)) {
+                System.out.println("El usuario ya existe. No se agregará nuevamente.");
+                return; // Salir si el usuario ya existe
+            }
+        }
+        
+        // Si no existe, agregarlo a la lista
         Usuario usuario = new Usuario(id, nombre, nombreUsuario, contraseña, edad, sexo, tipoUsuario);
         listaUsuarios.add(usuario);
     }
@@ -233,7 +243,7 @@ public class GuardarInformacion {
      * id, nombre, nombreUsuario, contrasena, edad, sexo, tipoUsuario.
      */
     public void guardarUsuariosCSV() {
-        try (FileWriter writer = new FileWriter("Usuarios.csv", true)) {
+        try (FileWriter writer = new FileWriter("Usuarios.csv", true)) { 
             for (Usuario usuario : listaUsuarios) {
                 writer.append(usuario.getId())
                       .append(",")
@@ -252,7 +262,7 @@ public class GuardarInformacion {
             }
             writer.flush();
         } catch (IOException e) {
-            System.out.println("Error al guardar usuarios en CSV: " + e.getMessage());
+            System.out.println(e);
         }
     }
 

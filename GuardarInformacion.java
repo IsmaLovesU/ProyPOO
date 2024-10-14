@@ -243,15 +243,24 @@ public class GuardarInformacion {
      * id, nombre, nombreUsuario, contrasena, edad, sexo, tipoUsuario.
      */
     public void guardarUsuariosCSV() {
-        try (FileWriter writer = new FileWriter("Usuarios.csv", true)) { 
+        try (FileWriter writer = new FileWriter("Usuarios.csv", false)) { // Sobrescribe el archivo para evitar que se dupliquen los usuarios
             for (Usuario usuario : listaUsuarios) {
+                String contrasenaCifrada;
+            try {
+                // Cifrar la contraseña antes de guardarla
+                contrasenaCifrada = AESUtil.encrypt(usuario.getContrasena());
+            } catch (Exception e) {
+                continue;  // Si hay un error al cifrar, saltar al siguiente usuario
+            }
+            
+            // Guardar los datos del usuario en el archivo CSV
                 writer.append(usuario.getId())
                       .append(",")
                       .append(usuario.getNombre())
                       .append(",")
                       .append(usuario.getNombreUsuario())
                       .append(",")
-                      .append(usuario.getContrasena())
+                      .append(contrasenaCifrada)
                       .append(",")
                       .append(String.valueOf(usuario.getEdad()))
                       .append(",")

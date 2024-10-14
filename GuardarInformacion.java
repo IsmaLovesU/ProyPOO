@@ -90,12 +90,12 @@ public class GuardarInformacion {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                String idMedicamento = UUID.randomUUID().toString(); // Generar nuevo ID para el medicamento
-                String idPaciente = datos[0]; // Obtener el ID del paciente
-                String nombreMedicamento = datos[1];
-                String descripcion = datos[2];
-                int dosis = Integer.parseInt(datos[3]);
-                float inventario = Float.parseFloat(datos[4]);
+                String idMedicamento = datos[0];
+                String idPaciente = datos[1]; // Obtener el ID del paciente
+                String nombreMedicamento = datos[2];
+                String descripcion = datos[3];
+                int dosis = Integer.parseInt(datos[4]);
+                float inventario = Float.parseFloat(datos[5]);
 
                 // Crear el objeto Medicamento
                 Medicamento medicamento = new Medicamento(idMedicamento, nombreMedicamento, descripcion, dosis, inventario);
@@ -108,6 +108,8 @@ public class GuardarInformacion {
                         break;
                     }
                 }
+                //Agregar medicamento a la lista de medicamentos
+                listaMedicamentos.add(medicamento);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -201,6 +203,7 @@ public class GuardarInformacion {
                 break;
             }
         }
+        guardarMedicamentosCSV();
     }
 
     /**

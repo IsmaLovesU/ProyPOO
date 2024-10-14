@@ -35,14 +35,25 @@ public class InicioSesion {
                 
                 // El nombre de usuario y la contraseña están en las posiciones 2 y 3 del CSV
                 String usuarioCSV = datosUsuario[2];
-                String contrasenaCSV = datosUsuario[3];
+                String contrasenaCifrada = datosUsuario[3];  // Aquí se asegura que la variable existe
+
+               // Descifrar la contraseña (con su try catch porque si no no funciona jaja)
+                String contrasenaDescifrada;
+                try {
+                    contrasenaDescifrada = AESUtil.decrypt(contrasenaCifrada);
+                } catch (Exception e) {
+                    System.out.println("Error al descifrar la contraseña.");
+                    continue;  // Saltar a la siguiente línea en caso de error
+                }   
+
 
                 // Verificamos si el nombre de usuario y la contraseña coinciden
-                if (usuarioCSV.equals(nombreUsuario) && contrasenaCSV.equals(contrasena)) {
+                if (usuarioCSV.equals(nombreUsuario) && contrasenaDescifrada.equals(contrasena)) {
                     System.out.println("Has iniciado sesión");
                     return true; // Si coinciden, se retorna true y se autentica al usuario
                 }
             }
+            
         } catch (IOException e) {
             // Si ocurre un error de entrada/salida (archivo no encontrado, etc.)
             System.out.println("Oh-oh, ocurrió un error desconocido con el archivo.");

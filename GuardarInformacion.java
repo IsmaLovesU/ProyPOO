@@ -1,6 +1,5 @@
 import java.util.List;
 import java.util.ArrayList;
-import java.util.UUID;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -13,7 +12,7 @@ import java.io.FileReader;
 public class GuardarInformacion {
     private List<Usuario> listaUsuarios;
     private List<Paciente> listaPacientes;
-    private List<Medicamento> listaMedicamentos; 
+    private List<Medicamento> listaMedicamentos;
 
     /**
      * Constructor que inicializa las listas de usuarios y pacientes.
@@ -23,9 +22,9 @@ public class GuardarInformacion {
         listaUsuarios = new ArrayList<>();
         listaPacientes = new ArrayList<>();
         listaMedicamentos = new ArrayList<>();
-        cargarMedicamentosDesdeCSV(); // Nuevo método para cargar los medicamentos.
-        cargarUsuariosDesdeCSV(); // Nuevo método para cargar los usuarios.
-        cargarPacientesDesdeCSV();  // Nuevo método para cargar los pacientes.
+        cargarUsuariosDesdeCSV();  // Nuevo método para cargar los usuarios
+        cargarPacientesDesdeCSV();  // Nuevo método para cargar los pacientes
+        cargarMedicamentosDesdeCSV();  // Nuevo método para cargar los medicamentos
     }
 
     /**
@@ -90,7 +89,7 @@ public class GuardarInformacion {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                String idMedicamento = datos[0];
+                String idMedicamento = datos[0]; // Generar nuevo ID para el medicamento
                 String idPaciente = datos[1]; // Obtener el ID del paciente
                 String nombreMedicamento = datos[2];
                 String descripcion = datos[3];
@@ -108,7 +107,7 @@ public class GuardarInformacion {
                         break;
                     }
                 }
-                //Agregar medicamento a la lista de medicamentos
+                // Agregar el medicamento a la lista general
                 listaMedicamentos.add(medicamento);
             }
         } catch (IOException e) {
@@ -206,27 +205,40 @@ public class GuardarInformacion {
         guardarMedicamentosCSV();
     }
 
-    public void eliminarMedicamento(String idPaciente, String nombreMedicamentoEliminado){
-        for (Paciente paciente : listaPacientes){
-            if (paciente.getId().equals(idPaciente)){
-                //Busca el medicamento que se quiere eliminar
-                Medicamento medicamentoEliminar = null;
-                for (Medicamento medicamento : paciente.getMedicamentos()){
-                    //Si se encuentra el medicamento se elimina
-                    if (medicamento.getNombre().equals(nombreMedicamentoEliminado)){
-                        medicamentoEliminar = medicamento;
+    /**
+     * Elimina un medicamento del archivo CSV "Medicamentos.csv" basado en el ID proporcionado.
+     * 
+     * Este método lee todas las líneas del archivo "Medicamentos.csv" y elimina la línea que
+     * contiene el ID del medicamento que coincide con el proporcionado como parámetro.
+     * Luego, reescribe el archivo con las líneas actualizadas que no contienen el medicamento eliminado.
+     * 
+     * @param NombreMedicamentoAEliminar El nombre del medicamento que se desea eliminar del archivo CSV.
+     * 
+     * @throws IOException Si ocurre un error al leer o escribir en el archivo CSV.
+     */
+    public void eliminarMedicamento(String idPaciente, String nombreMedicamentoAEliminar) {
+        for (Paciente paciente : listaPacientes) {
+            if (paciente.getId().equals(idPaciente)) {
+                // Busca el medicamento a eliminar
+                Medicamento medicamentoAEliminar = null;
+                for (Medicamento medicamento : paciente.getMedicamentos()) {
+                    if (medicamento.getNombre().equals(nombreMedicamentoAEliminar)) {
+                        medicamentoAEliminar = medicamento;
                         break;
                     }
                 }
-
-                //Si se encuentra el medicamento lo elimina
-                if (medicamentoEliminar != null){
-                    paciente.getMedicamentos().remove(medicamentoEliminar);
-                } catch (IOException e) {
-                    System.out.println(e);
-                //Guarda la lista actualizada de los medicamentos
+    
+                // Si se encontró el medicamento, lo elimina
+                if (medicamentoAEliminar != null) {
+                    paciente.getMedicamentos().remove(medicamentoAEliminar);
+                    System.out.println("Medicamento eliminado: " + nombreMedicamentoAEliminar);
+                } else {
+                    System.out.println("Medicamento no encontrado: " + nombreMedicamentoAEliminar);
+                }
+    
+                // Guarda la lista actualizada en el archivo CSV
                 guardarMedicamentosCSV();
-                break;
+                break; // Salimos del bucle una vez que hemos procesado el paciente
             }
         }
     }
@@ -320,6 +332,6 @@ public class GuardarInformacion {
             writer.flush();
         } catch (IOException e) {
             System.out.println(e);
-        }
     }
+}
 }

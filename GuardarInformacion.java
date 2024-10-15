@@ -1,6 +1,5 @@
 import java.util.List;
 import java.util.ArrayList;
-import java.util.UUID;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -13,6 +12,7 @@ import java.io.FileReader;
 public class GuardarInformacion {
     private List<Usuario> listaUsuarios;
     private List<Paciente> listaPacientes;
+    private List<Medicamento> listaMedicamentos;
 
     /**
      * Constructor que inicializa las listas de usuarios y pacientes.
@@ -21,7 +21,10 @@ public class GuardarInformacion {
     public GuardarInformacion() {
         listaUsuarios = new ArrayList<>();
         listaPacientes = new ArrayList<>();
+        listaMedicamentos = new ArrayList<>();
         cargarUsuariosDesdeCSV();  // Nuevo método para cargar los usuarios
+        cargarPacientesDesdeCSV();  // Nuevo método para cargar los pacientes
+        cargarMedicamentosDesdeCSV();  // Nuevo método para cargar los medicamentos
     }
 
     /**
@@ -53,6 +56,7 @@ public class GuardarInformacion {
             e.printStackTrace();
         }
     }
+    
 
     /**
      * Carga los pacientes desde un archivo CSV y los almacena en la lista de pacientes.
@@ -63,10 +67,10 @@ public class GuardarInformacion {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                String idPaciente = UUID.randomUUID().toString(); // Generar nuevo ID para el paciente
+                String idPaciente = datos[0]; 
                 String nombre = datos[1];
-                int edad = Integer.parseInt(datos[2]);
-                String informacionAdicional = datos[3];
+                int edad = Integer.parseInt(datos[3]);
+                String informacionAdicional = datos[4];
 
                 Paciente paciente = new Paciente(idPaciente, nombre, edad, informacionAdicional);
                 listaPacientes.add(paciente);
@@ -85,12 +89,12 @@ public class GuardarInformacion {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                String idMedicamento = UUID.randomUUID().toString(); // Generar nuevo ID para el medicamento
-                String idPaciente = datos[0]; // Obtener el ID del paciente
-                String nombreMedicamento = datos[1];
-                String descripcion = datos[2];
-                int dosis = Integer.parseInt(datos[3]);
-                float inventario = Float.parseFloat(datos[4]);
+                String idMedicamento = datos[0]; // Generar nuevo ID para el medicamento
+                String idPaciente = datos[1]; // Obtener el ID del paciente
+                String nombreMedicamento = datos[2];
+                String descripcion = datos[3];
+                int dosis = Integer.parseInt(datos[4]);
+                float inventario = Float.parseFloat(datos[5]);
 
                 // Crear el objeto Medicamento
                 Medicamento medicamento = new Medicamento(idMedicamento, nombreMedicamento, descripcion, dosis, inventario);
@@ -103,6 +107,8 @@ public class GuardarInformacion {
                         break;
                     }
                 }
+                // Agregar el medicamento a la lista general
+                listaMedicamentos.add(medicamento);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -118,7 +124,7 @@ public class GuardarInformacion {
         return listaUsuarios;
     }
 
-/**
+    /**
      * Registra un nuevo usuario en el sistema.
      * 
      * @param id El identificador del usuario.
@@ -129,7 +135,7 @@ public class GuardarInformacion {
      * @param sexo El sexo del usuario.
      * @param tipoUsuario El tipo de usuario (doctor, administrador, etc.).
      */
-    public void registroUsuario(String id, String nombre, String nombreUsuario, String contraseña, int edad, String sexo, String tipoUsuario) {
+     public void registroUsuario(String id, String nombre, String nombreUsuario, String contraseña, int edad, String sexo, String tipoUsuario) {
         if (contraseña == null) {
             System.out.println("Error: La contraseña no puede ser nula.");
             return; // Salir del método si la contraseña es nula
@@ -165,7 +171,6 @@ public class GuardarInformacion {
      */
     public void crearPaciente(String idUsuario, String nombre, int edad, String informacionAdicional) {
         Paciente nuevoPaciente = new Paciente(idUsuario, nombre, edad, informacionAdicional);
-        nuevoPaciente.generarId(); // Generar ID para el nuevo paciente
     
         for (Usuario usuario : listaUsuarios) {
             if (usuario.getId().equals(idUsuario)) {
@@ -196,6 +201,7 @@ public class GuardarInformacion {
                 break;
             }
         }
+        guardarMedicamentosCSV();
     }
 
     /**
@@ -209,30 +215,30 @@ public class GuardarInformacion {
      * 
      * @throws IOException Si ocurre un error al leer o escribir en el archivo CSV.
      */
-    public void eliminarMedicamentoCSV(String NombreMedicamentoAEliminar) {
-        String archivoMedicamentos = "Medicamentos.csv";
-        List<String> lineasActualizadas = new ArrayList<>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(archivoMedicamentos))) {
-            String linea;
-            while ((linea = reader.readLine()) != null) {
-                String[] datos = linea.split(",");
-                String NombreMedicamento = datos[2]; // El segundo campo es el ID del medicamento
-                if (!NombreMedicamento.equals(NombreMedicamentoAEliminar)) {
-                    lineasActualizadas.add(linea); // Solo guardar las líneas que no sean el medicamento a eliminar
+    public void eliminarMedicamento(String idPaciente, String nombreMedicamentoAEliminar) {
+        for (Paciente paciente : listaPacientes) {
+            if (paciente.getId().equals(idPaciente)) {
+                // Busca el medicamento a eliminar
+                Medicamento medicamentoAEliminar = null;
+                for (Medicamento medicamento : paciente.getMedicamentos()) {
+                    if (medicamento.getNombre().equals(nombreMedicamentoAEliminar)) {
+                        medicamentoAEliminar = medicamento;
+                        break;
+                    }
                 }
+    
+                // Si se encontró el medicamento, lo elimina
+                if (medicamentoAEliminar != null) {
+                    paciente.getMedicamentos().remove(medicamentoAEliminar);
+                    System.out.println("Medicamento eliminado: " + nombreMedicamentoAEliminar);
+                } else {
+                    System.out.println("Medicamento no encontrado: " + nombreMedicamentoAEliminar);
+                }
+    
+                // Guarda la lista actualizada en el archivo CSV
+                guardarMedicamentosCSV();
+                break; // Salimos del bucle una vez que hemos procesado el paciente
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Guardar de nuevo el archivo CSV sin el medicamento eliminado
-        try (FileWriter writer = new FileWriter(archivoMedicamentos)) {
-            for (String linea : lineasActualizadas) {
-                writer.write(linea + "\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -279,12 +285,9 @@ public class GuardarInformacion {
      * idUsuario, idPaciente, nombrePaciente, edad, informacionAdicional.
      */
     public void guardarPacientesCSV() {
-        try (FileWriter writer = new FileWriter("Pacientes.csv", true)) {
-            for (Usuario usuario : listaUsuarios) {
-                for (Paciente paciente : usuario.getPacientes()) {
-                    writer.append(usuario.getId())
-                          .append(",")
-                          .append(paciente.getId())
+        try (FileWriter writer = new FileWriter("Pacientes.csv", false)) {
+                for (Paciente paciente : listaPacientes) {
+                    writer.append(paciente.getId())
                           .append(",")
                           .append(paciente.getNombre())
                           .append(",")
@@ -293,7 +296,7 @@ public class GuardarInformacion {
                           .append(paciente.getInformacionAdicional())
                           .append("\n");
                 }
-            }
+            
             writer.flush();
         } catch (IOException e) {
             System.out.println(e);
@@ -305,7 +308,7 @@ public class GuardarInformacion {
      * idPaciente, idMedicamento, nombreMedicamento, descripcion, dosis, inventario.
      */
     public void guardarMedicamentosCSV() {
-        try (FileWriter writer = new FileWriter("Medicamentos.csv", true)) {
+        try (FileWriter writer = new FileWriter("Medicamentos.csv", false)) {
             for (Paciente paciente : listaPacientes) {
                 for (Medicamento medicamento : paciente.getMedicamentos()) {
                     writer.append(paciente.getId())
@@ -325,6 +328,6 @@ public class GuardarInformacion {
             writer.flush();
         } catch (IOException e) {
             System.out.println(e);
-        }
     }
+}
 }

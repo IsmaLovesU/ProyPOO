@@ -67,8 +67,8 @@ public class GuardarInformacion {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                String idPaciente = datos[1]; 
-                String nombre = datos[2];
+                String idPaciente = datos[0]; 
+                String nombre = datos[1];
                 int edad = Integer.parseInt(datos[3]);
                 String informacionAdicional = datos[4];
 
@@ -171,7 +171,6 @@ public class GuardarInformacion {
      */
     public void crearPaciente(String idUsuario, String nombre, int edad, String informacionAdicional) {
         Paciente nuevoPaciente = new Paciente(idUsuario, nombre, edad, informacionAdicional);
-        nuevoPaciente.generarId(); // Generar ID para el nuevo paciente
     
         for (Usuario usuario : listaUsuarios) {
             if (usuario.getId().equals(idUsuario)) {
@@ -287,11 +286,8 @@ public class GuardarInformacion {
      */
     public void guardarPacientesCSV() {
         try (FileWriter writer = new FileWriter("Pacientes.csv", false)) {
-            for (Usuario usuario : listaUsuarios) {
-                for (Paciente paciente : usuario.getPacientes()) {
-                    writer.append(usuario.getId())
-                          .append(",")
-                          .append(paciente.getId())
+                for (Paciente paciente : listaPacientes) {
+                    writer.append(paciente.getId())
                           .append(",")
                           .append(paciente.getNombre())
                           .append(",")
@@ -300,7 +296,7 @@ public class GuardarInformacion {
                           .append(paciente.getInformacionAdicional())
                           .append("\n");
                 }
-            }
+            
             writer.flush();
         } catch (IOException e) {
             System.out.println(e);

@@ -12,6 +12,7 @@ public class MainPrueba {
             System.out.println("2. Crear Paciente");
             System.out.println("3. Agregar Medicamento");
             System.out.println("4. Eliminar medicamento");
+            System.err.println("5. Inicio de sesion: ");
             System.out.println("0. Salir");
             System.out.print("Seleccione una opción: ");
             opcion = scanner.nextInt();
@@ -74,10 +75,26 @@ public class MainPrueba {
                     break;
 
                 case 4:
+                    System.out.print("Ingrese ID del paciente: ");
+                    String idPacienteEliminar = scanner.nextLine();
                     System.out.print("Ingrese el nombre del Medicamento a eliminar: ");
-                    String idMedicamentoAEliminar = scanner.nextLine();
-                    sistema.eliminarMedicamentoCSV(idMedicamentoAEliminar);
+                    String nombreMedicamentoAEliminar = scanner.nextLine();
+                    sistema.eliminarMedicamento(idPacienteEliminar, nombreMedicamentoAEliminar);
                     System.out.println("Medicamento eliminado del CSV.");
+                    break;
+
+                case 5: 
+                    System.out.print("Ingrese su nombre de usuario: ");
+                    String usuarioLogin = scanner.nextLine();
+                    System.out.print("Ingrese su contraseña: ");
+                    String contrasenaLogin = scanner.nextLine();
+                    
+                    boolean exito = sistema.iniciarSesion(usuarioLogin, contrasenaLogin);
+                    if (exito) {
+                        System.out.println("Sesión iniciada correctamente.");
+                    } else {
+                        System.out.println("Error al iniciar sesión.");
+                    }
                     break;
 
                 case 0:

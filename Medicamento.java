@@ -13,7 +13,7 @@ public class Medicamento {
     
 
     public Medicamento(String id, String nombre, String descripcion, int dosis, float inventario) {
-        this.id = id; 
+        this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.dosis = dosis;

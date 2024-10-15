@@ -74,9 +74,11 @@ public class MainPrueba {
                     break;
 
                 case 4:
-                    System.out.print("Ingrese el nombre del Medicamento a eliminar: ");
-                    String idMedicamentoAEliminar = scanner.nextLine();
-                    sistema.eliminarMedicamentoCSV(idMedicamentoAEliminar);
+                    System.out.print("Ingrese ID del paciente: ");
+                    String idMedicamentoPacienteEliminar = scanner.nextLine();
+                    System.out.print("Ingrese el nombre del medicamento a eliminar: ");
+                    String nombreMedicamentoEliminar = scanner.nextLine();
+                    sistema.eliminarMedicamento(idMedicamentoPacienteEliminar, nombreMedicamentoEliminar);
                     System.out.println("Medicamento eliminado del CSV.");
                     break;
 

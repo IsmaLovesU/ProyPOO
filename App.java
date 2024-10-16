@@ -2,6 +2,7 @@ import javax.swing.*;
 public class App {
 
     private JFrame frame;
+    private JFrame programaFrame;
     private JTabbedPane tabbedPane;
     private PacientesPanel pacientesPanel;
     private GuardarInformacion gestion;
@@ -18,7 +19,7 @@ public class App {
 
         gestion.prueba();
         
-        frame = new JFrame("Gestión de Medicamentos");
+        frame = new JFrame("LOG In");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 500);
         frame.setLocationRelativeTo(null);
@@ -26,6 +27,8 @@ public class App {
         pacientesPanel = new PacientesPanel();
         tabbedPane = new JTabbedPane();
         tabbedPane.addTab("Pacientes", pacientesPanel);
+
+        inicializarProgramaframe();
 
     }
     public void mostrarLogIn(){
@@ -37,13 +40,22 @@ public class App {
     }
 
     public void mostrarMenu(){
-        frame.setContentPane(tabbedPane);
-        frame.revalidate();
-        frame.repaint();
+        frame.dispose();
+        programaFrame.setVisible(true);
     }
 
     public void mostrarRegistro(){
+        RegistroGUI registroPanel= new RegistroGUI(this, gestion);
+        frame.setContentPane(registroPanel);
+        frame.setVisible(true);
+    }
 
+    private void inicializarProgramaframe(){
+        programaFrame = new JFrame("Gestion de Medicamentos");
+        programaFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        programaFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        programaFrame.setLocationRelativeTo(null);
+        programaFrame.setContentPane(tabbedPane);
     }
 }
 

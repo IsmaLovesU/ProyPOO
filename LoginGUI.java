@@ -23,7 +23,7 @@ public class LoginGUI extends JPanel {
         gbc.insets = new Insets(10, 10, 10, 10);
 
         JLabel lblTitulo = new JLabel("Inicio de sesión");
-        lblTitulo.setFont(new Font("Arial", Font.BOLD, 24));
+        lblTitulo.setFont(new Font("Impact", Font.BOLD, 24));
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
@@ -67,8 +67,7 @@ public class LoginGUI extends JPanel {
         btnRegister.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Aquí se manejaría el cambio a la pantalla de registro
-                JOptionPane.showMessageDialog(null, "Registro no implementado aún.");
+                app.mostrarRegistro();
             }
         });
         gbc.gridx = 1;
@@ -79,7 +78,7 @@ public class LoginGUI extends JPanel {
         String nombreUsuario = txtUsername.getText();
         String contraseña = new String(txtPassword.getPassword());
 
-        if (gestion.inicioSesion(nombreUsuario, contraseña)) {
+        if (gestion.autenticar(nombreUsuario, contraseña)) {
             JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso.");
             app.mostrarMenu();
             // Aquí podrías abrir el menú principal o la siguiente pantalla

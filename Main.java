@@ -5,7 +5,7 @@ public class Main {
         boolean pregunta = false;
         String respuesta= "";
         boolean inicio = false;
-        GuardarInformacion gestor = new GuardarInformacion(); // Crear instancia del gestor de información
+        GuardarInformacion gestor = new GuardarInformacion();
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("--Programa sin nombre(pi-las)--\n");
@@ -28,9 +28,9 @@ public class Main {
 
             while (!sesionIniciada) {
                 System.out.print("Nombre de usuario: ");
-                String nombreUsuario = scanner.nextLine();
+                String nombreUsuario = scanner.next();
                 System.out.print("Contraseña: ");
-                String contrasena = scanner.nextLine();
+                String contrasena = scanner.next();
                 
                 // Llamar al método autenticar del gestor de información
                 sesionIniciada = gestor.autenticar(nombreUsuario, contrasena); // Cambiar 'inicioSesion' por 'gestor'
@@ -46,7 +46,6 @@ public class Main {
 
         else if(respuesta.equals("no")){
             System.out.println("----- Registro de usuario-----");
-            System.out.println("Registro de usuario:");
             System.out.print("ID: ");
             String id = scanner.nextLine();
             System.out.print("Nombre: ");

@@ -73,10 +73,10 @@ public class GuardarInformacion {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                String idPaciente = datos[0]; 
-                String nombre = datos[1];
-                int edad = Integer.parseInt(datos[3]);
-                String informacionAdicional = datos[4];
+                String idPaciente = datos[1]; 
+                String nombre = datos[0];
+                int edad = Integer.parseInt(datos[2]);
+                String informacionAdicional = datos[3];
 
                 Paciente paciente = new Paciente(idPaciente, nombre, edad, informacionAdicional);
                 listaPacientes.add(paciente);
@@ -354,7 +354,7 @@ public class GuardarInformacion {
 
         return false;
     }
-    
+
     /**
      * Método que autentica a un usuario verificando su nombre de usuario y contraseña
      * en la lista de usuarios cargados desde el archivo CSV.

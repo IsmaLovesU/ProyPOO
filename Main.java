@@ -6,7 +6,6 @@ public class Main {
         String respuesta= "";
         boolean inicio= false;
         GuardarInformacion gestor = new GuardarInformacion();
-        InicioSesion inicioSesion = new InicioSesion(); // INICIO DE SESION
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("--Programa sin nombre( pi-las)--\n");

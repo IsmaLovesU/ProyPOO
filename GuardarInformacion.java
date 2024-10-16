@@ -12,6 +12,7 @@ import java.io.FileReader;
 public class GuardarInformacion {
     private List<Usuario> listaUsuarios;
     private List<Paciente> listaPacientes;
+    private List<Medicamento> listaMedicamentos;
 
     /**
      * Constructor que inicializa las listas de usuarios y pacientes.
@@ -20,28 +21,100 @@ public class GuardarInformacion {
     public GuardarInformacion() {
         listaUsuarios = new ArrayList<>();
         listaPacientes = new ArrayList<>();
+        listaMedicamentos = new ArrayList<>();
         cargarUsuariosDesdeCSV();  // Nuevo método para cargar los usuarios
+        cargarPacientesDesdeCSV();  // Nuevo método para cargar los pacientes
+        cargarMedicamentosDesdeCSV();  // Nuevo método para cargar los medicamentos
+    }
+
+    // Este método de prueba solo es para crear un usuario y que lo pruebe en la GUI, luego lo borro
+    public void prueba(){
+        Usuario usuario= new Usuario("123", "Diego", "Diego", "pussydestroyer", 17, "Siempre", "Puto");
+        listaUsuarios.add(usuario);
     }
 
     /**
      * Carga los usuarios desde un archivo CSV y los almacena en la lista de usuarios.
      * El archivo debe tener el formato: id, nombre, nombreUsuario, contrasena, edad, sexo, tipoUsuario.
      */
-    private void cargarUsuariosDesdeCSV() {
+    public void cargarUsuariosDesdeCSV() {
         try (BufferedReader reader = new BufferedReader(new FileReader("Usuarios.csv"))) {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                String id = datos[0];
+                // Nota: En lugar de generar un nuevo ID, usa el ID que ya está en el archivo CSV, sino luego se duplican los usuarios ayiyiyiyiyi
+                String id = datos[0];  // Usar el ID existente del CSV
                 String nombre = datos[1];
                 String nombreUsuario = datos[2];
-                String contrasena = datos[3];
+        
+                // Descifrar la contraseña
+                String contrasenaCifrada = datos[3];
+                String contrasenaDescifrada = AESUtil.decrypt(contrasenaCifrada);
+                
                 int edad = Integer.parseInt(datos[4]);
                 String sexo = datos[5];
                 String tipoUsuario = datos[6];
-                
-                Usuario usuario = new Usuario(id, nombre, nombreUsuario, contrasena, edad, sexo, tipoUsuario);
-                listaUsuarios.add(usuario);
+    
+                Usuario usuario = new Usuario(id, nombre, nombreUsuario, contrasenaDescifrada, edad, sexo, tipoUsuario);
+                listaUsuarios.add(usuario);  // Agregar el usuario a la lista
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+
+    /**
+     * Carga los pacientes desde un archivo CSV y los almacena en la lista de pacientes.
+     * El archivo debe tener el formato: idPaciente, nombre, edad, informacionAdicional.
+     */
+    public void cargarPacientesDesdeCSV() {
+        try (BufferedReader reader = new BufferedReader(new FileReader("Pacientes.csv"))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] datos = linea.split(",");
+                String idPaciente = datos[0]; 
+                String nombre = datos[1];
+                int edad = Integer.parseInt(datos[3]);
+                String informacionAdicional = datos[4];
+
+                Paciente paciente = new Paciente(idPaciente, nombre, edad, informacionAdicional);
+                listaPacientes.add(paciente);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Carga los medicamentos desde un archivo CSV y los almacena en la lista de medicamento.
+     * El archivo debe tener el formato: idMedicamento, nombreMedicamento, descripcion, dosis, horarioSuministro, recesatado, inventario.
+     */
+    public void cargarMedicamentosDesdeCSV() {
+        try (BufferedReader reader = new BufferedReader(new FileReader("Medicamentos.csv"))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] datos = linea.split(",");
+                String idMedicamento = datos[0]; // Generar nuevo ID para el medicamento
+                String idPaciente = datos[1]; // Obtener el ID del paciente
+                String nombreMedicamento = datos[2];
+                String descripcion = datos[3];
+                int dosis = Integer.parseInt(datos[4]);
+                float inventario = Float.parseFloat(datos[5]);
+
+                // Crear el objeto Medicamento
+                Medicamento medicamento = new Medicamento(idMedicamento, nombreMedicamento, descripcion, dosis, inventario);
+
+                // Buscar el paciente correspondiente por el idPaciente
+                for (Paciente paciente : listaPacientes) {
+                    if (paciente.getId().equals(idPaciente)) {
+                        // Asocia el medicamento con el paciente
+                        paciente.agregarMedicamentos(medicamento);
+                        break;
+                    }
+                }
+                // Agregar el medicamento a la lista general
+                listaMedicamentos.add(medicamento);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,58 +131,6 @@ public class GuardarInformacion {
     }
 
     /**
-     * Verifica que el id del usurario no se repita
-     * 
-     * @param id id del usuario que nuevo 
-     * @return true si ya existe un Id igual, false si no.
-     */
-    public boolean verificarUsuario(String id){
-        for(Usuario usuario: listaUsuarios){
-            if(usuario.getId().equals(id)){
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public boolean verificarContraseña(String contraseña){
-        
-        if(contraseña.length() < 10){
-            return false;
-        }
-
-        boolean minuscula= false;
-        boolean mayuscula = false;
-        boolean numero = false;
-
-        for(char c: contraseña.toCharArray()){
-
-            if (Character.isUpperCase(c)){
-                mayuscula = true;
-            }
-
-            if (Character.isLowerCase(c)){
-                minuscula = true;
-            }
-            
-            if (Character.isDigit(c)){
-                numero = true;
-            }
-
-            if (!Character.isLetterOrDigit(c)){
-                return false;
-            }
-        }
-
-        if (!mayuscula || !minuscula || !numero){
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Registra un nuevo usuario en el sistema.
      * 
      * @param id El identificador del usuario.
@@ -120,30 +141,33 @@ public class GuardarInformacion {
      * @param sexo El sexo del usuario.
      * @param tipoUsuario El tipo de usuario (doctor, administrador, etc.).
      */
-    public String registroUsuario(String id, String nombre, String nombreUsuario, String contraseña, int edad, String sexo, String tipoUsuario) {
-
-        boolean verificarId = verificarUsuario(id);
-
-        boolean verificarContraseña= verificarContraseña(contraseña);
-
-        if (!verificarId && verificarContraseña){
-            Usuario usuario = new Usuario(id, nombre, nombreUsuario, contraseña, edad, sexo, tipoUsuario);
-            listaUsuarios.add(usuario);
-
-            return "Registro de usuario exitoso";
-        } else if(verificarId){
-            return "El id de usuario ya existe.";
-  
-        } else if (!verificarContraseña){
-            return "La contraseña no cumple con todos los requsítos";
+     public String registroUsuario(String id, String nombre, String nombreUsuario, String contraseña, int edad, String sexo, String tipoUsuario) {
+        if (contraseña == null) {
+            return "Error: La contraseña no puede ser nula.";
+        }
+    
+        try {
+            contraseña = AESUtil.encrypt(contraseña); // Cifrar la contraseña
+        } catch (Exception e) {
+            e.printStackTrace(); // Manejo de excepciones
+            return "Ocurrió un error al guardar la información"; // Salir del método si hay un error
         }
 
-        return null;
+        // Verificar si el usuario ya existe
+        for (Usuario usuario : listaUsuarios) {
+            if (usuario.getId().equals(id) || usuario.getNombreUsuario().equals(nombreUsuario)) {
+                return "El usuario ya existe. Ingrese nuevamente los datos"; // Salir si el usuario ya existe
+            }
+        }
+        
+        // Si no existe, agregarlo a la lista
+        Usuario usuario = new Usuario(id, nombre, nombreUsuario, contraseña, edad, sexo, tipoUsuario);
+        listaUsuarios.add(usuario);
+        return "Registro de usuario exitoso";
     }
-
+    
     /**
      * Crea un nuevo paciente asociado a un usuario y lo agrega a la lista de pacientes.
-     * 
      * @param idUsuario El identificador del usuario dueño del paciente.
      * @param nombre El nombre del paciente.
      * @param edad La edad del paciente.
@@ -151,16 +175,16 @@ public class GuardarInformacion {
      */
     public void crearPaciente(String idUsuario, String nombre, int edad, String informacionAdicional) {
         Paciente nuevoPaciente = new Paciente(idUsuario, nombre, edad, informacionAdicional);
-        nuevoPaciente.generarId();
-
+    
         for (Usuario usuario : listaUsuarios) {
             if (usuario.getId().equals(idUsuario)) {
-                usuario.agregarPaciente(nuevoPaciente);
+                usuario.agregarPaciente(nuevoPaciente); // Agregar paciente al usuario
                 break;
             }
         }
-
-        listaPacientes.add(nuevoPaciente);  
+    
+        listaPacientes.add(nuevoPaciente); // Agregar paciente a la lista general
+        //guardarPacientesCSV(); // Guardar el paciente en el archivo CSV
     }
 
     /**
@@ -181,22 +205,71 @@ public class GuardarInformacion {
                 break;
             }
         }
+        guardarMedicamentosCSV();
     }
+
+    /**
+     * Elimina un medicamento del archivo CSV "Medicamentos.csv" basado en el ID proporcionado.
+     * 
+     * Este método lee todas las líneas del archivo "Medicamentos.csv" y elimina la línea que
+     * contiene el ID del medicamento que coincide con el proporcionado como parámetro.
+     * Luego, reescribe el archivo con las líneas actualizadas que no contienen el medicamento eliminado.
+     * 
+     * @param NombreMedicamentoAEliminar El nombre del medicamento que se desea eliminar del archivo CSV.
+     * 
+     * @throws IOException Si ocurre un error al leer o escribir en el archivo CSV.
+     */
+    public void eliminarMedicamento(String idPaciente, String nombreMedicamentoAEliminar) {
+        for (Paciente paciente : listaPacientes) {
+            if (paciente.getId().equals(idPaciente)) {
+                // Busca el medicamento a eliminar
+                Medicamento medicamentoAEliminar = null;
+                for (Medicamento medicamento : paciente.getMedicamentos()) {
+                    if (medicamento.getNombre().equals(nombreMedicamentoAEliminar)) {
+                        medicamentoAEliminar = medicamento;
+                        break;
+                    }
+                }
+    
+                // Si se encontró el medicamento, lo elimina
+                if (medicamentoAEliminar != null) {
+                    paciente.getMedicamentos().remove(medicamentoAEliminar);
+                    System.out.println("Medicamento eliminado: " + nombreMedicamentoAEliminar);
+                } else {
+                    System.out.println("Medicamento no encontrado: " + nombreMedicamentoAEliminar);
+                }
+    
+                // Guarda la lista actualizada en el archivo CSV
+                guardarMedicamentosCSV();
+                break; // Salimos del bucle una vez que hemos procesado el paciente
+            }
+        }
+    }
+
 
     /**
      * Guarda los usuarios en un archivo CSV. Los datos se guardan en el formato:
      * id, nombre, nombreUsuario, contrasena, edad, sexo, tipoUsuario.
      */
     public void guardarUsuariosCSV() {
-        try (FileWriter writer = new FileWriter("Usuarios.csv", true)) {
+        try (FileWriter writer = new FileWriter("Usuarios.csv", false)) { // Sobrescribe el archivo para evitar que se dupliquen los usuarios
             for (Usuario usuario : listaUsuarios) {
+                String contrasenaCifrada;
+            try {
+                // Cifrar la contraseña antes de guardarla
+                contrasenaCifrada = AESUtil.encrypt(usuario.getContrasena());
+            } catch (Exception e) {
+                continue;  // Si hay un error al cifrar, saltar al siguiente usuario
+            }
+            
+            // Guardar los datos del usuario en el archivo CSV
                 writer.append(usuario.getId())
                       .append(",")
                       .append(usuario.getNombre())
                       .append(",")
                       .append(usuario.getNombreUsuario())
                       .append(",")
-                      .append(usuario.getContrasena())
+                      .append(contrasenaCifrada)
                       .append(",")
                       .append(String.valueOf(usuario.getEdad()))
                       .append(",")
@@ -216,12 +289,9 @@ public class GuardarInformacion {
      * idUsuario, idPaciente, nombrePaciente, edad, informacionAdicional.
      */
     public void guardarPacientesCSV() {
-        try (FileWriter writer = new FileWriter("Pacientes.csv", true)) {
-            for (Usuario usuario : listaUsuarios) {
-                for (Paciente paciente : usuario.getPacientes()) {
-                    writer.append(usuario.getId())
-                          .append(",")
-                          .append(paciente.getId())
+        try (FileWriter writer = new FileWriter("Pacientes.csv", false)) {
+                for (Paciente paciente : listaPacientes) {
+                    writer.append(paciente.getId())
                           .append(",")
                           .append(paciente.getNombre())
                           .append(",")
@@ -230,7 +300,7 @@ public class GuardarInformacion {
                           .append(paciente.getInformacionAdicional())
                           .append("\n");
                 }
-            }
+            
             writer.flush();
         } catch (IOException e) {
             System.out.println(e);
@@ -242,74 +312,48 @@ public class GuardarInformacion {
      * idPaciente, idMedicamento, nombreMedicamento, descripcion, dosis, inventario.
      */
     public void guardarMedicamentosCSV() {
-        try (FileWriter writer = new FileWriter("Medicamentos.csv", true)) {
+        try (FileWriter writer = new FileWriter("Medicamentos.csv", false)) {
             for (Paciente paciente : listaPacientes) {
-                System.out.println("Paciente: " + paciente.getNombre());
                 for (Medicamento medicamento : paciente.getMedicamentos()) {
-                    System.out.println("Medicamento encontrado para el paciente: " + medicamento.getNombre());
-                    System.out.println("Descripción: " + medicamento.getDescripcion());
-                    System.out.println("Dosis: " + medicamento.getDosis());
-                    System.out.println("Inventario: " + medicamento.getInventario());
-                    writer.write(paciente.getId() + "," + medicamento.getId() + "," + medicamento.getNombre() + "," + medicamento.getDescripcion() + "," + medicamento.getDosis() + "," + medicamento.getInventario() + "\n");
+                    writer.append(paciente.getId())
+                          .append(",")
+                          .append(medicamento.getId())
+                          .append(",")
+                          .append(medicamento.getNombre())
+                          .append(",")
+                          .append(medicamento.getDescripcion())
+                          .append(",")
+                          .append(String.valueOf(medicamento.getDosis()))
+                          .append(",")
+                          .append(String.valueOf(medicamento.getInventario()))
+                          .append("\n");
                 }
             }
             writer.flush();
         } catch (IOException e) {
             System.out.println(e);
         }
+
     }
+    
+    /**
+     * Verifica que el usuario y la contraseña existan para el inicio de sesión
+     * 
+     * @param nombreUsuario nombre de usuario del usuario que ingresa al programa
+     * @param contraseña la contraseña del usuario
+     * 
+     * @return tru si el usuario y la contraseña coniciden con un usuario existente
+     */
+    public boolean inicioSesion(String nombreUsuario, String contraseña){
 
-
-    public Usuario obtenerUsuario(String id){
-        for (Usuario usuario: listaUsuarios){
-            if(usuario.getId().equals(id)){
-                return usuario;
-            }
-        }
-
-        return null;
-    }
-
-    public String editarNombre(String id, String nuevoNombre){
         for(Usuario usuario: listaUsuarios){
-            if(usuario.getId().equals(id)){
-                usuario.setNombre(nuevoNombre);
-
-                return "El nombre se cambió correctamente";
+            if(nombreUsuario.equals(usuario.getNombreUsuario()) && contraseña.equals(usuario.getContrasena())){
+                return true;
             }
         }
 
-        return null;
+        return false;
     }
 
-    public String editarNombreUsuario(String id, String nuevoNombreU){
-        for(Usuario usuario: listaUsuarios){
-            if (usuario.getId().equals(id)){
-                usuario.setNombreUsuario(nuevoNombreU);
 
-                return "El nombre de usuario se cambió correctamente";
-            }
-        }
-
-        return null;
-    }
-
-    public String cambioContraseña(String id, String cotraseña){
-        for (Usuario usuario: listaUsuarios){
-            if(usuario.getId().equals(id)){
-
-                boolean verificarContraseña= verificarContraseña(cotraseña);
-
-                if( verificarContraseña){
-                    usuario.setContrasena(cotraseña);
-
-                    return "Cambio de contraseña exitoso";
-                } else {
-                    return "La contraseña no cumple con todos los requisitos";
-                }
-            } 
-        }
-
-        return null;
-    }
 }

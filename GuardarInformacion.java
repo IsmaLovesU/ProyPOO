@@ -27,11 +27,17 @@ public class GuardarInformacion {
         cargarMedicamentosDesdeCSV();  // Nuevo método para cargar los medicamentos
     }
 
+    // Este método de prueba solo es para crear un usuario y que lo pruebe en la GUI, luego lo borro
+    public void prueba(){
+        Usuario usuario= new Usuario("123", "Diego", "Diego", "pussydestroyer", 17, "Siempre", "Puto");
+        listaUsuarios.add(usuario);
+    }
+
     /**
      * Carga los usuarios desde un archivo CSV y los almacena en la lista de usuarios.
      * El archivo debe tener el formato: id, nombre, nombreUsuario, contrasena, edad, sexo, tipoUsuario.
      */
-    private void cargarUsuariosDesdeCSV() {
+    public void cargarUsuariosDesdeCSV() {
         try (BufferedReader reader = new BufferedReader(new FileReader("Usuarios.csv"))) {
             String linea;
             while ((linea = reader.readLine()) != null) {
@@ -135,30 +141,29 @@ public class GuardarInformacion {
      * @param sexo El sexo del usuario.
      * @param tipoUsuario El tipo de usuario (doctor, administrador, etc.).
      */
-     public void registroUsuario(String id, String nombre, String nombreUsuario, String contraseña, int edad, String sexo, String tipoUsuario) {
+     public String registroUsuario(String id, String nombre, String nombreUsuario, String contraseña, int edad, String sexo, String tipoUsuario) {
         if (contraseña == null) {
-            System.out.println("Error: La contraseña no puede ser nula.");
-            return; // Salir del método si la contraseña es nula
+            return "Error: La contraseña no puede ser nula.";
         }
     
         try {
             contraseña = AESUtil.encrypt(contraseña); // Cifrar la contraseña
         } catch (Exception e) {
             e.printStackTrace(); // Manejo de excepciones
-            return; // Salir del método si hay un error
+            return "Ocurrió un error al guardar la información"; // Salir del método si hay un error
         }
 
         // Verificar si el usuario ya existe
         for (Usuario usuario : listaUsuarios) {
             if (usuario.getId().equals(id) || usuario.getNombreUsuario().equals(nombreUsuario)) {
-                System.out.println("El usuario ya existe. No se agregará nuevamente.");
-                return; // Salir si el usuario ya existe
+                return "El usuario ya existe. Ingrese nuevamente los datos"; // Salir si el usuario ya existe
             }
         }
         
         // Si no existe, agregarlo a la lista
         Usuario usuario = new Usuario(id, nombre, nombreUsuario, contraseña, edad, sexo, tipoUsuario);
         listaUsuarios.add(usuario);
+        return "Registro de usuario exitoso";
     }
     
     /**
@@ -328,6 +333,28 @@ public class GuardarInformacion {
             writer.flush();
         } catch (IOException e) {
             System.out.println(e);
+        }
+
     }
-}
+    
+    /**
+     * Verifica que el usuario y la contraseña existan para el inicio de sesión
+     * 
+     * @param nombreUsuario nombre de usuario del usuario que ingresa al programa
+     * @param contraseña la contraseña del usuario
+     * 
+     * @return tru si el usuario y la contraseña coniciden con un usuario existente
+     */
+    public boolean inicioSesion(String nombreUsuario, String contraseña){
+
+        for(Usuario usuario: listaUsuarios){
+            if(nombreUsuario.equals(usuario.getNombreUsuario()) && contraseña.equals(usuario.getContrasena())){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
 }

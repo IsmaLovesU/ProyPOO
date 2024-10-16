@@ -354,6 +354,39 @@ public class GuardarInformacion {
 
         return false;
     }
+    
+    /**
+     * Método que autentica a un usuario verificando su nombre de usuario y contraseña
+     * en la lista de usuarios cargados desde el archivo CSV.
+     *
+     * @param nombreUsuario El nombre de usuario que se desea autenticar.
+     * @param contrasena La contraseña correspondiente al usuario.
+     * @return true si las credenciales coinciden con las almacenadas en la lista de usuarios, 
+     *         false en caso contrario.
+     */
+    public boolean autenticar(String nombreUsuario, String contrasena) {
+        for (Usuario usuario : listaUsuarios) {
+            String contrasenaDescifrada;
+            
+            try {
+                contrasenaDescifrada = AESUtil.decrypt(usuario.getContrasena());
+            } catch (Exception e) {
+                System.out.println("Error al descifrar la contraseña.");
+                continue;
+            }
 
+            // Verificamos si el nombre de usuario y la contraseña coinciden
+            if (usuario.getNombreUsuario().equals(nombreUsuario) && contrasenaDescifrada.equals(contrasena)) {
+                System.out.println("Has iniciado sesión");
+                return true;
+            }
+        }
+
+        // Si no se encuentran coincidencias, se indica que las credenciales son incorrectas
+        System.out.println("Usuario o contraseña incorrectos.");
+        return false;
+    }
+
+    
 
 }

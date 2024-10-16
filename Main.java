@@ -4,38 +4,46 @@ public class Main {
     public static void main(String[] args) {
         boolean pregunta = false;
         String respuesta= "";
-        boolean inicio= false;
-        GuardarInformacion gestor = new GuardarInformacion();
+        boolean inicio = false;
+        GuardarInformacion gestor = new GuardarInformacion(); // Crear instancia del gestor de información
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("--Programa sin nombre( pi-las)--\n");
+        System.out.println("--Programa sin nombre(pi-las)--\n");
 
         while (!pregunta) {
             System.out.print("¿Posees una cuenta? (si/no): ");
-            respuesta= scanner.nextLine();
+            respuesta = scanner.nextLine();
 
-            if(respuesta.equals("si") || respuesta.equals("no")){
+            if (respuesta.equals("si") || respuesta.equals("no")) {
                 pregunta = true;
             } else {
                 System.out.println("Opción inválida.");
             }
-
         }
+
         // Proceso de inicio de sesión
-        if(respuesta.equals("si")){
+        if (respuesta.equals("si")) {
             System.out.println("----- Inicio de Sesión -----");
             boolean sesionIniciada = false;
+
             while (!sesionIniciada) {
                 System.out.print("Nombre de usuario: ");
                 String nombreUsuario = scanner.nextLine();
                 System.out.print("Contraseña: ");
                 String contrasena = scanner.nextLine();
                 
-                sesionIniciada = inicioSesion.autenticar(nombreUsuario, contrasena);
-
-                inicio= true;
+                // Llamar al método autenticar del gestor de información
+                sesionIniciada = gestor.autenticar(nombreUsuario, contrasena); // Cambiar 'inicioSesion' por 'gestor'
+                
+                if (sesionIniciada) {
+                    System.out.println("Sesión iniciada correctamente.");
+                    inicio = true;
+                } else {
+                    System.out.println("Credenciales incorrectas. Intenta de nuevo.");
+                }
             }
-        } 
+        }
+
         else if(respuesta.equals("no")){
             System.out.println("----- Registro de usuario-----");
             System.out.println("Registro de usuario:");

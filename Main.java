@@ -8,8 +8,8 @@ public class Main {
         GuardarInformacion gestor = new GuardarInformacion();
         Scanner scanner = new Scanner(System.in);
 
+        
         System.out.println("--Programa sin nombre(pi-las)--\n");
-
         while (!pregunta) {
             System.out.print("¿Posees una cuenta? (si/no): ");
             respuesta = scanner.nextLine();
@@ -61,6 +61,7 @@ public class Main {
             String sexo = scanner.nextLine();
             System.out.print("Tipo de usuario: ");
             String tipoUsuario = scanner.nextLine();
+            
 
             gestor.registroUsuario(id, nombre, nombreUsuario, contrasena, edad, sexo, tipoUsuario);
             System.out.println("Guardando usuarios en CSV...");

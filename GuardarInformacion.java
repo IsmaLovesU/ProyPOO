@@ -132,6 +132,7 @@ public class GuardarInformacion {
 
     /**
      * Registra un nuevo usuario en el sistema.
+     * Cambio de retorno de método a booleano. 
      * 
      * @param id El identificador del usuario.
      * @param nombre El nombre completo del usuario.
@@ -141,29 +142,29 @@ public class GuardarInformacion {
      * @param sexo El sexo del usuario.
      * @param tipoUsuario El tipo de usuario (doctor, administrador, etc.).
      */
-     public String registroUsuario(String id, String nombre, String nombreUsuario, String contraseña, int edad, String sexo, String tipoUsuario) {
+     public boolean registroUsuario(String id, String nombre, String nombreUsuario, String contraseña, int edad, String sexo, String tipoUsuario) {
         if (contraseña == null) {
-            return "Error: La contraseña no puede ser nula.";
+            return false;
         }
     
         try {
             contraseña = AESUtil.encrypt(contraseña); // Cifrar la contraseña
         } catch (Exception e) {
             e.printStackTrace(); // Manejo de excepciones
-            return "Ocurrió un error al guardar la información"; // Salir del método si hay un error
+            return false;
         }
 
         // Verificar si el usuario ya existe
         for (Usuario usuario : listaUsuarios) {
             if (usuario.getId().equals(id) || usuario.getNombreUsuario().equals(nombreUsuario)) {
-                return "El usuario ya existe. Ingrese nuevamente los datos"; // Salir si el usuario ya existe
+                return false; // Salir si el usuario ya existe
             }
         }
         
         // Si no existe, agregarlo a la lista
         Usuario usuario = new Usuario(id, nombre, nombreUsuario, contraseña, edad, sexo, tipoUsuario);
         listaUsuarios.add(usuario);
-        return "Registro de usuario exitoso";
+        return true;
     }
     
     /**

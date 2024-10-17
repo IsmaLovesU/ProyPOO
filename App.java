@@ -32,7 +32,6 @@ public class App {
 
     }
     public void mostrarLogIn(){
-        // Añadir la interfaz de Login al frame
         LoginGUI loginPanel = new LoginGUI(this, gestion);
         frame.setContentPane(loginPanel);
         frame.setVisible(true);

@@ -29,7 +29,7 @@ public class GuardarInformacion {
 
     // Este método de prueba solo es para crear un usuario y que lo pruebe en la GUI, luego lo borro
     public void prueba(){
-        Usuario usuario= new Usuario("123", "Diego", "Diego", "pussydestroyer", 17, "Siempre", "Puto");
+        Usuario usuario= new Usuario("123", "Diego", "Diego", "123", 17, "Siempre", "JJS");
         listaUsuarios.add(usuario);
     }
 

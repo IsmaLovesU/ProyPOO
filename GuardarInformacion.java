@@ -73,12 +73,19 @@ public class GuardarInformacion {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                String idPaciente = datos[1]; 
-                String nombre = datos[0];
-                int edad = Integer.parseInt(datos[2]);
-                String informacionAdicional = datos[3];
-
+                String idPaciente = datos[0];
+                String idUsuario = datos[1];
+                String nombre = datos[2];
+                int edad = Integer.parseInt(datos[3]);
+                String informacionAdicional = datos[4];
+    
                 Paciente paciente = new Paciente(idPaciente, nombre, edad, informacionAdicional);
+    
+                for (Usuario usuario : listaUsuarios){
+                    if (usuario.getId().equals(idUsuario)){
+                        usuario.agregarPaciente(paciente);
+                    }
+                }
                 listaPacientes.add(paciente);
             }
         } catch (IOException e) {
@@ -292,6 +299,37 @@ public class GuardarInformacion {
         }
     }
 
+    /**
+     * Método para eliminar un paciente de un usuario especifico
+     * @param idUsuario
+     * @param nombrePacienteAEliminar
+     */
+    public void eliminarPaciente(String idUsuario, String nombrePacienteAEliminar) {
+        for (Usuario usuario : listaUsuarios) {
+            if (usuario.getId().equals(idUsuario)) {
+                // Busca el paciente a eliminar
+                Paciente pacienteAEliminar = null;
+                for (Paciente paciente : usuario.getPacientes()) {
+                    if (paciente.getNombre().equals(nombrePacienteAEliminar)) {
+                        pacienteAEliminar = paciente;
+                        break;
+                    }
+                }
+    
+                // Si se encontró el paciente, lo elimina
+                if (pacienteAEliminar != null) {
+                    usuario.getPacientes().remove(pacienteAEliminar);
+                } else {
+    
+                }
+    
+                // Guarda la lista actualizada en el archivo CSV
+                guardarPacientesCSV();
+                break; // Salimos del bucle una vez que hemos procesado el paciente
+            }
+        }
+    }
+
 
     /**
      * Guarda los usuarios en un archivo CSV. Los datos se guardan en el formato:
@@ -336,8 +374,11 @@ public class GuardarInformacion {
      */
     public void guardarPacientesCSV() {
         try (FileWriter writer = new FileWriter("Pacientes.csv", false)) {
-                for (Paciente paciente : listaPacientes) {
-                    writer.append(paciente.getId())
+            for (Usuario usuario : listaUsuarios)
+                for (Paciente paciente : usuario.getPacientes()) {
+                    writer.append(usuario.getId())
+                          .append(",")
+                          .append(paciente.getId())
                           .append(",")
                           .append(paciente.getNombre())
                           .append(",")

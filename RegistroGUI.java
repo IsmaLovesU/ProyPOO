@@ -9,12 +9,14 @@ public class RegistroGUI extends JPanel {
     private JButton btnRegister, btnRegreso;
     private GuardarInformacion gestion;
     private App app;
+    private GeneradorId generadorId;
 
 
     public RegistroGUI(App app, GuardarInformacion gestion) {
         this.app= app;
         this.gestion= gestion;
         initComponents();
+        generadorId = new GeneradorId();
     }
 
     private void initComponents() {
@@ -121,10 +123,12 @@ public class RegistroGUI extends JPanel {
         String nombre = txtName.getText();
         String nombreUsuario= txtUsername.getText();
         String contraseña= new String(txtPassword.getPassword());
-
-        String id = "fav";
-        String genero= "M";
-        String tipo = "Doc";
+        String genero = txtGenero.getText();
+        String tipo = txtTipoUsuario.getText();
+        
+        
+        String id = generadorId.generarId();
+        System.out.println(id);
 
         if(!gestion.verificarContraseña(contraseña)){
             JOptionPane.showMessageDialog(this, "La contraseña no cumple con los requisitos necesarios. Debe tenrer minúsculas, mayúsculas, números, mínimo 10 caracteres, sin símbolos", "Alerta", JOptionPane.ERROR_MESSAGE);

@@ -8,7 +8,6 @@ import java.util.ArrayList;
  * Proyecto - Pillas
 */
 
-import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -23,7 +22,7 @@ class GeneradorId {
      * Genera un ID único y se que no se repita.
      * @return El ID generado.
      */
-    public static String generarId(){
+    public String generarId(){
         Random random = new Random();
         String idGenerado;
         boolean idUnico;

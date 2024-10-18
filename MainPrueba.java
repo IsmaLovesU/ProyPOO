@@ -12,6 +12,7 @@ public class MainPrueba {
             System.out.println("2. Crear Paciente");
             System.out.println("3. Agregar Medicamento");
             System.out.println("4. Eliminar medicamento");
+            System.out.println("5. Eliminar paciente");
             System.out.println("0. Salir");
             System.out.print("Seleccione una opción: ");
             opcion = scanner.nextInt();
@@ -79,6 +80,15 @@ public class MainPrueba {
                     System.out.print("Ingrese el nombre del medicamento a eliminar: ");
                     String nombreMedicamentoEliminar = scanner.nextLine();
                     sistema.eliminarMedicamento(idMedicamentoPacienteEliminar, nombreMedicamentoEliminar);
+                    System.out.println("Medicamento eliminado del CSV.");
+                    break;
+
+                case 5:
+                    System.out.print("Ingrese ID del paciente: ");
+                    String idPacienteEliminar = scanner.nextLine();
+                    System.out.print("Ingrese el nombre del paciente a eliminar: ");
+                    String nombrePacienteEliminar = scanner.nextLine();
+                    sistema.eliminarPaciente(idPacienteEliminar, nombrePacienteEliminar);;
                     System.out.println("Medicamento eliminado del CSV.");
                     break;
 

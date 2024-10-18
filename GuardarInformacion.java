@@ -170,16 +170,16 @@ public class GuardarInformacion {
      * @param informacionAdicional Información adicional sobre el paciente.
      */
     public void crearPaciente(String idUsuario, String nombre, int edad, String informacionAdicional) {
-        Paciente nuevoPaciente = new Paciente(idUsuario, nombre, edad, informacionAdicional);
+        Paciente paciente = new Paciente(idUsuario, nombre, edad, informacionAdicional);
     
         for (Usuario usuario : listaUsuarios) {
             if (usuario.getId().equals(idUsuario)) {
-                usuario.agregarPaciente(nuevoPaciente); // Agregar paciente al usuario
+                usuario.agregarPaciente(paciente); // Agregar paciente al usuario
                 break;
             }
         }
     
-        listaPacientes.add(nuevoPaciente); // Agregar paciente a la lista general
+        guardarPacientesCSV(); // Agregar paciente a la lista general
         //guardarPacientesCSV(); // Guardar el paciente en el archivo CSV
     }
 
@@ -241,6 +241,34 @@ public class GuardarInformacion {
             }
         }
     }
+
+    public void eliminarPaciente(String idUsuario, String nombrePacienteAEliminar) {
+        for (Usuario usuario : listaUsuarios) {
+            if (usuario.getId().equals(idUsuario)) {
+                // Busca el medicamento a eliminar
+                Paciente pacienteAEliminar = null;
+                for (Paciente paciente : usuario.getPacientes()) {
+                    if (paciente.getNombre().equals(nombrePacienteAEliminar)) {
+                        pacienteAEliminar = paciente;
+                        break;
+                    }
+                }
+    
+                // Si se encontró el medicamento, lo elimina
+                if (pacienteAEliminar != null) {
+                    usuario.getPacientes().remove(pacienteAEliminar);
+                } else {
+
+                }
+    
+                // Guarda la lista actualizada en el archivo CSV
+                guardarPacientesCSV();
+                break; // Salimos del bucle una vez que hemos procesado el paciente
+            }
+        }
+    }
+
+    
 
 
     /**
@@ -328,6 +356,6 @@ public class GuardarInformacion {
             writer.flush();
         } catch (IOException e) {
             System.out.println(e);
+        }
     }
-}
 }

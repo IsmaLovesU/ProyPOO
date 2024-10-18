@@ -131,6 +131,51 @@ public class GuardarInformacion {
     }
 
     /**
+     * Verificar que la contraseña cumpla con los requisitos para que sea aeptada
+     * 
+     * @param contraseña la contraseña que se créa
+     * @return true si cumple con todas las condicoines para crear la contraseña
+     */
+    public boolean verificarContraseña(String contraseña){
+        
+        if(contraseña.length() < 10){
+            System.out.println("Error de tamaño" + contraseña.length());
+
+            return false;
+        }
+
+        boolean minuscula= false;
+        boolean mayuscula = false;
+        boolean numero = false;
+
+        for(char c: contraseña.toCharArray()){
+
+            if (Character.isUpperCase(c)){
+                mayuscula = true;
+            }
+
+            if (Character.isLowerCase(c)){
+                minuscula = true;
+            }
+            
+            if (Character.isDigit(c)){
+                numero = true;
+            }
+
+            if (!Character.isLetterOrDigit(c)){
+                return false;
+            }
+        }
+
+        if (!mayuscula || !minuscula || !numero){
+            return false;
+        }
+
+        return true;
+    }
+
+
+    /**
      * Registra un nuevo usuario en el sistema.
      * Cambio de retorno de método a booleano. 
      * 

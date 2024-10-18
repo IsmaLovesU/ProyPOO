@@ -64,7 +64,7 @@ public class PacientesPanel extends JPanel {
     }
 
     private void estilizarBoton(JButton boton) {
-        boton.setBackground(new Color(72, 209, 204));
+        boton.setBackground(Color.BLUE);
         boton.setForeground(Color.WHITE);
         boton.setFocusPainted(false);
         boton.setFont(new Font("Arial", Font.BOLD, 14));

@@ -132,10 +132,12 @@ public class RegistroGUI extends JPanel {
 
         if(!gestion.verificarContraseña(contraseña)){
             JOptionPane.showMessageDialog(this, "La contraseña no cumple con los requisitos necesarios. Debe tenrer minúsculas, mayúsculas, números, mínimo 10 caracteres, sin símbolos", "Alerta", JOptionPane.ERROR_MESSAGE);
+        } else{
+            gestion.registroUsuario(id, nombre, nombreUsuario, contraseña, 18,genero, tipo);
+            app.mostrarPacientesPanel();
+    
         }
 
-        gestion.registroUsuario(id, nombre, nombreUsuario, contraseña, 18,genero, tipo);
-        app.mostrarMenu();
 
     }
 

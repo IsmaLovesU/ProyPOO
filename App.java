@@ -1,11 +1,13 @@
+import java.util.ArrayList;
+
 import javax.swing.*;
 public class App {
 
     private JFrame frame;
     private JFrame programaFrame;
-    private JTabbedPane tabbedPane;
-    private PacientesPanel pacientesPanel;
     private GuardarInformacion gestion;
+    private ArrayList<Paciente> listaPacientes;
+
     
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -16,6 +18,14 @@ public class App {
 
     public App() {
         gestion = new GuardarInformacion();
+        listaPacientes = new ArrayList<>();
+        Paciente paciente = new Paciente("FNEON221", "Jesus", 10, "Es asmatico");
+        listaPacientes.add(paciente);
+        Paciente paciente2 = new Paciente("fadf3", "María", 12, "Nada");
+        listaPacientes.add(paciente2);
+        Paciente paciente3 = new Paciente("adfa23", "Pedro", 23, "Algo más");
+        listaPacientes.add(paciente3);
+    
 
         gestion.prueba();
         
@@ -23,10 +33,6 @@ public class App {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 500);
         frame.setLocationRelativeTo(null);
-
-        pacientesPanel = new PacientesPanel();
-        tabbedPane = new JTabbedPane();
-        tabbedPane.addTab("Pacientes", pacientesPanel);
 
         inicializarProgramaframe();
 
@@ -38,10 +44,6 @@ public class App {
 
     }
 
-    public void mostrarMenu(){
-        frame.dispose();
-        programaFrame.setVisible(true);
-    }
 
     public void mostrarRegistro(){
         RegistroGUI registroPanel= new RegistroGUI(this, gestion);
@@ -54,7 +56,20 @@ public class App {
         programaFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         programaFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         programaFrame.setLocationRelativeTo(null);
-        programaFrame.setContentPane(tabbedPane);
     }
+    public void mostrarPacientesPanel() {
+        frame.setContentPane(new PacientesPanel(this, listaPacientes));
+        frame.revalidate();
+        frame.repaint();
+        frame.setVisible(true);
+    }
+
+    public void mostrarMedicamentosPanel(Paciente paciente) {
+        frame.setContentPane(new MedicamentosPanel(this, paciente));
+        frame.revalidate();
+        frame.repaint();
+    }
+
+
 }
 

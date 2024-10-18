@@ -80,7 +80,7 @@ public class LoginGUI extends JPanel {
 
         if (gestion.autenticar(nombreUsuario, contraseña)) {
             JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso.");
-            app.mostrarMenu();
+            app.mostrarPacientesPanel();
             // Aquí podrías abrir el menú principal o la siguiente pantalla
         } else {
             JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.", "Error", JOptionPane.ERROR_MESSAGE);

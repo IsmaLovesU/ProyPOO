@@ -10,7 +10,7 @@ public class App {
 
     private JFrame frame; // Ventana principal para el login y registro
     private JFrame programaFrame; // Ventana secundaria para el panel de gestión de medicamentos
-    private GuardarInformacion gestion; // Objeto encargado de guardar la información
+    private GuardarUsuario guardarUsuario;
     private ArrayList<Paciente> listaPacientes; // Lista de pacientes de la aplicación
 
     /**
@@ -30,7 +30,7 @@ public class App {
      * Inicializa la lista de pacientes, el objeto de gestión de información y la ventana principal.
      */
     public App() {
-        gestion = new GuardarInformacion(); // Inicializa el gestor de información
+        guardarUsuario = new GuardarUsuario();
         listaPacientes = new ArrayList<>(); // Inicializa la lista de pacientes
         
         // Creación de pacientes de prueba
@@ -41,8 +41,6 @@ public class App {
         Paciente paciente3 = new Paciente("adfa23", "Pedro", 23, "Algo más");
         listaPacientes.add(paciente3);
 
-        gestion.prueba(); // Llamada a un método de prueba en el gestor de información
-        
         frame = new JFrame("LOG In"); // Configura la ventana del login
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la aplicación al cerrar la ventana
         frame.setSize(600, 500); // Establece el tamaño de la ventana
@@ -55,7 +53,7 @@ public class App {
      * Muestra el panel de inicio de sesión en la ventana principal.
      */
     public void mostrarLogIn() {
-        LoginGUI loginPanel = new LoginGUI(this, gestion); // Crea el panel de login
+        LoginGUI loginPanel = new LoginGUI(this, guardarUsuario); // Crea el panel de login
         frame.setContentPane(loginPanel); // Establece el contenido del frame
         frame.setVisible(true); // Muestra la ventana
     }
@@ -64,7 +62,7 @@ public class App {
      * Muestra el panel de registro en la ventana principal.
      */
     public void mostrarRegistro() {
-        RegistroGUI registroPanel = new RegistroGUI(this, gestion); // Crea el panel de registro
+        RegistroGUI registroPanel = new RegistroGUI(this, guardarUsuario); // Crea el panel de registro
         frame.setContentPane(registroPanel); // Establece el contenido del frame
         frame.setVisible(true); // Muestra la ventana
     }

@@ -1,11 +1,14 @@
 import java.util.Scanner;
 
 public class Main {
+    public static GuardarUsuario guardarUsuario;
+    public static GuardarPaciente guardarPaciente;
+    public static GuardarMedicamento guardarMedicamento;
     public static void main(String[] args) {
         boolean pregunta = false;
         String respuesta= "";
         boolean inicio = false;
-        GuardarInformacion gestor = new GuardarInformacion();
+
         Scanner scanner = new Scanner(System.in);
 
         
@@ -33,7 +36,7 @@ public class Main {
                 String contrasena = scanner.next();
                 
                 // Llamar al método autenticar del gestor de información
-                sesionIniciada = gestor.autenticar(nombreUsuario, contrasena); // Cambiar 'inicioSesion' por 'gestor'
+                sesionIniciada = guardarUsuario.autenticar(nombreUsuario, contrasena); // Cambiar 'inicioSesion' por 'gestor'
                 
                 if (sesionIniciada) {
                     System.out.println("Sesión iniciada correctamente.");
@@ -63,9 +66,9 @@ public class Main {
             String tipoUsuario = scanner.nextLine();
             
 
-            gestor.registroUsuario(id, nombre, nombreUsuario, contrasena, edad, sexo, tipoUsuario);
+            guardarUsuario.registroUsuario(id, nombre, nombreUsuario, contrasena, edad, sexo, tipoUsuario);
             System.out.println("Guardando usuarios en CSV...");
-            gestor.guardarUsuariosCSV();
+            guardarUsuario.guardarUsuariosCSV();
 
 
             inicio= true;
@@ -100,9 +103,9 @@ public class Main {
                     System.out.print("Información adicional: ");
                     String infoAdicional = scanner.nextLine();
 
-                    gestor.crearPaciente(idUsuario, nombrePaciente, edadPaciente, infoAdicional);
+                    guardarPaciente.crearPaciente(idUsuario, nombrePaciente, edadPaciente, infoAdicional);
                     System.out.println("Guardando usuarios en CSV...");
-                    gestor.guardarUsuariosCSV();
+                    guardarUsuario.guardarUsuariosCSV();
 
 
                 } else if (opcion == 2) {
@@ -118,15 +121,15 @@ public class Main {
                     System.out.print("Inventario: ");
                     float inventario = scanner.nextFloat();
 
-                    gestor.crearMedicamento(idPaciente, nombreMedicamento, descripcion, dosis, inventario);
+                    guardarMedicamento.crearMedicamento(idPaciente, nombreMedicamento, descripcion, dosis, inventario);
 
                 } else if (opcion == 3) {
                     System.out.println("Guardando pacientes en CSV...");
-                    gestor.guardarPacientesCSV();
+                    guardarPaciente.guardarPacientesCSV();
 
                 } else if (opcion == 4) {
                     System.out.println("Guardando medicamentos en CSV...");
-                    gestor.guardarMedicamentosCSV();
+                    guardarMedicamento.guardarMedicamentosCSV();
 
                 } else if (opcion == 5) {
                     System.out.println("Mostrando información...");

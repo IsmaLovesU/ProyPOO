@@ -2,7 +2,10 @@ import java.util.Scanner;
 
 public class MainPrueba {
     public static void main(String[] args) {
-        GuardarInformacion sistema = new GuardarInformacion();
+        GuardarMedicamento guardarMedicamento = new GuardarMedicamento();
+        GuardarUsuario guardarUsuario = new GuardarUsuario();
+        GuardarPaciente guardarPaciente = new GuardarPaciente();
+
         Scanner scanner = new Scanner(System.in);
         int opcion;
 
@@ -35,9 +38,9 @@ public class MainPrueba {
                     String sexo = scanner.nextLine();
                     System.out.print("Ingrese Tipo de Usuario: ");
                     String tipoUsuario = scanner.nextLine();
-                    sistema.registroUsuario(id, nombre, nombreUsuario, contrasena, edad, sexo, tipoUsuario);
+                    guardarUsuario.registroUsuario(id, nombre, nombreUsuario, contrasena, edad, sexo, tipoUsuario);
                     System.out.println("Usuario registrado exitosamente.");
-                    sistema.guardarUsuariosCSV();
+                    guardarUsuario.guardarUsuariosCSV();
                     System.out.println("Usuarios guardados en CSV.");
                     break;
 
@@ -51,9 +54,9 @@ public class MainPrueba {
                     scanner.nextLine();  
                     System.out.print("Ingrese Información Adicional: ");
                     String infoAdicional = scanner.nextLine();
-                    sistema.crearPaciente(idUsuario, nombrePaciente, edadPaciente, infoAdicional);
+                    guardarPaciente.crearPaciente(idUsuario, nombrePaciente, edadPaciente, infoAdicional);
                     System.out.println("Paciente creado exitosamente.");
-                    sistema.guardarPacientesCSV();
+                    guardarPaciente.guardarPacientesCSV();
                     System.out.println("Pacientes guardados en CSV.");
                     break;
 
@@ -68,9 +71,9 @@ public class MainPrueba {
                     int dosis = scanner.nextInt();
                     System.out.print("Ingrese Inventario: ");
                     float inventario = scanner.nextFloat();
-                    sistema.crearMedicamento(idPaciente, nombreMedicamento, descripcion, dosis, inventario);
+                    guardarMedicamento.crearMedicamento(idPaciente, nombreMedicamento, descripcion, dosis, inventario);
                     System.out.println("Medicamento agregado exitosamente.");
-                    sistema.guardarMedicamentosCSV();
+                    guardarMedicamento.guardarMedicamentosCSV();
                     System.out.println("Medicamentos guardados en CSV.");
                     break;
 
@@ -79,7 +82,7 @@ public class MainPrueba {
                     String idMedicamentoPacienteEliminar = scanner.nextLine();
                     System.out.print("Ingrese el nombre del medicamento a eliminar: ");
                     String nombreMedicamentoEliminar = scanner.nextLine();
-                    sistema.eliminarMedicamento(idMedicamentoPacienteEliminar, nombreMedicamentoEliminar);
+                    guardarMedicamento.eliminarMedicamento(idMedicamentoPacienteEliminar, nombreMedicamentoEliminar);
                     System.out.println("Medicamento eliminado del CSV.");
                     break;
 
@@ -88,7 +91,7 @@ public class MainPrueba {
                     String idPacienteEliminar = scanner.nextLine();
                     System.out.print("Ingrese el nombre del paciente a eliminar: ");
                     String nombrePacienteEliminar = scanner.nextLine();
-                    sistema.eliminarPaciente(idPacienteEliminar, nombrePacienteEliminar);;
+                    guardarPaciente.eliminarPaciente(idPacienteEliminar, nombrePacienteEliminar);;
                     System.out.println("Medicamento eliminado del CSV.");
                     break;
 

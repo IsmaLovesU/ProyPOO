@@ -12,7 +12,7 @@ public class RegistroGUI extends JPanel {
     private JTextField txtName, txtUsername, txtedad, txtGenero, txtTipoUsuario; // Campos de texto para datos de usuario
     private JPasswordField txtPassword; // Campo de texto para la contraseña
     private JButton btnRegister, btnRegreso; // Botones para registrar y regresar al login
-    private GuardarInformacion gestion; // Objeto para manejar la gestión de la información
+    private GuardarUsuario guardarUsuario;
     private App app; // Referencia a la instancia principal de la aplicación
     private GeneradorId generadorId; // Objeto para generar identificadores únicos
 
@@ -22,9 +22,9 @@ public class RegistroGUI extends JPanel {
      * @param app     La instancia principal de la aplicación.
      * @param gestion Objeto para gestionar la información de usuarios.
      */
-    public RegistroGUI(App app, GuardarInformacion gestion) {
+    public RegistroGUI(App app, GuardarUsuario guardarUsuario) {
         this.app = app;
-        this.gestion = gestion;
+        this.guardarUsuario = guardarUsuario;
         initComponents(); // Inicializa los componentes de la interfaz
         generadorId = new GeneradorId(); // Crea una instancia del generador de IDs
     }
@@ -143,13 +143,13 @@ public class RegistroGUI extends JPanel {
         System.out.println(id); // Imprime el ID generado (solo para pruebas)
 
         // Verifica si la contraseña cumple con los requisitos
-        if (!gestion.verificarContraseña(contraseña)) {
+        if (!guardarUsuario.verificarContraseña(contraseña)) {
             JOptionPane.showMessageDialog(this, 
                 "La contraseña no cumple con los requisitos necesarios. Debe tener minúsculas, mayúsculas, números, mínimo 10 caracteres, sin símbolos", 
                 "Alerta", JOptionPane.ERROR_MESSAGE);
         } else {
             // Registra al usuario si la contraseña es válida
-            gestion.registroUsuario(id, nombre, nombreUsuario, contraseña, 18, genero, tipo);
+            guardarUsuario.registroUsuario(id, nombre, nombreUsuario, contraseña, 18, genero, tipo);
             app.mostrarPacientesPanel(); // Muestra el panel de pacientes
         }
     }

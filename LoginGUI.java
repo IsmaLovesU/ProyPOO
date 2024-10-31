@@ -1,3 +1,11 @@
+/**
+ * Universidad del Valle de Gutemala
+ * Programación Orinetada a Objetos 
+ * Sección: 10
+ * Ing. Kimberly Barrera
+ * Proyecto - Pillas
+*/
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -21,6 +29,19 @@ public class LoginGUI extends JPanel {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
+
+        //Imagen de logo FALTA CENTRAR LA IMAGEN!
+        ImageIcon icon = new ImageIcon("resources/logo.png");
+
+        Image image = icon.getImage().getScaledInstance(131, 153, Image.SCALE_SMOOTH);
+        icon = new ImageIcon(image);
+
+        //Se agrega al Label
+        JLabel lblImagen = new JLabel(icon);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        add(lblImagen, gbc);
 
         JLabel lblTitulo = new JLabel("Inicio de sesión");
         lblTitulo.setFont(new Font("Impact", Font.BOLD, 24));
@@ -49,7 +70,7 @@ public class LoginGUI extends JPanel {
         add(txtPassword, gbc);
 
         btnLogin = new JButton("Iniciar sesión");
-        btnLogin.setBackground(Color.BLUE);
+        btnLogin.setBackground(new Color (0,41, 95, 255));
         btnLogin.setForeground(Color.WHITE);
         btnLogin.addActionListener(new ActionListener() {
             @Override
@@ -62,8 +83,8 @@ public class LoginGUI extends JPanel {
         add(btnLogin, gbc);
 
         btnRegister = new JButton("Registrate");
-        btnRegister.setBackground(Color.ORANGE);
-        btnRegister.setForeground(Color.BLACK);
+        btnRegister.setBackground(new Color (228, 147, 19));
+        btnRegister.setForeground(Color.WHITE);
         btnRegister.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

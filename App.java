@@ -1,3 +1,11 @@
+/**
+ * Universidad del Valle de Gutemala
+ * Programación Orinetada a Objetos 
+ * Sección: 10
+ * Ing. Kimberly Barrera
+ * Proyecto - Pillas
+*/
+
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -43,7 +51,7 @@ public class App {
 
         gestion.prueba(); // Llamada a un método de prueba en el gestor de información
         
-        frame = new JFrame("LOG In"); // Configura la ventana del login
+        frame = new JFrame("Log In"); // Configura la ventana del login
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la aplicación al cerrar la ventana
         frame.setSize(600, 500); // Establece el tamaño de la ventana
         frame.setLocationRelativeTo(null); // Centra la ventana en la pantalla

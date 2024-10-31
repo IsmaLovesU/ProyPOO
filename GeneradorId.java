@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 /**
  * Universidad del Valle de Gutemala
  * Programación Orinetada a Objetos 
@@ -8,6 +6,7 @@ import java.util.ArrayList;
  * Proyecto - Pillas
 */
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**

@@ -276,6 +276,14 @@ public class GuardarInformacion {
         }
     }
 
+    /**
+     * Muestra la lista de medicamentos asociados a un paciente especificado por su ID y nombre.
+     * Si el paciente es encontrado, se muestra el nombre del paciente seguido de los medicamentos registrados para él.
+     * Si no se encuentra el paciente, se muestra un mensaje de error.
+     *
+     * @param idPaciente el ID del paciente cuyo historial de medicamentos se desea visualizar.
+     * @param nombrePaciente el nombre del paciente cuyo historial de medicamentos se desea visualizar.
+     */
     public void mostrarMedicamentosPaciente(String idPaciente, String nombrePaciente) {
         boolean encontrado = false;
         for (Paciente paciente : listaPacientes) {

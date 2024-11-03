@@ -120,4 +120,12 @@ public class GuardarPaciente {
             System.out.println(e);
         }
     }
+
+    public void mostrarPacientesPorId(String idPaciente) {
+        for (Paciente paciente : listaPacientes) {
+            if (paciente.getId().equals(idPaciente)) {
+                System.out.println("ID: " + paciente.getId() + ", Nombre: " + paciente.getNombre());
+            }
+        }
+    }
 }

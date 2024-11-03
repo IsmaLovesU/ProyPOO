@@ -251,6 +251,24 @@ public class GuardarInformacion {
         }
     }
 
+    public void mostrarMedicamentosPaciente(String idPaciente, String nombrePaciente) {
+        boolean encontrado = false;
+        for (Paciente paciente : listaPacientes) {
+            if (paciente.getId().equals(idPaciente) && paciente.getNombre().equalsIgnoreCase(nombrePaciente)) {
+                System.out.println("Medicamentos de " + nombrePaciente + ":");
+                for (Medicamento medicamento : paciente.getMedicamentos()) {
+                    System.out.println("- " + medicamento);
+                }
+                encontrado = true;
+                break; // Rompemos el bucle una vez encontrado el paciente
+            }
+        }
+        
+        if (!encontrado) {
+            System.out.println("Paciente no encontrado. Verifique el ID y nombre.");
+        }
+    }
+
     public boolean iniciarSesion(String nombreUsuario, String contrasenaIngresada) {
         for (Usuario usuario : listaUsuarios) {
             if (usuario.getNombreUsuario().equals(nombreUsuario)) {

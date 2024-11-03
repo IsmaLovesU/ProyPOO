@@ -192,6 +192,21 @@ public class GuardarInformacion {
         }
     }
 
+    public void buscarPacientePorIDyNombre(String idPaciente, String nombrePaciente) { 
+        for (Paciente paciente : listaPacientes) {
+            if (paciente.getId().equals(idPaciente) && paciente.getNombre().equalsIgnoreCase(nombrePaciente)) {
+                System.out.println("Datos del Paciente:");
+                System.out.println("ID: " + paciente.getId());
+                System.out.println("Nombre: " + paciente.getNombre());
+                System.out.println("Edad: " + paciente.getEdad());
+                System.out.println("Información Adicional: " + paciente.getInformacionAdicional());
+                // Si el objeto Paciente tiene más atributos, se pueden agregar aquí.
+                return;
+            }
+        }
+        System.out.println("Paciente no encontrado. Verifique que el ID y el nombre sean correctos.");
+    }
+
     /**
      * Crea un nuevo medicamento asociado a un paciente y lo agrega a la lista de medicamentos del paciente.
      * 

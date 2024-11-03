@@ -144,6 +144,13 @@ public class RegistroGUI extends JPanel {
         String nombre = txtName.getText(); // Obtiene el nombre ingresado
         String nombreUsuario = txtUsername.getText(); // Obtiene el nombre de usuario
         String contraseña = new String(txtPassword.getPassword()); // Obtiene la contraseña ingresada
+        int edad = 0;
+        try {
+            edad = Integer.parseInt(txtedad.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido para la edad.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String genero = txtGenero.getText(); // Obtiene el género
         String tipo = txtTipoUsuario.getText(); // Obtiene el tipo de usuario
 
@@ -157,7 +164,7 @@ public class RegistroGUI extends JPanel {
                 "Alerta", JOptionPane.ERROR_MESSAGE);
         } else {
             // Registra al usuario si la contraseña es válida
-            gestion.registroUsuario(id, nombre, nombreUsuario, contraseña, 18, genero, tipo);
+            gestion.registroUsuario(id, nombre, nombreUsuario, contraseña,edad, genero, tipo);
             app.mostrarPacientesPanel(); // Muestra el panel de pacientes
         }
     }

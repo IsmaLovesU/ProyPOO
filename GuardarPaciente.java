@@ -121,11 +121,41 @@ public class GuardarPaciente {
         }
     }
 
-    public void mostrarPacientesPorId(String idPaciente) {
+    /**
+     * Método para mostar los pacientes
+     * @param idPaciente
+     * @return
+     */
+    public String mostrarPacientesPorId(String idPaciente) {
         for (Paciente paciente : listaPacientes) {
             if (paciente.getId().equals(idPaciente)) {
-                System.out.println("ID: " + paciente.getId() + ", Nombre: " + paciente.getNombre());
+                return "ID: " + paciente.getId() + ", Nombre: " + paciente.getNombre();
             }
         }
+        return "Paciente no encontrado";
     }
+
+    /**
+     * Método para mostrar los médicamentos dependiendo del nombre y id del paciente
+     * @param idPaciente
+     * @param nombrePaciente
+     * @return
+     */
+    public String obtenerMedicamentosPaciente(String idPaciente, String nombrePaciente) {
+        StringBuilder resultado = new StringBuilder();
+        
+        for (Paciente paciente : listaPacientes) {
+            if (paciente.getId().equals(idPaciente) && paciente.getNombre().equalsIgnoreCase(nombrePaciente)) {
+                resultado.append("Medicamentos de ").append(nombrePaciente).append(":\n");
+                for (Medicamento medicamento : paciente.getMedicamentos()) {
+                    resultado.append("- ").append(medicamento).append("\n");
+                }
+                return resultado.toString(); // Retornamos la cadena cuando encontramos al paciente
+            }
+        }
+    
+        // Si no se encontró el paciente
+        return "Paciente no encontrado. Verifique el ID y nombre.";
+    }
+    
 }

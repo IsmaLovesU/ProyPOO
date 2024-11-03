@@ -184,6 +184,11 @@ public class GuardarInformacion {
         //guardarPacientesCSV(); // Guardar el paciente en el archivo CSV
     }
 
+    /**
+     * Muestra los pacientes cuyo ID coincide con el ID proporcionado.
+     *
+     * @param idPaciente el ID del paciente que se desea buscar.
+     */
     public void mostrarPacientesPorId(String idPaciente) {
         for (Paciente paciente : listaPacientes) {
             if (paciente.getId().equals(idPaciente)) {
@@ -192,6 +197,11 @@ public class GuardarInformacion {
         }
     }
 
+    /**
+     * Muestra los pacientes cuyo ID coincide con el ID proporcionado.
+     *
+     * @param idPaciente el ID del paciente que se desea buscar.
+     */
     public void buscarPacientePorIDyNombre(String idPaciente, String nombrePaciente) { 
         for (Paciente paciente : listaPacientes) {
             if (paciente.getId().equals(idPaciente) && paciente.getNombre().equalsIgnoreCase(nombrePaciente)) {

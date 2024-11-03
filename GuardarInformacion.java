@@ -184,6 +184,14 @@ public class GuardarInformacion {
         //guardarPacientesCSV(); // Guardar el paciente en el archivo CSV
     }
 
+    public void mostrarPacientesPorId(String idPaciente) {
+        for (Paciente paciente : listaPacientes) {
+            if (paciente.getId().equals(idPaciente)) {
+                System.out.println("ID: " + paciente.getId() + ", Nombre: " + paciente.getNombre());
+            }
+        }
+    }
+
     /**
      * Crea un nuevo medicamento asociado a un paciente y lo agrega a la lista de medicamentos del paciente.
      * 

@@ -11,12 +11,12 @@ public class MainPrueba {
             System.out.println("1. Registrar Usuario");
             System.out.println("2. Crear Paciente");
             System.out.println("3. Agregar Medicamento");
-            System.out.println("4. Eliminar medicamento");
-            System.err.println("5. Inicio de sesion: ");
+            System.out.println("4. Eliminar Medicamento");
+            System.out.println("5. Inicio de Sesión");
             System.out.println("0. Salir");
             System.out.print("Seleccione una opción: ");
             opcion = scanner.nextInt();
-            scanner.nextLine();  // Limpiar el buffer
+            scanner.nextLine();  
 
             switch (opcion) {
                 case 1:
@@ -30,7 +30,7 @@ public class MainPrueba {
                     String contrasena = scanner.nextLine();
                     System.out.print("Ingrese Edad: ");
                     int edad = scanner.nextInt();
-                    scanner.nextLine();  // Limpiar el buffer
+                    scanner.nextLine();  
                     System.out.print("Ingrese Sexo: ");
                     String sexo = scanner.nextLine();
                     System.out.print("Ingrese Tipo de Usuario: ");
@@ -48,7 +48,7 @@ public class MainPrueba {
                     String nombrePaciente = scanner.nextLine();
                     System.out.print("Ingrese Edad del Paciente: ");
                     int edadPaciente = scanner.nextInt();
-                    scanner.nextLine();  // Limpiar el buffer
+                    scanner.nextLine();  
                     System.out.print("Ingrese Información Adicional: ");
                     String infoAdicional = scanner.nextLine();
                     sistema.crearPaciente(idUsuario, nombrePaciente, edadPaciente, infoAdicional);

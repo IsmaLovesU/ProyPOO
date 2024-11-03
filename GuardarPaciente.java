@@ -122,7 +122,7 @@ public class GuardarPaciente {
     }
 
     /**
-     * Método para mostar los pacientes
+     * Muestra los pacientes cuyo ID coincide con el ID proporcionado.
      * @param idPaciente
      * @return
      */
@@ -136,7 +136,7 @@ public class GuardarPaciente {
     }
 
     /**
-     * Método para mostrar los médicamentos dependiendo del nombre y id del paciente
+     * Muestra la lista de medicamentos asociados a un paciente especificado por su ID y nombre.
      * @param idPaciente
      * @param nombrePaciente
      * @return
@@ -156,6 +156,28 @@ public class GuardarPaciente {
     
         // Si no se encontró el paciente
         return "Paciente no encontrado. Verifique el ID y nombre.";
+    }
+
+    /**
+     * Muestra los pacientes cuyo ID coincide con el ID proporcionado y muestra información más especifica
+     * @param idPaciente
+     * @param nombrePaciente
+     * @return
+     */
+    public String buscarPacientePorIDyNombre(String idPaciente, String nombrePaciente) {
+        for (Paciente paciente : listaPacientes) {
+            if (paciente.getId().equals(idPaciente) && paciente.getNombre().equalsIgnoreCase(nombrePaciente)) {
+                StringBuilder resultado = new StringBuilder();
+                resultado.append("Datos del Paciente:\n");
+                resultado.append("ID: ").append(paciente.getId()).append("\n");
+                resultado.append("Nombre: ").append(paciente.getNombre()).append("\n");
+                resultado.append("Edad: ").append(paciente.getEdad()).append("\n");
+                resultado.append("Información Adicional: ").append(paciente.getInformacionAdicional()).append("\n");
+                return resultado.toString();
+            }
+        }
+    
+        return "Paciente no encontrado. Verifique que el ID y el nombre.";
     }
     
 }

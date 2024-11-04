@@ -30,10 +30,10 @@ public class App{
      */
     public static void main(String[] args) {
         GuardarInformacion gestion = new GuardarInformacion();
-
         SwingUtilities.invokeLater(() -> {
             App app = new App(gestion); // Crea una instancia de la aplicación
-            app.mostrarLogIn(); // Muestra el panel de inicio de sesión
+            app.mostrarLogIn();
+            gestion.listaUsuarios(); // Muestra el panel de inicio de sesión
         });
     }
 
@@ -51,10 +51,7 @@ public class App{
         Paciente paciente2 = new Paciente("fadf3", "María", 12, "Nada");
         listaPacientes.add(paciente2);
         Paciente paciente3 = new Paciente("adfa23", "Pedro", 23, "Algo más");
-        listaPacientes.add(paciente3);
-        gestion.cargarUsuariosDesdeCSV();
-        gestion.prueba(); // Llamada a un método de prueba en el gestor de información
-        
+        listaPacientes.add(paciente3);        
         frame = new JFrame("Aplicación"); // Configura la ventana del login
         frame.setSize(600, 500); // Establece el tamaño de la ventana
         frame.setLocationRelativeTo(null); // Centra la ventana en la pantalla

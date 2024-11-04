@@ -102,7 +102,7 @@ public class LoginGUI extends JPanel {
         String nombreUsuario = txtUsername.getText();
         String contraseña = new String(txtPassword.getPassword());
 
-        if (gestion.inicioSesion(nombreUsuario, contraseña)) {
+        if (gestion.autenticar(nombreUsuario, contraseña)) {
             JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso.");
             app.mostrarPacientesPanel();
             // Aquí podrías abrir el menú principal o la siguiente pantalla

@@ -22,6 +22,12 @@ public class GuardarInformacion {
     private List<Paciente> listaPacientes;
     private List<Medicamento> listaMedicamentos;
 
+
+    public void listaUsuarios(){
+        for(Usuario usuario: listaUsuarios){
+            System.out.println(usuario.getNombre());
+        }
+    }
     /**
      * Constructor que inicializa las listas de usuarios y pacientes.
      * También carga los usuarios desde un archivo CSV al iniciar.
@@ -36,11 +42,6 @@ public class GuardarInformacion {
     }
 
     // Este método de prueba solo es para crear un usuario y que lo pruebe en la GUI, luego lo borro
-    public void prueba(){
-        Usuario usuario= new Usuario("123", "Diego", "Diego", "123", 17, "Siempre", "JJS");
-        listaUsuarios.add(usuario);
-    }
-
     /**
      * Carga los usuarios desde un archivo CSV y los almacena en la lista de usuarios.
      * El archivo debe tener el formato: id, nombre, nombreUsuario, contrasena, edad, sexo, tipoUsuario.
@@ -432,25 +433,6 @@ public class GuardarInformacion {
     }
     
     /**
-     * Verifica que el usuario y la contraseña existan para el inicio de sesión
-     * 
-     * @param nombreUsuario nombre de usuario del usuario que ingresa al programa
-     * @param contraseña la contraseña del usuario
-     * 
-     * @return tru si el usuario y la contraseña coniciden con un usuario existente
-     */
-    public boolean inicioSesion(String nombreUsuario, String contraseña){
-
-        for(Usuario usuario: listaUsuarios){
-            if(nombreUsuario.equals(usuario.getNombreUsuario()) && contraseña.equals(usuario.getContrasena())){
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Método que autentica a un usuario verificando su nombre de usuario y contraseña
      * en la lista de usuarios cargados desde el archivo CSV.
      *
@@ -466,13 +448,11 @@ public class GuardarInformacion {
             try {
                 contrasenaDescifrada = AESUtil.decrypt(usuario.getContrasena());
             } catch (Exception e) {
-                System.out.println("Error al descifrar la contraseña.");
                 continue;
             }
 
             // Verificamos si el nombre de usuario y la contraseña coinciden
             if (usuario.getNombreUsuario().equals(nombreUsuario) && contrasenaDescifrada.equals(contrasena)) {
-                System.out.println("Has iniciado sesión");
                 return true;
             }
         }

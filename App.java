@@ -6,6 +6,8 @@
  * Proyecto - Pillas
 */
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -14,7 +16,7 @@ import javax.swing.*;
  * Gestiona los distintos paneles y ventanas de la interfaz gráfica, así como 
  * la lógica principal de la aplicación.
  */
-public class App {
+public class App{
 
     private JFrame frame; // Ventana principal para el login y registro
     private JFrame programaFrame; // Ventana secundaria para el panel de gestión de medicamentos
@@ -27,9 +29,11 @@ public class App {
      * @param args Argumentos pasados por línea de comandos (no se utilizan).
      */
     public static void main(String[] args) {
+        GuardarInformacion gestion = new GuardarInformacion();
         SwingUtilities.invokeLater(() -> {
-            App app = new App(); // Crea una instancia de la aplicación
-            app.mostrarLogIn(); // Muestra el panel de inicio de sesión
+            App app = new App(gestion); // Crea una instancia de la aplicación
+            app.mostrarLogIn();
+            gestion.listaUsuarios(); // Muestra el panel de inicio de sesión
         });
     }
 
@@ -37,14 +41,24 @@ public class App {
      * Constructor de la clase `App`. 
      * Inicializa la lista de pacientes, el objeto de gestión de información y la ventana principal.
      */
-    public App() {
-        gestion = new GuardarInformacion(); // Inicializa el gestor de información
+    public App(GuardarInformacion gestion) {
+        this.gestion = gestion;
         listaPacientes = new ArrayList<>(); // Inicializa la lista de pacientes
         
         frame = new JFrame("Log In"); // Configura la ventana del login
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la aplicación al cerrar la ventana
         frame.setSize(600, 500); // Establece el tamaño de la ventana
         frame.setLocationRelativeTo(null); // Centra la ventana en la pantalla
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la aplicación al cerrar la ventana
+
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e){
+                gestion.guardarUsuariosCSV();
+            }
+        });
+
 
         inicializarProgramaframe(); // Inicializa la ventana del programa principal
     }

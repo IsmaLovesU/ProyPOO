@@ -44,29 +44,31 @@ public class LoginGUI extends JPanel {
         add(lblImagen, gbc);
 
         JLabel lblTitulo = new JLabel("Inicio de sesión");
-        lblTitulo.setFont(new Font("Impact", Font.BOLD, 24));
+        lblTitulo.setFont(new Font("Impact", Font.CENTER_BASELINE, 30));
         gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.gridy = 1;
         gbc.gridwidth = 2;
         add(lblTitulo, gbc);
 
         JLabel lblUsername = new JLabel("Username:");
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.gridwidth = 1;
         add(lblUsername, gbc);
 
-        txtUsername = new JTextField(15);
+        txtUsername = new JTextField(12);
         gbc.gridx = 1;
+        gbc.gridy = 2;
         add(txtUsername, gbc);
 
         JLabel lblPassword = new JLabel("Contraseña:");
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         add(lblPassword, gbc);
 
-        txtPassword = new JPasswordField(15);
+        txtPassword = new JPasswordField(12);
         gbc.gridx = 1;
+        gbc.gridy = 3;
         add(txtPassword, gbc);
 
         btnLogin = new JButton("Iniciar sesión");
@@ -79,7 +81,7 @@ public class LoginGUI extends JPanel {
             }
         });
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         add(btnLogin, gbc);
 
         btnRegister = new JButton("Registrate");
@@ -92,6 +94,7 @@ public class LoginGUI extends JPanel {
             }
         });
         gbc.gridx = 1;
+        gbc.gridy = 4;
         add(btnRegister, gbc);
     }
 

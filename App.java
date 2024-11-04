@@ -41,16 +41,6 @@ public class App {
         gestion = new GuardarInformacion(); // Inicializa el gestor de información
         listaPacientes = new ArrayList<>(); // Inicializa la lista de pacientes
         
-        // Creación de pacientes de prueba
-        Paciente paciente = new Paciente("FNEON221", "Jesus", 10, "Es asmático");
-        listaPacientes.add(paciente);
-        Paciente paciente2 = new Paciente("fadf3", "María", 12, "Nada");
-        listaPacientes.add(paciente2);
-        Paciente paciente3 = new Paciente("adfa23", "Pedro", 23, "Algo más");
-        listaPacientes.add(paciente3);
-
-        gestion.prueba(); // Llamada a un método de prueba en el gestor de información
-        
         frame = new JFrame("Log In"); // Configura la ventana del login
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la aplicación al cerrar la ventana
         frame.setSize(600, 500); // Establece el tamaño de la ventana
@@ -98,6 +88,28 @@ public class App {
         frame.repaint(); // Redibuja el frame
         frame.setVisible(true); // Asegura que la ventana esté visible
     }
+
+    /**
+     * Muestra el panel de registro de pacientes en la ventana principal.
+     */
+    public void mostrarRegistroPacientePanel() {
+        RegistroPacientePanel registroPacientePanel = new RegistroPacientePanel(this);
+        frame.setContentPane(registroPacientePanel);
+        frame.revalidate();
+        frame.repaint();
+        frame.setVisible(true);
+    }
+
+    /**
+     * Añade un paciente a la lista y actualiza el panel de pacientes.
+     *
+     * @param paciente El paciente que se desea agregar.
+     */
+    public void agregarPaciente(Paciente paciente) {
+        listaPacientes.add(paciente);
+        mostrarPacientesPanel(); // Refresca el panel de pacientes
+    }
+
 
     /**
      * Muestra el panel de medicamentos de un paciente específico.

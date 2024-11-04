@@ -48,7 +48,7 @@ public class PacientesPanel extends JPanel {
         // Botón para agregar un nuevo paciente
         JButton botonAgregarPaciente = new JButton("Agregar Paciente");
         estilizarBoton(botonAgregarPaciente); // Aplica estilo al botón
-        botonAgregarPaciente.addActionListener(e -> agregarNuevoPaciente()); // Evento al hacer clic en el botón
+        botonAgregarPaciente.addActionListener(e -> app.mostrarRegistroPacientePanel()); // Evento al hacer clic en el botón
         botonesPanel.add(botonAgregarPaciente); // Agrega el botón al panel
 
         add(botonesPanel, BorderLayout.CENTER); // Agrega el panel de botones al panel principal
@@ -81,14 +81,6 @@ public class PacientesPanel extends JPanel {
     }
 
     /**
-     * Muestra un mensaje indicando que la función de agregar un nuevo paciente 
-     * está en desarrollo.
-     */
-    private void agregarNuevoPaciente() {
-        JOptionPane.showMessageDialog(this, "Función de agregar paciente en construcción.");
-    }
-
-    /**
      * Elimina un paciente de la lista y actualiza el panel.
      *
      * @param paciente El paciente que se desea eliminar.
@@ -112,3 +104,4 @@ public class PacientesPanel extends JPanel {
         boton.setPreferredSize(new Dimension(200, 40)); // Tamaño fijo del botón
     }
 }
+

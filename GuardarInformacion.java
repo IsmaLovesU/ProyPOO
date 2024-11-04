@@ -22,6 +22,12 @@ public class GuardarInformacion {
     private List<Paciente> listaPacientes;
     private List<Medicamento> listaMedicamentos;
 
+
+    public void listaUsuarios(){
+        for(Usuario usuario: listaUsuarios){
+            System.out.println(usuario.getNombre());
+        }
+    }
     /**
      * Constructor que inicializa las listas de usuarios y pacientes.
      * También carga los usuarios desde un archivo CSV al iniciar.

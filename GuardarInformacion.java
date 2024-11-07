@@ -18,6 +18,7 @@ import java.io.FileReader;
  * Proporciona funcionalidad para registrar, crear y guardar datos en archivos CSV.
  */
 public class GuardarInformacion {
+<<<<<<< HEAD
     private List<Usuario> listaUsuarios;
     private List<Paciente> listaPacientes;
     private List<Medicamento> listaMedicamentos;
@@ -39,6 +40,19 @@ public class GuardarInformacion {
         cargarUsuariosDesdeCSV();  // Nuevo método para cargar los usuarios
         cargarPacientesDesdeCSV();  // Nuevo método para cargar los pacientes
         cargarMedicamentosDesdeCSV();  // Nuevo método para cargar los medicamentos
+=======
+    private Usuario usuario;
+    private Paciente paciente;
+    private Medicamento medicamento;
+    private List<Usuario> usuarios;
+    private ArrayList<Paciente> listaPacientes;
+
+    public GuardarInformacion(){
+        usuario= new Usuario();
+        paciente= new Paciente();
+        medicamento = new Medicamento();
+        usuarios = new ArrayList<>();
+>>>>>>> df5b90e48d5269b6cfa4b8269a23999a4eed445c
     }
 
     // Este método de prueba solo es para crear un usuario y que lo pruebe en la GUI, luego lo borro
@@ -102,6 +116,7 @@ public class GuardarInformacion {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Carga los medicamentos desde un archivo CSV y los almacena en la lista de medicamento.
      * El archivo debe tener el formato: idMedicamento, nombreMedicamento, descripcion, dosis, horarioSuministro, recesatado, inventario.
@@ -144,6 +159,20 @@ public class GuardarInformacion {
      */
     public List<Usuario> getUsuarios() {
         return listaUsuarios;
+=======
+    public void crearPaciente(String nombre, int edad, String informacionAdicional, Usuario usuario1){
+        paciente.setNombre(nombre);
+        paciente.setEdad(edad);
+        paciente.setInformacionAdicional(informacionAdicional);
+        
+        usuario1.agregarPaciente(paciente);
+
+        paciente = new Paciente();
+    }
+
+    public List<Paciente> mostrarPacientes(Usuario usuario1) {
+        return usuario1.getPacientes();
+>>>>>>> df5b90e48d5269b6cfa4b8269a23999a4eed445c
     }
 
     /**
@@ -308,6 +337,7 @@ public class GuardarInformacion {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Método para eliminar un paciente de un usuario especifico
      * @param idUsuario
@@ -336,6 +366,12 @@ public class GuardarInformacion {
                 guardarPacientesCSV();
                 break; // Salimos del bucle una vez que hemos procesado el paciente
             }
+=======
+    public List<Medicamento> mostrarMedicamentos(Usuario usuario1) {
+        List<Medicamento> medicamentos = new ArrayList<>();
+        for (Paciente paciente : listaPacientes) {
+            medicamentos.addAll(paciente.getMedicamentos());
+>>>>>>> df5b90e48d5269b6cfa4b8269a23999a4eed445c
         }
     }
 

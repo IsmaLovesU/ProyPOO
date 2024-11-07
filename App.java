@@ -1,13 +1,3 @@
-/**
- * Universidad del Valle de Gutemala
- * Programación Orinetada a Objetos 
- * Sección: 10
- * Ing. Kimberly Barrera
- * Proyecto - Pillas
-*/
-
-import java.awt.event.WindowAdapter;
-import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -16,7 +6,7 @@ import javax.swing.*;
  * Gestiona los distintos paneles y ventanas de la interfaz gráfica, así como 
  * la lógica principal de la aplicación.
  */
-public class App{
+public class App {
 
     private JFrame frame; // Ventana principal para el login y registro
     private JFrame programaFrame; // Ventana secundaria para el panel de gestión de medicamentos
@@ -29,11 +19,9 @@ public class App{
      * @param args Argumentos pasados por línea de comandos (no se utilizan).
      */
     public static void main(String[] args) {
-        GuardarInformacion gestion = new GuardarInformacion();
         SwingUtilities.invokeLater(() -> {
-            App app = new App(gestion); // Crea una instancia de la aplicación
-            app.mostrarLogIn();
-            gestion.listaUsuarios(); // Muestra el panel de inicio de sesión
+            App app = new App(); // Crea una instancia de la aplicación
+            app.mostrarLogIn(); // Muestra el panel de inicio de sesión
         });
     }
 
@@ -41,24 +29,23 @@ public class App{
      * Constructor de la clase `App`. 
      * Inicializa la lista de pacientes, el objeto de gestión de información y la ventana principal.
      */
-    public App(GuardarInformacion gestion) {
-        this.gestion = gestion;
+    public App() {
+        gestion = new GuardarInformacion(); // Inicializa el gestor de información
         listaPacientes = new ArrayList<>(); // Inicializa la lista de pacientes
         
-        frame = new JFrame("Log In"); // Configura la ventana del login
+        // Creación de pacientes de prueba
+        Paciente paciente = new Paciente("FNEON221", "Jesus", 10, "Es asmático");
+        listaPacientes.add(paciente);
+        Paciente paciente2 = new Paciente("fadf3", "María", 12, "Nada");
+        listaPacientes.add(paciente2);
+        Paciente paciente3 = new Paciente("adfa23", "Pedro", 23, "Algo más");
+        listaPacientes.add(paciente3);
+
+        
+        frame = new JFrame("LOG In"); // Configura la ventana del login
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la aplicación al cerrar la ventana
         frame.setSize(600, 500); // Establece el tamaño de la ventana
         frame.setLocationRelativeTo(null); // Centra la ventana en la pantalla
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la aplicación al cerrar la ventana
-
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e){
-                gestion.guardarUsuariosCSV();
-            }
-        });
-
 
         inicializarProgramaframe(); // Inicializa la ventana del programa principal
     }
@@ -102,28 +89,6 @@ public class App{
         frame.repaint(); // Redibuja el frame
         frame.setVisible(true); // Asegura que la ventana esté visible
     }
-
-    /**
-     * Muestra el panel de registro de pacientes en la ventana principal.
-     */
-    public void mostrarRegistroPacientePanel() {
-        RegistroPacientePanel registroPacientePanel = new RegistroPacientePanel(this);
-        frame.setContentPane(registroPacientePanel);
-        frame.revalidate();
-        frame.repaint();
-        frame.setVisible(true);
-    }
-
-    /**
-     * Añade un paciente a la lista y actualiza el panel de pacientes.
-     *
-     * @param paciente El paciente que se desea agregar.
-     */
-    public void agregarPaciente(Paciente paciente) {
-        listaPacientes.add(paciente);
-        mostrarPacientesPanel(); // Refresca el panel de pacientes
-    }
-
 
     /**
      * Muestra el panel de medicamentos de un paciente específico.

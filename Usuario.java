@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 /**
  * Universidad del Valle de Gutemala
  * Programación Orinetada a Objetos 
@@ -11,9 +11,6 @@ import java.util.UUID;
 import java.util.List;
 import java.util.ArrayList;
 
-=======
-import java.util.ArrayList;
->>>>>>> df5b90e48d5269b6cfa4b8269a23999a4eed445c
 public class Usuario {
     private String id;
     private String nombre;
@@ -22,11 +19,7 @@ public class Usuario {
     private int edad;
     private String sexo;
     private String tipoUsuario;
-<<<<<<< HEAD
     private List<Paciente> pacientes;
-=======
-    private ArrayList<Paciente> pacientes;
->>>>>>> df5b90e48d5269b6cfa4b8269a23999a4eed445c
 
     public Usuario(String id, String nombre, String nombreUsuario, String contrasena, int edad, String sexo, String tipoUsuario) {
         this.id = id;
@@ -96,7 +89,7 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario;
     }
 
-<<<<<<< HEAD
+
     public void agregarPaciente(Paciente paciente){
         pacientes.add(paciente);
     }
@@ -106,13 +99,4 @@ public class Usuario {
     }
 
 
-=======
-    public ArrayList<Paciente> getPacientes(){
-        return pacientes;
-    }
-
-    public void agregarPaciente(Paciente paciente){
-        pacientes.add(paciente);
-    }
->>>>>>> df5b90e48d5269b6cfa4b8269a23999a4eed445c
 }

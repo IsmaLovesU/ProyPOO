@@ -463,6 +463,10 @@ public class GuardarInformacion {
         return false;
     }
 
-    
+    // Método para actualizar un usuario específico en la lista y guardar los cambios
+    public void actualizarUsuario(Usuario usuario) {
+
+        guardarUsuariosCSV();
+    }
 
 }

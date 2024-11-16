@@ -100,4 +100,20 @@ public class App {
         frame.revalidate(); // Vuelve a validar el contenido del frame
         frame.repaint(); // Redibuja el frame
     }
+
+    /**
+     * Muestra el panel de configuración de usuario en la ventana principal.
+     *
+     * @param usuario El usuario cuya información se editará.
+     * @param paciente El paciente relacionado (si es necesario).
+     */
+    public void mostrarConfigUsuarioPanel(Usuario usuario, Paciente paciente) {
+        ConfigUsuarioPanel configPanel = new ConfigUsuarioPanel(this, usuario, paciente, gestion); // Crea el panel de configuración de usuario
+        programaFrame.setContentPane(configPanel); // Establece el contenido del programaFrame con el nuevo panel
+        programaFrame.revalidate(); // Vuelve a validar el contenido del frame
+        programaFrame.repaint(); // Redibuja el frame para asegurar que se vean los cambios
+        programaFrame.setVisible(true); // Asegura que la ventana esté visible
+    }
+
+
 }

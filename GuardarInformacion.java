@@ -21,6 +21,7 @@ public class GuardarInformacion {
     private List<Usuario> listaUsuarios;
     private List<Paciente> listaPacientes;
     private List<Medicamento> listaMedicamentos;
+    private Usuario usuarioActual;
 
 
     public void listaUsuarios(){
@@ -460,6 +461,20 @@ public class GuardarInformacion {
         // Si no se encuentran coincidencias, se indica que las credenciales son incorrectas
         System.out.println("Usuario o contraseña incorrectos.");
         return false;
+    }
+
+    public void obtenerUsuario(String nombereUsuario){
+        for(Usuario usuario: listaUsuarios){
+            if(nombereUsuario.equals(usuario.getNombreUsuario())){
+                this.usuarioActual = usuario;
+
+                System.out.println(usuarioActual.getNombre());
+            }
+        }
+    }
+
+    public Usuario devolverUsuario(){
+        return usuarioActual;
     }
 
     

@@ -22,6 +22,7 @@ public class App{
     private JFrame programaFrame; // Ventana secundaria para el panel de gestión de medicamentos
     private GuardarInformacion gestion; // Objeto encargado de guardar la información
     private ArrayList<Paciente> listaPacientes; // Lista de pacientes de la aplicación
+    private NotificadorMedicamento notificador;
 
     /**
      * Método principal de la aplicación que inicia el flujo en un hilo de la interfaz gráfica.
@@ -56,6 +57,7 @@ public class App{
             @Override
             public void windowClosing(WindowEvent e){
                 gestion.guardarUsuariosCSV();
+                detenerNotificador();
             }
         });
 
@@ -101,6 +103,9 @@ public class App{
         frame.revalidate(); // Vuelve a validar el contenido del frame
         frame.repaint(); // Redibuja el frame
         frame.setVisible(true); // Asegura que la ventana esté visible
+
+        iniciarNotificador();
+
     }
 
     /**
@@ -134,5 +139,18 @@ public class App{
         frame.setContentPane(new MedicamentosPanel(this, paciente)); // Crea y establece el panel de medicamentos
         frame.revalidate(); // Vuelve a validar el contenido del frame
         frame.repaint(); // Redibuja el frame
+    }
+
+    private void iniciarNotificador(){
+        if(notificador == null){
+            notificador = new NotificadorMedicamento(gestion.devolverUsuario());
+            notificador.iniciar();
+        }
+    }
+
+    private void detenerNotificador(){
+        if(notificador != null){
+            notificador.detener();
+        }
     }
 }

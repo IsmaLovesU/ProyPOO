@@ -124,6 +124,6 @@ public class ConfigUsuarioPanel extends JPanel {
         gestion.actualizarUsuario(usuario);
 
         JOptionPane.showMessageDialog(this, "Información actualizada exitosamente.");
-        // Aquí puedes agregar la lógica para actualizar la información en el almacenamiento o base de datos
+   
     }
 }

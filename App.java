@@ -12,6 +12,7 @@ public class App {
     private JFrame programaFrame; // Ventana secundaria para el panel de gestión de medicamentos
     private GuardarInformacion gestion; // Objeto encargado de guardar la información
     private ArrayList<Paciente> listaPacientes; // Lista de pacientes de la aplicación
+    private NotificadorMedicamento notificador;
 
     /**
      * Método principal de la aplicación que inicia el flujo en un hilo de la interfaz gráfica.
@@ -46,6 +47,17 @@ public class App {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la aplicación al cerrar la ventana
         frame.setSize(600, 500); // Establece el tamaño de la ventana
         frame.setLocationRelativeTo(null); // Centra la ventana en la pantalla
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la aplicación al cerrar la ventana
+
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e){
+                gestion.guardarUsuariosCSV();
+                detenerNotificador();
+            }
+        });
+
 
         inicializarProgramaframe(); // Inicializa la ventana del programa principal
     }
@@ -88,7 +100,32 @@ public class App {
         frame.revalidate(); // Vuelve a validar el contenido del frame
         frame.repaint(); // Redibuja el frame
         frame.setVisible(true); // Asegura que la ventana esté visible
+
+        iniciarNotificador();
+
     }
+
+    /**
+     * Muestra el panel de registro de pacientes en la ventana principal.
+     */
+    public void mostrarRegistroPacientePanel() {
+        RegistroPacientePanel registroPacientePanel = new RegistroPacientePanel(this);
+        frame.setContentPane(registroPacientePanel);
+        frame.revalidate();
+        frame.repaint();
+        frame.setVisible(true);
+    }
+
+    /**
+     * Añade un paciente a la lista y actualiza el panel de pacientes.
+     *
+     * @param paciente El paciente que se desea agregar.
+     */
+    public void agregarPaciente(Paciente paciente) {
+        listaPacientes.add(paciente);
+        mostrarPacientesPanel(); // Refresca el panel de pacientes
+    }
+
 
     /**
      * Muestra el panel de medicamentos de un paciente específico.
@@ -101,19 +138,16 @@ public class App {
         frame.repaint(); // Redibuja el frame
     }
 
-    /**
-     * Muestra el panel de configuración de usuario en la ventana principal.
-     *
-     * @param usuario El usuario cuya información se editará.
-     * @param paciente El paciente relacionado (si es necesario).
-     */
-    public void mostrarConfigUsuarioPanel(Usuario usuario, Paciente paciente) {
-        ConfigUsuarioPanel configPanel = new ConfigUsuarioPanel(this, usuario, paciente, gestion); // Crea el panel de configuración de usuario
-        programaFrame.setContentPane(configPanel); // Establece el contenido del programaFrame con el nuevo panel
-        programaFrame.revalidate(); // Vuelve a validar el contenido del frame
-        programaFrame.repaint(); // Redibuja el frame para asegurar que se vean los cambios
-        programaFrame.setVisible(true); // Asegura que la ventana esté visible
+    private void iniciarNotificador(){
+        if(notificador == null){
+            notificador = new NotificadorMedicamento(gestion.devolverUsuario());
+            notificador.iniciar();
+        }
     }
 
-
+    private void detenerNotificador(){
+        if(notificador != null){
+            notificador.detener();
+        }
+    }
 }

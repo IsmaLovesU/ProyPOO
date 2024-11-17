@@ -17,6 +17,7 @@ public class MedicamentosPanel extends JPanel {
 
     private App app; // Referencia a la aplicación principal.
     private Paciente paciente; // Paciente cuyos medicamentos se van a mostrar.
+    private JComboBox<String> comboMedicamentos; // ComboBox para listar los medicamentos.
 
     /**
      * Constructor de la clase MedicamentosPanel.
@@ -32,36 +33,70 @@ public class MedicamentosPanel extends JPanel {
         setLayout(new BorderLayout()); // Establece BorderLayout como el diseño del panel.
         setBackground(new Color(248, 240, 255)); // Establece un color de fondo.
 
-        JPanel botonesPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15)); 
-        botonesPanel.setBackground(new Color(248, 240, 255)); // Fondo del panel de botones.
-
         // Título del panel que indica los medicamentos del paciente.
         JLabel titulo = new JLabel("Medicamentos de " + paciente.getNombre());
         titulo.setFont(new Font("Arial", Font.BOLD, 16)); // Estilo del título.
         titulo.setHorizontalAlignment(SwingConstants.CENTER); // Alineación del título.
         add(titulo, BorderLayout.NORTH); // Agrega el título en la parte superior del panel.
 
-        // Crear un botón para cada medicamento del paciente.
-        for (Medicamento medicamento : paciente.getMedicamentos()) {
-            JButton botonMedicamento = new JButton(medicamento.getNombre()); // Botón con el nombre del medicamento.
-            estilizarBoton(botonMedicamento); // Aplica estilo al botón.
-            botonMedicamento.addActionListener(e -> mostrarOpcionesMedicamento(medicamento)); // Evento de clic.
-            botonesPanel.add(botonMedicamento); // Agrega el botón al panel.
-        }
+        // Panel central para el ComboBox y botón de gestión 
+        JPanel panelCentral = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
+        panelCentral.setBackground(new Color(248, 240, 255));
 
-        // Botón para agregar un nuevo medicamento.
+        // ComboBox para mostrar los medicamentos
+        comboMedicamentos = new JComboBox<>();
+        actualizarComboBox(); // Llena el ComboBox con los nombres de los medicamentos
+        comboMedicamentos.setPreferredSize(new Dimension(250, 30));
+        panelCentral.add(comboMedicamentos);
+
+        // Botón para gestionar el medicamento seleccionado
+        JButton botonGestionarMedicamento = new JButton("Gestionar Medicamento");
+        estilizarBoton(botonGestionarMedicamento);
+        botonGestionarMedicamento.addActionListener(e -> gestionarMedicamentoSeleccionado());
+        panelCentral.add(botonGestionarMedicamento);
+
+        add(panelCentral, BorderLayout.CENTER); // Agrega el panel central
+
+        // Panel inferior para los botones adicionales
+        JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
+        panelInferior.setBackground(new Color(248, 240, 255));
+
+        // Botón para agregar un nuevo medicamento
         JButton botonAgregarMedicamento = new JButton("Agregar Medicamento");
-        estilizarBoton(botonAgregarMedicamento); // Aplica estilo al botón.
-        botonAgregarMedicamento.addActionListener(e -> agregarNuevoMedicamento()); // Evento de clic.
-        botonesPanel.add(botonAgregarMedicamento); // Agrega el botón al panel.
+        estilizarBoton(botonAgregarMedicamento); // Aplica estilo al botón
+        botonAgregarMedicamento.addActionListener(e -> agregarNuevoMedicamento()); // Evento de clic
+        panelInferior.add(botonAgregarMedicamento);
 
-        // Botón para volver al panel de pacientes.
+        // Botón para volver al panel de pacientes
         JButton botonVolver = new JButton("Volver a Pacientes");
-        estilizarBoton(botonVolver); // Aplica estilo al botón.
-        botonVolver.addActionListener(e -> app.mostrarPacientesPanel()); // Evento de clic para volver.
-        botonesPanel.add(botonVolver); // Agrega el botón al panel.
+        estilizarBoton(botonVolver); // Aplica estilo al botón
+        botonVolver.addActionListener(e -> app.mostrarPacientesPanel()); // Evento de clic para volver
+        panelInferior.add(botonVolver);
 
-        add(botonesPanel, BorderLayout.CENTER); // Agrega el panel de botones al centro del layout.
+        add(panelInferior, BorderLayout.SOUTH); // Agrega el panel inferior
+    }
+
+    /**
+     * Llena el ComboBox con los nombres de los medicamentos del paciente.
+     */
+    private void actualizarComboBox() {
+        comboMedicamentos.removeAllItems();
+        for (Medicamento medicamento : paciente.getMedicamentos()) {
+            comboMedicamentos.addItem(medicamento.getNombre());
+        }
+    }
+
+    /**
+     * Gestiona las opciones del medicamento seleccionado en el ComboBox.
+     */
+    private void gestionarMedicamentoSeleccionado() {
+        int index = comboMedicamentos.getSelectedIndex();
+        if (index != -1) {
+            Medicamento medicamentoSeleccionado = paciente.getMedicamentos().get(index);
+            mostrarOpcionesMedicamento(medicamentoSeleccionado);
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un medicamento.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     /**
@@ -105,7 +140,7 @@ public class MedicamentosPanel extends JPanel {
     private void eliminarMedicamento(Medicamento medicamento) {
         paciente.getMedicamentos().remove(medicamento); // Elimina el medicamento de la lista del paciente.
         JOptionPane.showMessageDialog(this, "Medicamento eliminado."); // Muestra mensaje de confirmación.
-        app.mostrarMedicamentosPanel(paciente); // Actualiza el panel de medicamentos.
+        actualizarComboBox(); // Actualiza el ComboBox
     }
 
     /**

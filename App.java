@@ -58,6 +58,7 @@ public class App {
             public void windowClosing(WindowEvent e){
                 gestion.guardarUsuariosCSV();
                 gestion.guardarPacientesCSV();
+                gestion.guardarMedicamentosCSV();
                 detenerNotificador();
             }
         });

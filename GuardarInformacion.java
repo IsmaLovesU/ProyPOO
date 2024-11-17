@@ -25,7 +25,11 @@ public class GuardarInformacion {
 
     public void listaUsuarios(){
         for(Usuario usuario: listaUsuarios){
-            System.out.println(usuario.getNombre());
+            for(Paciente paciente: usuario.getPacientes()){
+                for (Medicamento medicamento: paciente.getMedicamentos()){
+                    System.out.println(medicamento.getNombre());
+                }
+            }
         }
     }
     /**
@@ -384,7 +388,7 @@ public class GuardarInformacion {
      */
     public void guardarPacientesCSV() {
         try (FileWriter writer = new FileWriter("Pacientes.csv", false)) {
-            for (Usuario usuario : listaUsuarios)
+            for (Usuario usuario : listaUsuarios){
                 for (Paciente paciente : usuario.getPacientes()) {
                     writer.append(usuario.getId())
                           .append(",")
@@ -397,7 +401,7 @@ public class GuardarInformacion {
                           .append(paciente.getInformacionAdicional())
                           .append("\n");
                 }
-            
+            }
             writer.flush();
         } catch (IOException e) {
             System.out.println(e);

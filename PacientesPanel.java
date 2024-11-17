@@ -33,6 +33,7 @@ public class PacientesPanel extends JPanel {
         this.app = app;
         this.listaPacientes = pacientes;
         this.gestion = gestion1;
+        gestion.listaUsuarios();
 
         setLayout(new BorderLayout()); // Establece el layout como BorderLayout
         setBackground(new Color(240, 248, 255)); // Establece el color de fondo

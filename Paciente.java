@@ -7,7 +7,6 @@
 */
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class Paciente {
@@ -52,7 +51,7 @@ public class Paciente {
         this.edad = edad;
     }
 
-    public List<String> getCondiciones() {
+    public ArrayList<String> getCondiciones() {
         return condiciones;
     }
 
@@ -60,7 +59,7 @@ public class Paciente {
         condiciones.add(nuevaCondicion);
     }
 
-    public List<Medicamento> getMedicamentos() {
+    public ArrayList<Medicamento> getMedicamentos() {
         return medicamentos;
     }
 

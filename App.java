@@ -52,6 +52,7 @@ public class App {
             @Override
             public void windowClosing(WindowEvent e){
                 gestion.guardarUsuariosCSV();
+                gestion.guardarPacientesCSV();
                 detenerNotificador();
             }
         });
@@ -115,6 +116,18 @@ public class App {
         frame.repaint();
         frame.setVisible(true);
     }
+
+    /**
+     * Muestra el panel de registro de pacientes en la ventana principal.
+     */
+    public void mostrarConfigUsuarioPanel() {
+        ConfigUsuarioPanel configUsuarioPanel = new ConfigUsuarioPanel(this, gestion);
+        frame.setContentPane(configUsuarioPanel);
+        frame.revalidate();
+        frame.repaint();
+        frame.setVisible(true);
+    }
+
 
     /**
      * Añade un paciente a la lista y actualiza el panel de pacientes.

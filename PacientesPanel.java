@@ -135,7 +135,7 @@ public class PacientesPanel extends JPanel {
      * Muestra el panel de configuraciones.
      */
     private void mostrarConfiguraciones() {
-        JOptionPane.showMessageDialog(this, "Configuraciones en construcción.");
+        app.mostrarConfigUsuarioPanel();
     }
 
     /**

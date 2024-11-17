@@ -18,16 +18,24 @@ public class ConfigUsuarioPanel extends JPanel {
     private JPasswordField txtPassword;
     private JButton btnGuardar;
     private JButton btnCancelar;
+    private App app;
+    private Usuario usuario;
+    private GuardarInformacion gestion;
 
 
-    public ConfigUsuarioPanel(App app, Usuario usuario, Paciente paciente, GuardarInformacion gestion) {
+
+    public ConfigUsuarioPanel(App app, GuardarInformacion gestion) {
+        this.app = app;
+        this.gestion = gestion;
+        this.usuario = gestion.devolverUsuario();
+
         setLayout(new GridBagLayout());
         setBackground(new Color(248, 240, 255)); // Color de fondo suave
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         
         JLabel lblTitulo = new JLabel("Editar Información de Usuario");
-        lblTitulo.setFont(new Font("Arial", Font.BOLD, 24));
+        lblTitulo.setFont(new Font("Impact", Font.CENTER_BASELINE, 20));
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
@@ -108,7 +116,7 @@ public class ConfigUsuarioPanel extends JPanel {
         btnCancelar = new JButton("Cancelar");
         btnCancelar.setBackground(Color.RED);
         btnCancelar.setForeground(Color.WHITE);
-        btnCancelar.addActionListener(e -> app.mostrarMedicamentosPanel(paciente)); // Vuelve al panel anterior
+        btnCancelar.addActionListener(e -> app.mostrarPacientesPanel()); // Vuelve al panel anterior
         gbc.gridx = 2;
         add(btnCancelar, gbc);
     }

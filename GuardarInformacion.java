@@ -429,7 +429,7 @@ public class GuardarInformacion {
             }
             writer.flush();
         } catch (IOException e) {
-            System.out.println(e);
+            System.out.println("Error al guardar el medicamento en el archivo" + e.getMessage());
         }
 
     }

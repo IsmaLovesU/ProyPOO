@@ -132,7 +132,7 @@ public class App {
     * Muestra el panel de registro de pacientes en la ventana principal.
     */
     public void mostrarConfigPacientePanel(Paciente paciente) {
-        ConfigPacientePanel configPacientePanel = new ConfigPacientePanel(this, gestion, paciente);
+        ConfigPacientePanel configPacientePanel = new ConfigPacientePanel(this, paciente);
         frame.setContentPane(configPacientePanel);
         frame.revalidate();
         frame.repaint();

@@ -20,11 +20,9 @@ public class ConfigPacientePanel extends JPanel {
 
     private App app;
     private Paciente paciente;
-    private GuardarInformacion gestion;
 
-    public ConfigPacientePanel(App app1, GuardarInformacion gestion, Paciente paciente) {
+    public ConfigPacientePanel(App app1, Paciente paciente) {
         this.app = app1;
-        this.gestion = gestion;
         this.paciente = paciente;
 
         setLayout(new GridBagLayout());

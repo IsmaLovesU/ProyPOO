@@ -6,7 +6,6 @@
  * Proyecto - Pillas
 */
 
-import java.awt.event.WindowAdapter;
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -127,7 +126,6 @@ public class App {
         mostrarPacientesPanel(); // Refresca el panel de pacientes
     }
 
-
     /**
      * Muestra el panel de medicamentos de un paciente específico.
      * 
@@ -139,6 +137,25 @@ public class App {
         frame.repaint(); // Redibuja el frame
     }
 
+    /**
+     * Muestra el panel de registro de medicamentos por paciente. 
+     * 
+     * @param paciente
+     */
+    public void mostrarRegistroMedicamentoPanel(Paciente paciente) {
+        frame.setContentPane(new RegistroMedicamentoPanel(this, paciente)); // Abre el nuevo panel
+        frame.revalidate();
+        frame.repaint();
+        frame.setVisible(true);
+    }
+
+    /*
+     * Para guardar la infromación. 
+     */
+    public GuardarInformacion getGuardarInformacion() {
+        return gestion;
+    }
+    
     private void iniciarNotificador(){
         if(notificador == null){
             notificador = new NotificadorMedicamento(gestion.devolverUsuario());

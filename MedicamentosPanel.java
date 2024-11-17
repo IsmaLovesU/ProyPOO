@@ -90,12 +90,12 @@ public class MedicamentosPanel extends JPanel {
     }
 
     /**
-     * Muestra un mensaje indicando que la función de agregar un nuevo medicamento
-     * está en desarrollo.
+     * Agregar medicamento por paciente.
      */
     private void agregarNuevoMedicamento() {
-        JOptionPane.showMessageDialog(this, "Función de agregar medicamento en construcción.");
+        app.mostrarRegistroMedicamentoPanel(paciente); // Cambié para mostrar el nuevo panel
     }
+    
 
     /**
      * Elimina el medicamento del paciente y actualiza el panel.

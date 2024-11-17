@@ -121,8 +121,6 @@ public class ConfigUsuarioPanel extends JPanel {
         usuario.setSexo(txtGenero.getText());
         usuario.setTipoUsuario(txtTipoUsuario.getText());
 
-        gestion.actualizarUsuario(usuario);
-
         JOptionPane.showMessageDialog(this, "Información actualizada exitosamente.");
    
     }

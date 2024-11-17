@@ -53,6 +53,7 @@ public class App {
             @Override
             public void windowClosing(WindowEvent e){
                 gestion.guardarUsuariosCSV();
+                gestion.guardarPacientesCSV();
                 detenerNotificador();
             }
         });

@@ -83,8 +83,8 @@ public class GuardarInformacion {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                String idPaciente = datos[0];
-                String idUsuario = datos[1];
+                String idUsuario = datos[0];
+                String idPaciente = datos[1];
                 String nombre = datos[2];
                 int edad = Integer.parseInt(datos[3]);
                 String informacionAdicional = datos[4];

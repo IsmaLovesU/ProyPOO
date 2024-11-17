@@ -1,4 +1,3 @@
-
 /**
  * Universidad del Valle de Gutemala
  * Programación Orinetada a Objetos 
@@ -40,7 +39,6 @@ public class Usuario {
         return id;
     }
 
-    
     public String getNombre() {
         return nombre;
     }
@@ -88,7 +86,6 @@ public class Usuario {
     public void setTipoUsuario(String tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
-
 
     public void agregarPaciente(Paciente paciente){
         pacientes.add(paciente);

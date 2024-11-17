@@ -419,4 +419,12 @@ public class GuardarInformacion {
             System.out.println(e);
         }
     }
+
+    public void generarEstadisticas() {
+        System.out.println("===== Estadísticas Generales =====");
+        System.out.println("Total de usuarios registrados: " + listaUsuarios.size());
+        System.out.println("Total de pacientes registrados: " + listaPacientes.size());
+        System.out.println("Total de medicamentos registrados: " + listaMedicamentos.size());
+    }
 }
+

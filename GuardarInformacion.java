@@ -107,8 +107,8 @@ public class GuardarInformacion {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                String idPaciente = datos[0]; // Obtener el ID del paciente
-                String idMedicamento = datos[1]; // Generar nuevo ID para el medicamento
+                String idMedicamento = datos[0]; // Generar nuevo ID para el medicamento
+                String idPaciente = datos[1]; // Obtener el ID del paciente
                 String nombreMedicamento = datos[2];
                 String descripcion = datos[3];
                 int dosis = Integer.parseInt(datos[4]);
@@ -123,6 +123,7 @@ public class GuardarInformacion {
                         if (paciente.getId().equals(idPaciente)) {
                             // Asocia el medicamento con el paciente
                             paciente.agregarMedicamentos(medicamento);
+                            break;
                         }
                     }
                 }
@@ -200,7 +201,7 @@ public class GuardarInformacion {
      * @param tipoUsuario El tipo de usuario (doctor, administrador, etc.).
      */
      public boolean registroUsuario(String id, String nombre, String nombreUsuario, String contraseña, int edad, String sexo, String tipoUsuario) {
-        if (contraseña == null || nombreUsuario == "" || nombre == "") {
+        if (contraseña == null) {
             return false;
         }
     
@@ -219,9 +220,9 @@ public class GuardarInformacion {
         }
         
         // Si no existe, agregarlo a la lista
-        Usuario usuarioNuevo = new Usuario(id, nombre, nombreUsuario, contraseña, edad, sexo, tipoUsuario);
-        listaUsuarios.add(usuarioNuevo);
-        this.usuarioActual = usuarioNuevo;
+        Usuario usuario = new Usuario(id, nombre, nombreUsuario, contraseña, edad, sexo, tipoUsuario);
+        listaUsuarios.add(usuario);
+        usuarioActual = usuario;
         return true;
     }
     
@@ -407,7 +408,7 @@ public class GuardarInformacion {
      */
     public void guardarMedicamentosCSV() {
         try (FileWriter writer = new FileWriter("Medicamentos.csv", false)) {
-            for (Usuario usuario: listaUsuarios){
+            for(Usuario usuario: listaUsuarios){
                 for (Paciente paciente : usuario.getPacientes()) {
                     for (Medicamento medicamento : paciente.getMedicamentos()) {
                         writer.append(paciente.getId())

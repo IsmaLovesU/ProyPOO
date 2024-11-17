@@ -128,6 +128,16 @@ public class App {
         frame.setVisible(true);
     }
 
+    /**
+    * Muestra el panel de registro de pacientes en la ventana principal.
+    */
+    public void mostrarConfigPacientePanel(Paciente paciente) {
+        ConfigPacientePanel configPacientePanel = new ConfigPacientePanel(this, gestion, paciente);
+        frame.setContentPane(configPacientePanel);
+        frame.revalidate();
+        frame.repaint();
+        frame.setVisible(true);
+    }
 
     /**
      * Añade un paciente a la lista y actualiza el panel de pacientes.

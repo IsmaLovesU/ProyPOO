@@ -17,7 +17,7 @@ import java.awt.event.ActionListener;
  */
 public class RegistroGUI extends JPanel {
 
-    private JTextField txtName, txtUsername, txtedad, txtTipoUsuario; // Campos de texto para datos de usuario
+    private JTextField txtName, txtUsername, txtedad; // Campos de texto para datos de usuario
     private JPasswordField txtPassword; // Campo de texto para la contraseña
     private JButton btnRegister, btnRegreso; // Botones para registrar y regresar al login
     private GuardarInformacion gestion; // Objeto para manejar la gestión de la información

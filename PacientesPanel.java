@@ -115,7 +115,7 @@ public class PacientesPanel extends JPanel {
 
         switch (seleccion) {
             case 0 -> app.mostrarMedicamentosPanel(paciente);
-            case 1 -> JOptionPane.showMessageDialog(this, "Función de edición en construcción.");
+            case 1 -> app.mostrarConfigPacientePanel(paciente);
             case 2 -> eliminarPaciente(paciente);
         }
     }

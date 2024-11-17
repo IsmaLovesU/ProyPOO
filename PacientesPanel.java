@@ -37,6 +37,15 @@ public class PacientesPanel extends JPanel {
         setLayout(new BorderLayout()); // Establece el layout como BorderLayout
         setBackground(new Color(240, 248, 255)); // Establece el color de fondo
 
+        JPanel panelTitulo = new JPanel(new BorderLayout());
+        panelTitulo.setBackground(new Color(240, 248,255));
+
+
+        JLabel lblTitulo = new JLabel("Pacientes de " + gestion.devolverUsuario().getNombre());
+        lblTitulo.setFont(new Font("Impact", Font.CENTER_BASELINE, 30));
+        lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+        panelTitulo.add(lblTitulo, BorderLayout.NORTH);
+
         // Panel superior para el JComboBox y opciones
         JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
         panelSuperior.setBackground(new Color(240, 248, 255));
@@ -53,7 +62,8 @@ public class PacientesPanel extends JPanel {
         botonGestionarPaciente.addActionListener(e -> gestionarPacienteSeleccionado());
         panelSuperior.add(botonGestionarPaciente);
 
-        add(panelSuperior, BorderLayout.NORTH);
+        panelTitulo.add(panelSuperior, BorderLayout.CENTER);
+        add(panelTitulo, BorderLayout.NORTH);
 
         // Panel inferior para los botones adicionales
         JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));

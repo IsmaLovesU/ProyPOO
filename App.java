@@ -97,7 +97,7 @@ public class App {
      */
     public void mostrarPacientesPanel() {
         listaPacientes = gestion.devolverPacientes();
-        frame.setContentPane(new PacientesPanel(this,  listaPacientes)); // Crea y establece el panel de pacientes
+        frame.setContentPane(new PacientesPanel(this,  listaPacientes, gestion)); // Crea y establece el panel de pacientes
         frame.revalidate(); // Vuelve a validar el contenido del frame
         frame.repaint(); // Redibuja el frame
         frame.setVisible(true); // Asegura que la ventana esté visible

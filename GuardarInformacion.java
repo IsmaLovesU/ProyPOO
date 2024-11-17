@@ -19,8 +19,6 @@ import java.io.FileReader;
  */
 public class GuardarInformacion {
     private List<Usuario> listaUsuarios;
-    private List<Paciente> listaPacientes;
-    private List<Medicamento> listaMedicamentos;
     private Usuario usuarioActual;
 
 
@@ -35,8 +33,6 @@ public class GuardarInformacion {
      */
     public GuardarInformacion() {
         listaUsuarios = new ArrayList<>();
-        listaPacientes = new ArrayList<>();
-        listaMedicamentos = new ArrayList<>();
         cargarUsuariosDesdeCSV();  // Nuevo método para cargar los usuarios
         cargarPacientesDesdeCSV();  // Nuevo método para cargar los pacientes
         cargarMedicamentosDesdeCSV();  // Nuevo método para cargar los medicamentos
@@ -96,7 +92,6 @@ public class GuardarInformacion {
                         usuario.agregarPaciente(paciente);
                     }
                 }
-                listaPacientes.add(paciente);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -132,7 +127,6 @@ public class GuardarInformacion {
                     }
                 }
                 // Agregar el medicamento a la lista general
-                listaMedicamentos.add(medicamento);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -244,11 +238,9 @@ public class GuardarInformacion {
         for (Usuario usuario : listaUsuarios) {
             if (usuario.getId().equals(idUsuario)) {
                 usuario.agregarPaciente(nuevoPaciente); // Agregar paciente al usuario
-                break;
             }
         }
     
-        listaPacientes.add(nuevoPaciente); // Agregar paciente a la lista general
         //guardarPacientesCSV(); // Guardar el paciente en el archivo CSV
     }
 
@@ -263,11 +255,12 @@ public class GuardarInformacion {
      */
     public void crearMedicamento(String idPaciente, String nombreM, String descripcion, int dosis, float inventario) {
         Medicamento medicamento = new Medicamento(idPaciente, nombreM, descripcion, dosis, inventario);
-
-        for (Paciente paciente : listaPacientes) {
-            if (paciente.getId().equals(idPaciente)) {
-                paciente.agregarMedicamentos(medicamento);
-                break;
+        for (Usuario usuario: listaUsuarios){
+            for (Paciente paciente : usuario.getPacientes()) {
+                if (paciente.getId().equals(idPaciente)) {
+                    paciente.agregarMedicamentos(medicamento);
+                    break;
+                }
             }
         }
         guardarMedicamentosCSV();
@@ -285,28 +278,30 @@ public class GuardarInformacion {
      * @throws IOException Si ocurre un error al leer o escribir en el archivo CSV.
      */
     public void eliminarMedicamento(String idPaciente, String nombreMedicamentoAEliminar) {
-        for (Paciente paciente : listaPacientes) {
-            if (paciente.getId().equals(idPaciente)) {
-                // Busca el medicamento a eliminar
-                Medicamento medicamentoAEliminar = null;
-                for (Medicamento medicamento : paciente.getMedicamentos()) {
-                    if (medicamento.getNombre().equals(nombreMedicamentoAEliminar)) {
-                        medicamentoAEliminar = medicamento;
-                        break;
+        for(Usuario usuario: listaUsuarios){
+            for (Paciente paciente : usuario.getPacientes()) {
+                if (paciente.getId().equals(idPaciente)) {
+                    // Busca el medicamento a eliminar
+                    Medicamento medicamentoAEliminar = null;
+                    for (Medicamento medicamento : paciente.getMedicamentos()) {
+                        if (medicamento.getNombre().equals(nombreMedicamentoAEliminar)) {
+                            medicamentoAEliminar = medicamento;
+                            break;
+                        }
                     }
+        
+                    // Si se encontró el medicamento, lo elimina
+                    if (medicamentoAEliminar != null) {
+                        paciente.getMedicamentos().remove(medicamentoAEliminar);
+                        System.out.println("Medicamento eliminado: " + nombreMedicamentoAEliminar);
+                    } else {
+                        System.out.println("Medicamento no encontrado: " + nombreMedicamentoAEliminar);
+                    }
+        
+                    // Guarda la lista actualizada en el archivo CSV
+                    guardarMedicamentosCSV();
+                    break; // Salimos del bucle una vez que hemos procesado el paciente
                 }
-    
-                // Si se encontró el medicamento, lo elimina
-                if (medicamentoAEliminar != null) {
-                    paciente.getMedicamentos().remove(medicamentoAEliminar);
-                    System.out.println("Medicamento eliminado: " + nombreMedicamentoAEliminar);
-                } else {
-                    System.out.println("Medicamento no encontrado: " + nombreMedicamentoAEliminar);
-                }
-    
-                // Guarda la lista actualizada en el archivo CSV
-                guardarMedicamentosCSV();
-                break; // Salimos del bucle una vez que hemos procesado el paciente
             }
         }
     }

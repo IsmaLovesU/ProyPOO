@@ -205,7 +205,7 @@ public class GuardarInformacion {
      * @param tipoUsuario El tipo de usuario (doctor, administrador, etc.).
      */
      public boolean registroUsuario(String id, String nombre, String nombreUsuario, String contraseña, int edad, String sexo, String tipoUsuario) {
-        if (contraseña == null || nombreUsuario == "" || nombre == "") {
+        if (contraseña == null) {
             return false;
         }
     
@@ -224,9 +224,9 @@ public class GuardarInformacion {
         }
         
         // Si no existe, agregarlo a la lista
-        Usuario usuarioNuevo = new Usuario(id, nombre, nombreUsuario, contraseña, edad, sexo, tipoUsuario);
-        listaUsuarios.add(usuarioNuevo);
-        this.usuarioActual = usuarioNuevo;
+        Usuario usuario = new Usuario(id, nombre, nombreUsuario, contraseña, edad, sexo, tipoUsuario);
+        listaUsuarios.add(usuario);
+        usuarioActual = usuario;
         return true;
     }
     

@@ -420,6 +420,10 @@ public class GuardarInformacion {
         }
     }
 
+    /**
+     * Genera un reporte con estadísticas generales del sistema.
+     * Muestra el número total de usuarios, pacientes, medicamentos registrados y el promedio de meciamentos por pacientes.
+     */
     public void generarEstadisticas() {
         System.out.println("Total de usuarios registrados: " + listaUsuarios.size());
         System.out.println("Total de pacientes registrados: " + listaPacientes.size());

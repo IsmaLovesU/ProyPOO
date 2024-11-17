@@ -16,7 +16,7 @@ public class ConfigPacientePanel extends JPanel {
     private JTextArea txtMedicamentos;
     private JTextArea txtInformacionAdicional;
     private JButton btnGuardar;
-    private JButton btnCancelar;
+    private JButton btnRegresar;
 
     private App app;
     private Paciente paciente;
@@ -107,17 +107,18 @@ public class ConfigPacientePanel extends JPanel {
         btnGuardar.setBackground(new Color(34, 139, 34)); // Verde para guardar
         btnGuardar.setForeground(Color.WHITE);
         btnGuardar.addActionListener(e -> guardarCambios());
+        btnGuardar.addActionListener(e-> app.mostrarPacientesPanel());
         gbc.gridx = 1;
         gbc.gridy = 6;
         add(btnGuardar, gbc);
 
-        // Botón Cancelar
-        btnCancelar = new JButton("Cancelar");
-        btnCancelar.setBackground(Color.RED);
-        btnCancelar.setForeground(Color.WHITE);
-        btnCancelar.addActionListener(e -> app.mostrarPacientesPanel());
+        // Botón Regresar
+        btnRegresar = new JButton("Regresar");
+        btnRegresar.setBackground(Color.RED);
+        btnRegresar.setForeground(Color.WHITE);
+        btnRegresar.addActionListener(e -> app.mostrarPacientesPanel());
         gbc.gridx = 2;
-        add(btnCancelar, gbc);
+        add(btnRegresar, gbc);
     }
 
 private void guardarCambios() {

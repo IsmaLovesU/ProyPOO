@@ -226,6 +226,7 @@ public class GuardarInformacion {
         // Si no existe, agregarlo a la lista
         Usuario usuario = new Usuario(id, nombre, nombreUsuario, contraseña, edad, sexo, tipoUsuario);
         listaUsuarios.add(usuario);
+        usuarioActual = usuario;
         return true;
     }
     
@@ -454,6 +455,7 @@ public class GuardarInformacion {
 
             // Verificamos si el nombre de usuario y la contraseña coinciden
             if (usuario.getNombreUsuario().equals(nombreUsuario) && contrasenaDescifrada.equals(contrasena)) {
+                this.usuarioActual = usuario;
                 return true;
             }
         }
@@ -463,20 +465,18 @@ public class GuardarInformacion {
         return false;
     }
 
-    public void obtenerUsuario(String nombereUsuario){
-        for(Usuario usuario: listaUsuarios){
-            if(nombereUsuario.equals(usuario.getNombreUsuario())){
-                this.usuarioActual = usuario;
-
-                System.out.println(usuarioActual.getNombre());
-            }
-        }
-    }
-
     public Usuario devolverUsuario(){
         return usuarioActual;
     }
 
+    public ArrayList<Paciente> devolverPacientes() {
+        if (usuarioActual == null) {
+            System.out.println("Error: usuarioActual es null. No se pueden devolver pacientes.");
+            return new ArrayList<>(); // Devuelve una lista vacía para evitar errores
+        }
+        return usuarioActual.getPacientes();
+    }
+    
     
 
 }

@@ -42,15 +42,12 @@ public class App {
      */
     public App() {
         gestion = new GuardarInformacion(); // Inicializa el gestor de información
-        listaPacientes = gestion.devolverUsuario().getPacientes();// Inicializa la lista de pacientes
         
         // Creación de pacientes de prueba        
         frame = new JFrame("LOG In"); // Configura la ventana del login
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la aplicación al cerrar la ventana
         frame.setSize(600, 500); // Establece el tamaño de la ventana
         frame.setLocationRelativeTo(null); // Centra la ventana en la pantalla
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la aplicación al cerrar la ventana
 
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -80,6 +77,7 @@ public class App {
         RegistroGUI registroPanel = new RegistroGUI(this, gestion); // Crea el panel de registro
         frame.setContentPane(registroPanel); // Establece el contenido del frame
         frame.setVisible(true); // Muestra la ventana
+        
     }
 
     /**
@@ -98,7 +96,8 @@ public class App {
      * Permite la visualización de los pacientes disponibles.
      */
     public void mostrarPacientesPanel() {
-        frame.setContentPane(new PacientesPanel(this, listaPacientes)); // Crea y establece el panel de pacientes
+        listaPacientes = gestion.devolverPacientes();
+        frame.setContentPane(new PacientesPanel(this,  listaPacientes)); // Crea y establece el panel de pacientes
         frame.revalidate(); // Vuelve a validar el contenido del frame
         frame.repaint(); // Redibuja el frame
         frame.setVisible(true); // Asegura que la ventana esté visible

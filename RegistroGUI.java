@@ -166,7 +166,6 @@ public class RegistroGUI extends JPanel {
             // Registra al usuario si la contraseña es válida
             gestion.registroUsuario(id, nombre, nombreUsuario, contraseña,edad, genero, tipo);
             app.mostrarPacientesPanel(); // Muestra el panel de pacientes
-            gestion.obtenerUsuario(nombreUsuario);
         }
     }
 }

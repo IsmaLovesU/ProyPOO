@@ -483,6 +483,39 @@ public class GuardarInformacion {
         }
         return usuarioActual.getPacientes();
     }
+
+    /**
+     * Genera un reporte con estadísticas generales del sistema.
+     * Muestra el número total de usuarios, pacientes, medicamentos registrados y el promedio de meciamentos por pacientes.
+     */
+    public Object[] generarEstadisticas() {
+        int totalUsuarios = listaUsuarios.size();
+        int totalPacientes = 0;
+        int totalMedicamentos = 0;
+    
+        // Iterar sobre cada usuario y calcular el total de pacientes y medicamentos
+        for (Usuario usuario : listaUsuarios) {
+            List<Paciente> pacientes = usuario.getPacientes(); // Obtener pacientes del usuario
+            totalPacientes += pacientes.size();
+    
+            for (Paciente paciente : pacientes) {
+                totalMedicamentos += paciente.getMedicamentos().size(); // Contar medicamentos
+            }
+        }
+    
+        // Calcular el promedio de medicamentos por paciente
+        Object promedioMedicamentosPorPaciente = (totalPacientes > 0) 
+                ? (double) totalMedicamentos / totalPacientes 
+                : "No hay pacientes registrados para calcular el promedio.";
+    
+        // Retornar las estadísticas como un arreglo de objetos
+        return new Object[] {
+            "Total de usuarios registrados", totalUsuarios,
+            "Total de pacientes registrados", totalPacientes,
+            "Total de medicamentos registrados", totalMedicamentos,
+            "Promedio de medicamentos por paciente", promedioMedicamentosPorPaciente
+        };
+    }
     
     
 

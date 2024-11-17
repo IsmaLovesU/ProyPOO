@@ -18,7 +18,7 @@ public class Usuario {
     private int edad;
     private String sexo;
     private String tipoUsuario;
-    private List<Paciente> pacientes;
+    private ArrayList<Paciente> pacientes;
 
     public Usuario(String id, String nombre, String nombreUsuario, String contrasena, int edad, String sexo, String tipoUsuario) {
         this.id = id;
@@ -91,7 +91,7 @@ public class Usuario {
         pacientes.add(paciente);
     }
 
-    public List<Paciente> getPacientes() {
+    public ArrayList<Paciente> getPacientes() {
         return pacientes;
     }
 

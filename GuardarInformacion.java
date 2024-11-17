@@ -4,6 +4,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Clase que maneja la gestión de información para usuarios, pacientes y medicamentos.
@@ -424,20 +426,24 @@ public class GuardarInformacion {
      * Genera un reporte con estadísticas generales del sistema.
      * Muestra el número total de usuarios, pacientes, medicamentos registrados y el promedio de meciamentos por pacientes.
      */
-    public void generarEstadisticas() {
-        System.out.println("Total de usuarios registrados: " + listaUsuarios.size());
-        System.out.println("Total de pacientes registrados: " + listaPacientes.size());
-        System.out.println("Total de medicamentos registrados: " + listaMedicamentos.size());
-
+    public Map<String, Object> generarEstadisticas() {
+        Map<String, Object> estadisticas = new HashMap<>();
+        
+        // Calcular las estadísticas
+        estadisticas.put("totalUsuarios", listaUsuarios.size());
+        estadisticas.put("totalPacientes", listaPacientes.size());
+        estadisticas.put("totalMedicamentos", listaMedicamentos.size());
+        
         if (!listaPacientes.isEmpty()) {
             int totalMedicamentosAsociados = listaPacientes.stream()
                 .mapToInt(paciente -> paciente.getMedicamentos().size())
                 .sum();
-            System.out.println("Promedio de medicamentos por paciente: " +
-                    (double) totalMedicamentosAsociados / listaPacientes.size());
+            double promedioMedicamentos = (double) totalMedicamentosAsociados / listaPacientes.size();
+            estadisticas.put("promedioMedicamentosPorPaciente", promedioMedicamentos);
         } else {
-            System.out.println("No hay pacientes registrados para calcular promedios.");
+            estadisticas.put("promedioMedicamentosPorPaciente", "No hay pacientes registrados para calcular promedios.");
         }
+        
+        return estadisticas;
     }
-}
 

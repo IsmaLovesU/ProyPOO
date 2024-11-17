@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.time.LocalTime;
 
 /**
  * Clase que maneja la gestión de información para usuarios, pacientes y medicamentos.
@@ -107,15 +108,16 @@ public class GuardarInformacion {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                String idMedicamento = datos[0]; // Generar nuevo ID para el medicamento
-                String idPaciente = datos[1]; // Obtener el ID del paciente
+                String idPaciente = datos[0]; // Obtener el ID del paciente
+                String idMedicamento = datos[1]; // Generar nuevo ID para el medicamento
                 String nombreMedicamento = datos[2];
                 String descripcion = datos[3];
                 int dosis = Integer.parseInt(datos[4]);
-                float inventario = Float.parseFloat(datos[5]);
+                LocalTime horaSuministro = LocalTime.parse(datos[5]);
+                float inventario = Float.parseFloat(datos[6]);
 
                 // Crear el objeto Medicamento
-                Medicamento medicamento = new Medicamento(idMedicamento, nombreMedicamento, descripcion, dosis, inventario);
+                Medicamento medicamento = new Medicamento(idMedicamento, nombreMedicamento, descripcion, dosis, horaSuministro, inventario);
 
                 // Buscar el paciente correspondiente por el idPaciente
                 for(Usuario usuario: listaUsuarios){
@@ -245,27 +247,27 @@ public class GuardarInformacion {
         //guardarPacientesCSV(); // Guardar el paciente en el archivo CSV
     }
 
-    /**
-     * Crea un nuevo medicamento asociado a un paciente y lo agrega a la lista de medicamentos del paciente.
-     * 
-     * @param idPaciente El identificador del paciente.
-     * @param nombreM El nombre del medicamento.
-     * @param descripcion La descripción del medicamento.
-     * @param dosis La dosis recomendada.
-     * @param inventario La cantidad disponible en inventario.
-     */
-    public void crearMedicamento(String idPaciente, String nombreM, String descripcion, int dosis, float inventario) {
-        Medicamento medicamento = new Medicamento(idPaciente, nombreM, descripcion, dosis, inventario);
-        for (Usuario usuario: listaUsuarios){
-            for (Paciente paciente : usuario.getPacientes()) {
-                if (paciente.getId().equals(idPaciente)) {
-                    paciente.agregarMedicamentos(medicamento);
-                    break;
-                }
-            }
-        }
-        guardarMedicamentosCSV();
-    }
+    // /**
+    //  * Crea un nuevo medicamento asociado a un paciente y lo agrega a la lista de medicamentos del paciente.
+    //  * 
+    //  * @param idPaciente El identificador del paciente.
+    //  * @param nombreM El nombre del medicamento.
+    //  * @param descripcion La descripción del medicamento.
+    //  * @param dosis La dosis recomendada.
+    //  * @param inventario La cantidad disponible en inventario.
+    //  */
+    // public void crearMedicamento(String idPaciente, String nombreM, String descripcion, int dosis, float inventario) {
+    //     Medicamento medicamento = new Medicamento(idPaciente, nombreM, descripcion, dosis, inventario);
+    //     for (Usuario usuario: listaUsuarios){
+    //         for (Paciente paciente : usuario.getPacientes()) {
+    //             if (paciente.getId().equals(idPaciente)) {
+    //                 paciente.agregarMedicamentos(medicamento);
+    //                 break;
+    //             }
+    //         }
+    //     }
+    //     guardarMedicamentosCSV();
+    // }
 
     /**
      * Elimina un medicamento del archivo CSV "Medicamentos.csv" basado en el ID proporcionado.
@@ -420,6 +422,8 @@ public class GuardarInformacion {
                             .append(medicamento.getDescripcion())
                             .append(",")
                             .append(String.valueOf(medicamento.getDosis()))
+                            .append(",")
+                            .append(medicamento.getHorarioDeSuministro().toString())
                             .append(",")
                             .append(String.valueOf(medicamento.getInventario()))
                             .append("\n");

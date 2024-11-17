@@ -20,11 +20,12 @@ public class Medicamento {
 
     
 
-    public Medicamento(String id, String nombre, String descripcion, int dosis, float inventario) {
+    public Medicamento(String id, String nombre, String descripcion, int dosis, LocalTime horarioSuministro, float inventario) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.dosis = dosis;
+        this.horarioSuministro = horarioSuministro;
         this.inventario = inventario;
     }
 

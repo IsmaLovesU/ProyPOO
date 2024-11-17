@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalTime;
 
 /**
  * Clase que representa la interfaz gráfica para registrar un medicamento.
@@ -10,6 +11,7 @@ import java.awt.event.ActionListener;
 public class RegistroMedicamentoPanel extends JPanel {
 
     private JTextField txtNombre, txtDescripcion, txtDosis, txtInventario; // Campos de texto para datos del medicamento
+    private JComboBox<String> opcionHora, opcionMinutos;
     private JButton btnRegistrar, btnRegresar; // Botones para registrar y regresar
     private App app; // Instancia principal de la aplicación
     private Paciente paciente; // Paciente asociado al medicamento
@@ -80,6 +82,30 @@ public class RegistroMedicamentoPanel extends JPanel {
         gbc.gridx = 1;
         add(txtInventario, gbc);
 
+        JLabel lbHora = new JLabel("Hora de suministro");
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        add(lbHora, gbc);
+        
+        opcionHora = new JComboBox<>();
+        for(int i = 0; i < 24; i++){
+            opcionHora.addItem(String.format("%02d", i));
+        }
+        gbc.gridx = 1;
+        add(opcionHora, gbc);
+
+        JLabel lblMinutos = new JLabel("Minutos: ");
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        add(lblMinutos, gbc);
+
+        opcionMinutos = new JComboBox<>();
+        for(int i = 0; i< 60; i+=15){
+            opcionMinutos.addItem(String.format("%2d", i));
+        }
+        gbc.gridx =1;
+        add(opcionMinutos, gbc);
+
         btnRegistrar = new JButton("Registrar Medicamento");
         btnRegistrar.addActionListener(new ActionListener() {
             @Override
@@ -88,7 +114,7 @@ public class RegistroMedicamentoPanel extends JPanel {
             }
         });
         gbc.gridx = 0;
-        gbc.gridy = 5;
+        gbc.gridy = 7;
         add(btnRegistrar, gbc);
 
         btnRegresar = new JButton("Regresar");
@@ -119,10 +145,14 @@ public class RegistroMedicamentoPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "Dosis e inventario deben ser valores numéricos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+
+        int hora = Integer.parseInt((String) opcionHora.getSelectedItem());
+        int minutos = Integer.parseInt((String) opcionMinutos.getSelectedItem());
+        LocalTime horaSuministro = LocalTime.of(hora, minutos);
     
         // Generar el ID único para el medicamento
         String idMedicamento = generadorId.generarId();
-        Medicamento nuevoMedicamento = new Medicamento(idMedicamento, nombre, descripcion, dosis, inventario);
+        Medicamento nuevoMedicamento = new Medicamento(idMedicamento, nombre, descripcion, dosis, horaSuministro ,inventario);
     
         // Asociar el medicamento con el paciente actual
         paciente.agregarMedicamentos(nuevoMedicamento);

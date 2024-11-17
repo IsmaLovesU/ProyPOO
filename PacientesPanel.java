@@ -19,6 +19,7 @@ public class PacientesPanel extends JPanel {
     private App app; // Referencia a la aplicación principal
     private ArrayList<Paciente> listaPacientes; // Lista de pacientes disponibles
     private JComboBox<String> comboPacientes; // JComboBox para mostrar los nombres de los pacientes
+    private GuardarInformacion gestion;
 
     /**
      * Constructor de la clase PacientesPanel.
@@ -28,9 +29,10 @@ public class PacientesPanel extends JPanel {
      * @param app       Instancia principal de la aplicación.
      * @param pacientes Lista de pacientes a mostrar en el JComboBox.
      */
-    public PacientesPanel(App app, ArrayList<Paciente> pacientes) {
+    public PacientesPanel(App app, ArrayList<Paciente> pacientes, GuardarInformacion gestion1) {
         this.app = app;
         this.listaPacientes = pacientes;
+        this.gestion = gestion1;
 
         setLayout(new BorderLayout()); // Establece el layout como BorderLayout
         setBackground(new Color(240, 248, 255)); // Establece el color de fondo

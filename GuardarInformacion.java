@@ -421,10 +421,19 @@ public class GuardarInformacion {
     }
 
     public void generarEstadisticas() {
-        System.out.println("===== Estadísticas Generales =====");
         System.out.println("Total de usuarios registrados: " + listaUsuarios.size());
         System.out.println("Total de pacientes registrados: " + listaPacientes.size());
         System.out.println("Total de medicamentos registrados: " + listaMedicamentos.size());
+
+        if (!listaPacientes.isEmpty()) {
+            int totalMedicamentosAsociados = listaPacientes.stream()
+                .mapToInt(paciente -> paciente.getMedicamentos().size())
+                .sum();
+            System.out.println("Promedio de medicamentos por paciente: " +
+                    (double) totalMedicamentosAsociados / listaPacientes.size());
+        } else {
+            System.out.println("No hay pacientes registrados para calcular promedios.");
+        }
     }
 }
 

@@ -146,6 +146,18 @@ public class App {
     }
 
     /**
+    * Muestra el panel de registro de medicamentos en la ventana principal.
+    */
+    public void mostrarConfigMedicamentosPanel(Medicamento medicamento) {
+        ConfigMedicamentoPanel configMedicamentoPanel = new ConfigMedicamentoPanel(this, medicamento);
+        frame.setContentPane(configMedicamentoPanel);
+        frame.revalidate();
+        frame.repaint();
+        frame.setVisible(true);
+    }
+
+
+    /**
      * Añade un paciente a la lista y actualiza el panel de pacientes.
      *
      * @param paciente El paciente que se desea agregar.

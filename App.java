@@ -119,6 +119,18 @@ public class App {
     }
 
     /**
+     * Muestra el panel de registro de pacientes en la ventana principal.
+     */
+    public void mostrarConfigUsuarioPanel() {
+        ConfigUsuarioPanel configUsuarioPanel = new ConfigUsuarioPanel(this, gestion);
+        frame.setContentPane(configUsuarioPanel);
+        frame.revalidate();
+        frame.repaint();
+        frame.setVisible(true);
+    }
+
+
+    /**
      * Añade un paciente a la lista y actualiza el panel de pacientes.
      *
      * @param paciente El paciente que se desea agregar.

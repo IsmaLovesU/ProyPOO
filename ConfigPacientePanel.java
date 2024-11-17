@@ -22,8 +22,8 @@ public class ConfigPacientePanel extends JPanel {
     private Paciente paciente;
     private GuardarInformacion gestion;
 
-    public ConfigPacientePanel(App app, GuardarInformacion gestion, Paciente paciente) {
-        this.app = app;
+    public ConfigPacientePanel(App app1, GuardarInformacion gestion, Paciente paciente) {
+        this.app = app1;
         this.gestion = gestion;
         this.paciente = paciente;
 

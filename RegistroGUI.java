@@ -17,12 +17,13 @@ import java.awt.event.ActionListener;
  */
 public class RegistroGUI extends JPanel {
 
-    private JTextField txtName, txtUsername, txtedad, txtGenero, txtTipoUsuario; // Campos de texto para datos de usuario
+    private JTextField txtName, txtUsername, txtedad, txtTipoUsuario; // Campos de texto para datos de usuario
     private JPasswordField txtPassword; // Campo de texto para la contraseña
     private JButton btnRegister, btnRegreso; // Botones para registrar y regresar al login
     private GuardarInformacion gestion; // Objeto para manejar la gestión de la información
     private App app; // Referencia a la instancia principal de la aplicación
     private GeneradorId generadorId; // Objeto para generar identificadores únicos
+    private JComboBox<String> opcionGenero, opcionTipo;  // ComboBox para el género
 
     /**
      * Constructor de la clase RegistroGUI.
@@ -95,18 +96,19 @@ public class RegistroGUI extends JPanel {
         gbc.gridy = 2;
         add(lblGenero, gbc);
 
-        txtGenero = new JTextField(12); // Campo para ingresar el género
+        opcionGenero = new JComboBox<>(new String []{ "Hombre", "Mujer", "Otro"});
         gbc.gridx = 3;
-        add(txtGenero, gbc);
+        add(opcionGenero, gbc);
 
         JLabel lblTipoUsuario = new JLabel("Tipo de usuario:");
         gbc.gridx = 2;
         gbc.gridy = 3;
         add(lblTipoUsuario, gbc);
 
-        txtTipoUsuario = new JTextField(12); // Campo para ingresar el tipo de usuario
+        opcionTipo = new JComboBox<>(new String []{"Doctor", "Familiar", "Encargado"}); // Campo para ingresar el tipo de usuario
         gbc.gridx = 3;
-        add(txtTipoUsuario, gbc);
+        add(opcionTipo, gbc);
+
 
         btnRegister = new JButton("Regístrate"); // Botón para registrarse
         btnRegister.setBackground(Color.ORANGE); // Color de fondo del botón
@@ -151,8 +153,8 @@ public class RegistroGUI extends JPanel {
             JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido para la edad.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        String genero = txtGenero.getText(); // Obtiene el género
-        String tipo = txtTipoUsuario.getText(); // Obtiene el tipo de usuario
+        String genero = (String) opcionGenero.getSelectedItem(); // Obtiene el género
+        String tipo = (String) opcionTipo.getSelectedItem(); // Obtiene el tipo de usuario
 
         String id = generadorId.generarId(); // Genera un ID único
         System.out.println(id); // Imprime el ID generado (solo para pruebas)
@@ -162,7 +164,12 @@ public class RegistroGUI extends JPanel {
             JOptionPane.showMessageDialog(this, 
                 "La contraseña no cumple con los requisitos necesarios. Debe tener minúsculas, mayúsculas, números, mínimo 10 caracteres, sin símbolos", 
                 "Alerta", JOptionPane.ERROR_MESSAGE);
-        } else {
+        } else if(!gestion.registroUsuario(id, nombre, nombreUsuario, contraseña, edad, id, nombreUsuario)){
+            JOptionPane.showMessageDialog(this, "El nombre de usuario ya existe", "Alerta",JOptionPane.ERROR_MESSAGE);
+        }else if(nombre.trim().isEmpty()|| nombreUsuario.trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Los campos no pueden estar vacíos, llene los campos porfavor.", "Error de entreda", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
             // Registra al usuario si la contraseña es válida
             gestion.registroUsuario(id, nombre, nombreUsuario, contraseña,edad, genero, tipo);
             app.mostrarPacientesPanel(); // Muestra el panel de pacientes

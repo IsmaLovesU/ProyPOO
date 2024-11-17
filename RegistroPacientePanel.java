@@ -105,8 +105,8 @@ public class RegistroPacientePanel extends JPanel {
         btnRegresar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Regresando al panel anterior.");
-                // Aquí podrías agregar la lógica para regresar a la pantalla anterior
+                JOptionPane.showMessageDialog(null, "Regresando a inicio.");
+                app.mostrarPacientesPanel();
             }
         });
         gbc.gridx = 2;

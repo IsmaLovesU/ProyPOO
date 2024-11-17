@@ -146,8 +146,8 @@ public class RegistroMedicamentoPanel extends JPanel {
             return;
         }
 
-        int hora = Integer.parseInt((String) opcionHora.getSelectedItem());
-        int minutos = Integer.parseInt((String) opcionMinutos.getSelectedItem());
+        int hora = Integer.parseInt(opcionHora.getSelectedItem().toString().trim());
+        int minutos = Integer.parseInt(opcionMinutos.getSelectedItem().toString().trim());
         LocalTime horaSuministro = LocalTime.of(hora, minutos);
     
         // Generar el ID único para el medicamento

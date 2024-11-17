@@ -105,7 +105,7 @@ public class MedicamentosPanel extends JPanel {
      * @param medicamento Medicamento del cual se mostrarán las opciones.
      */
     private void mostrarOpcionesMedicamento(Medicamento medicamento) {
-        String[] opciones = {"Ver Información", "Eliminar Medicamento"};
+        String[] opciones = {"Ver Información", "Eliminar Medicamento", "Editar Medicamento"};
         int seleccion = JOptionPane.showOptionDialog(
                 this,
                 "Seleccione una opción para: " + medicamento.getNombre(),
@@ -121,6 +121,7 @@ public class MedicamentosPanel extends JPanel {
         switch (seleccion) {
             case 0 -> JOptionPane.showMessageDialog(this, medicamento.toString()); // Muestra información del medicamento.
             case 1 -> eliminarMedicamento(medicamento); // Elimina el medicamento.
+            case 2 -> app.mostrarConfigMedicamentosPanel(medicamento);
         }
     }
 

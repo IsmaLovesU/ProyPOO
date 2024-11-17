@@ -105,10 +105,8 @@ public class RegistroPacientePanel extends JPanel {
         btnRegresar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
                 JOptionPane.showMessageDialog(null, "Regresando a inicio.");
-=======
->>>>>>> a682a114bdb34165a7f476410e3acd54de72c280
+
                 app.mostrarPacientesPanel();
             }
         });

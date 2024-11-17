@@ -112,8 +112,8 @@ public class GuardarInformacion {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                String idMedicamento = datos[0]; // Generar nuevo ID para el medicamento
-                String idPaciente = datos[1]; // Obtener el ID del paciente
+                String idPaciente = datos[0]; // Obtener el ID del paciente
+                String idMedicamento = datos[1]; // Generar nuevo ID para el medicamento
                 String nombreMedicamento = datos[2];
                 String descripcion = datos[3];
                 int dosis = Integer.parseInt(datos[4]);
@@ -123,11 +123,12 @@ public class GuardarInformacion {
                 Medicamento medicamento = new Medicamento(idMedicamento, nombreMedicamento, descripcion, dosis, inventario);
 
                 // Buscar el paciente correspondiente por el idPaciente
-                for (Paciente paciente : listaPacientes) {
-                    if (paciente.getId().equals(idPaciente)) {
-                        // Asocia el medicamento con el paciente
-                        paciente.agregarMedicamentos(medicamento);
-                        break;
+                for(Usuario usuario: listaUsuarios){
+                    for (Paciente paciente : usuario.getPacientes()) {
+                        if (paciente.getId().equals(idPaciente)) {
+                            // Asocia el medicamento con el paciente
+                            paciente.agregarMedicamentos(medicamento);
+                        }
                     }
                 }
                 // Agregar el medicamento a la lista general
@@ -411,20 +412,22 @@ public class GuardarInformacion {
      */
     public void guardarMedicamentosCSV() {
         try (FileWriter writer = new FileWriter("Medicamentos.csv", false)) {
-            for (Paciente paciente : listaPacientes) {
-                for (Medicamento medicamento : paciente.getMedicamentos()) {
-                    writer.append(paciente.getId())
-                          .append(",")
-                          .append(medicamento.getId())
-                          .append(",")
-                          .append(medicamento.getNombre())
-                          .append(",")
-                          .append(medicamento.getDescripcion())
-                          .append(",")
-                          .append(String.valueOf(medicamento.getDosis()))
-                          .append(",")
-                          .append(String.valueOf(medicamento.getInventario()))
-                          .append("\n");
+            for (Usuario usuario: listaUsuarios){
+                for (Paciente paciente : usuario.getPacientes()) {
+                    for (Medicamento medicamento : paciente.getMedicamentos()) {
+                        writer.append(paciente.getId())
+                            .append(",")
+                            .append(medicamento.getId())
+                            .append(",")
+                            .append(medicamento.getNombre())
+                            .append(",")
+                            .append(medicamento.getDescripcion())
+                            .append(",")
+                            .append(String.valueOf(medicamento.getDosis()))
+                            .append(",")
+                            .append(String.valueOf(medicamento.getInventario()))
+                            .append("\n");
+                    }
                 }
             }
             writer.flush();

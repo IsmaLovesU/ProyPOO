@@ -16,6 +16,7 @@ public class MainPrueba {
             System.out.println("6. Mostrar Pacientes por ID");
             System.out.println("7. Mostrar Datos de un Paciente");
             System.out.println("8. Mostrar Medicamentos de un Paciente");
+            System.out.println("9. Generar Estadísticas");
             System.out.println("0. Salir");
             System.out.print("Seleccione una opción: ");
             opcion = scanner.nextInt();
@@ -120,6 +121,10 @@ public class MainPrueba {
                     System.out.print("Ingrese el Nombre del Paciente: ");
                     String nombrePacienteMedicamentos = scanner.nextLine();
                     sistema.mostrarMedicamentosPaciente(idPacienteMedicamentos, nombrePacienteMedicamentos);
+                    break;
+                
+                case 9:
+                    sistema.generarEstadisticas();
                     break;
 
                 case 0:

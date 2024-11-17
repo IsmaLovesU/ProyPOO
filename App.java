@@ -9,6 +9,8 @@
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 /**
  * Clase principal de la aplicación de gestión de medicamentos.
@@ -43,11 +45,14 @@ public class App {
         gestion = new GuardarInformacion(); // Inicializa el gestor de información
         
         // Creación de pacientes de prueba        
-        frame = new JFrame("LOG In"); // Configura la ventana del login
+        frame = new JFrame("Pillas"); // Configura la ventana del login
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la aplicación al cerrar la ventana
         frame.setSize(600, 500); // Establece el tamaño de la ventana
         frame.setLocationRelativeTo(null); // Centra la ventana en la pantalla
 
+        // Cambiar el ícono del JFrame
+        Image icono = new ImageIcon(getClass().getResource("/resources/Logo.png")).getImage();
+        frame.setIconImage(icono);
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e){

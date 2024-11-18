@@ -39,7 +39,7 @@ public class RegistroMedicamentoPanel extends JPanel {
         gbc.insets = new Insets(10, 10, 10, 10); // Márgenes entre los componentes
 
         JLabel lblTitulo = new JLabel("Registrar Medicamento para " + paciente.getNombre());
-        lblTitulo.setFont(new Font("Impact", Font.BOLD, 20)); // Configura la fuente del título
+        lblTitulo.setFont(new Font("Impact", Font.BOLD, 25)); // Configura la fuente del título
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
@@ -107,6 +107,8 @@ public class RegistroMedicamentoPanel extends JPanel {
         add(opcionMinutos, gbc);
 
         btnRegistrar = new JButton("Registrar Medicamento");
+        btnRegistrar.setBackground(new Color (0, 41, 95, 255));
+        btnRegistrar.setForeground(Color.white);
         btnRegistrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -118,6 +120,7 @@ public class RegistroMedicamentoPanel extends JPanel {
         add(btnRegistrar, gbc);
 
         btnRegresar = new JButton("Regresar");
+        btnRegresar.setBackground(Color.RED);
         btnRegresar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

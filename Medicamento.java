@@ -96,13 +96,18 @@ public class Medicamento {
 
     @Override
     public String toString() {
-        return "Medicamento{" +
-                "nombre='" + nombre + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", dosis='" + dosis + '\'' +
-                ", horarioSuministro='" + horarioSuministro + '\'' +
-                ", recetado='" + recetado + '\'' +
-                ", inventario='" + inventario + '\'' +
-                '}';
+        String recetado1= "";
+        if (recetado){
+            recetado1 = "Si";
+        } else {
+            recetado1 = "no";
+        }
+        return "Medicamento" + "\n" +
+                "Nombre: " + nombre  + "\n" +
+                "Descripcion: " + descripcion + "\n" +
+                "Dosis: " + dosis + "\n" +
+                "Horario de suministro: " + horarioSuministro + "\n" +
+                "Recetado: " + recetado1 + "\n" +
+                "Inventario: " + inventario;
     }
 }

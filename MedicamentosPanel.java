@@ -35,7 +35,7 @@ public class MedicamentosPanel extends JPanel {
 
         // Título del panel que indica los medicamentos del paciente.
         JLabel titulo = new JLabel("Medicamentos de " + paciente.getNombre());
-        titulo.setFont(new Font("Arial", Font.BOLD, 16)); // Estilo del título.
+        titulo.setFont(new Font("Impact", Font.CENTER_BASELINE, 30)); // Estilo del título.
         titulo.setHorizontalAlignment(SwingConstants.CENTER); // Alineación del título.
         add(titulo, BorderLayout.NORTH); // Agrega el título en la parte superior del panel.
 
@@ -119,7 +119,7 @@ public class MedicamentosPanel extends JPanel {
 
         // Ejecuta la acción según la opción seleccionada.
         switch (seleccion) {
-            case 0 -> JOptionPane.showMessageDialog(this, medicamento.toString()); // Muestra información del medicamento.
+            case 0 -> JOptionPane.showMessageDialog(this, medicamento.toString(), "Información de medicamento", JOptionPane.INFORMATION_MESSAGE); // Muestra información del medicamento.
             case 1 -> generarSuministro(medicamento);
             case 2 -> eliminarMedicamento(medicamento); // Elimina el medicamento.
             case 3 -> app.mostrarConfigMedicamentosPanel(medicamento);
@@ -151,7 +151,7 @@ public class MedicamentosPanel extends JPanel {
      * @param boton El botón al que se le aplicará el estilo.
      */
     private void estilizarBoton(JButton boton) {
-        boton.setBackground(new Color(186, 85, 211)); // Color de fondo del botón.
+        boton.setBackground(new Color(228, 147, 19)); // Color de fondo del botón.
         boton.setForeground(Color.WHITE); // Color del texto del botón.
         boton.setFocusPainted(false); // Desactiva el efecto de foco.
         boton.setFont(new Font("Arial", Font.BOLD, 14)); // Establece la fuente del texto.

@@ -1,11 +1,18 @@
+/**
+ * Universidad del Valle de Gutemala
+ * Programación Orinetada a Objetos 
+ * Sección: 10
+ * Ing. Kimberly Barrera
+ * Proyecto - Pillas
+*/
+
 import java.util.List;
 import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.LocalTime;
 
 /**
  * Clase que maneja la gestión de información para usuarios, pacientes y medicamentos.
@@ -13,27 +20,35 @@ import java.util.Map;
  */
 public class GuardarInformacion {
     private List<Usuario> listaUsuarios;
-    private List<Paciente> listaPacientes;
-    private List<Medicamento> listaMedicamentos;
+    private Usuario usuarioActual;
 
+
+    public void listaUsuarios(){
+        for(Usuario usuario: listaUsuarios){
+            for(Paciente paciente: usuario.getPacientes()){
+                for (Medicamento medicamento: paciente.getMedicamentos()){
+                    System.out.println(medicamento.getNombre());
+                }
+            }
+        }
+    }
     /**
      * Constructor que inicializa las listas de usuarios y pacientes.
      * También carga los usuarios desde un archivo CSV al iniciar.
      */
     public GuardarInformacion() {
         listaUsuarios = new ArrayList<>();
-        listaPacientes = new ArrayList<>();
-        listaMedicamentos = new ArrayList<>();
         cargarUsuariosDesdeCSV();  // Nuevo método para cargar los usuarios
         cargarPacientesDesdeCSV();  // Nuevo método para cargar los pacientes
         cargarMedicamentosDesdeCSV();  // Nuevo método para cargar los medicamentos
     }
 
+    // Este método de prueba solo es para crear un usuario y que lo pruebe en la GUI, luego lo borro
     /**
      * Carga los usuarios desde un archivo CSV y los almacena en la lista de usuarios.
      * El archivo debe tener el formato: id, nombre, nombreUsuario, contrasena, edad, sexo, tipoUsuario.
      */
-    private void cargarUsuariosDesdeCSV() {
+    public void cargarUsuariosDesdeCSV() {
         try (BufferedReader reader = new BufferedReader(new FileReader("Usuarios.csv"))) {
             String linea;
             while ((linea = reader.readLine()) != null) {
@@ -69,13 +84,19 @@ public class GuardarInformacion {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                String idPaciente = datos[1]; 
+                String idUsuario = datos[0];
+                String idPaciente = datos[1];
                 String nombre = datos[2];
                 int edad = Integer.parseInt(datos[3]);
                 String informacionAdicional = datos[4];
-
+    
                 Paciente paciente = new Paciente(idPaciente, nombre, edad, informacionAdicional);
-                listaPacientes.add(paciente);
+    
+                for (Usuario usuario : listaUsuarios){
+                    if (usuario.getId().equals(idUsuario)){
+                        usuario.agregarPaciente(paciente);
+                    }
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -91,26 +112,28 @@ public class GuardarInformacion {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                String idMedicamento = datos[0]; // Generar nuevo ID para el medicamento
-                String idPaciente = datos[1]; // Obtener el ID del paciente
+                String idPaciente = datos[0]; // Obtener el ID del paciente
+                String idMedicamento = datos[1]; // Generar nuevo ID para el medicamento
                 String nombreMedicamento = datos[2];
                 String descripcion = datos[3];
                 int dosis = Integer.parseInt(datos[4]);
-                float inventario = Float.parseFloat(datos[5]);
+                LocalTime horaSuministro = LocalTime.parse(datos[5]);
+                float inventario = Float.parseFloat(datos[6]);
 
                 // Crear el objeto Medicamento
-                Medicamento medicamento = new Medicamento(idMedicamento, nombreMedicamento, descripcion, dosis, inventario);
+                Medicamento medicamento = new Medicamento(idMedicamento, nombreMedicamento, descripcion, dosis, horaSuministro, inventario);
 
                 // Buscar el paciente correspondiente por el idPaciente
-                for (Paciente paciente : listaPacientes) {
-                    if (paciente.getId().equals(idPaciente)) {
-                        // Asocia el medicamento con el paciente
-                        paciente.agregarMedicamentos(medicamento);
-                        break;
+                for(Usuario usuario: listaUsuarios){
+                    for (Paciente paciente : usuario.getPacientes()) {
+                        if (paciente.getId().equals(idPaciente)) {
+                            // Asocia el medicamento con el paciente
+                            paciente.agregarMedicamentos(medicamento);
+                            break;
+                        }
                     }
                 }
                 // Agregar el medicamento a la lista general
-                listaMedicamentos.add(medicamento);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -127,7 +150,53 @@ public class GuardarInformacion {
     }
 
     /**
+     * Verificar que la contraseña cumpla con los requisitos para que sea aeptada
+     * 
+     * @param contraseña la contraseña que se créa
+     * @return true si cumple con todas las condicoines para crear la contraseña
+     */
+    public boolean verificarContraseña(String contraseña){
+        
+        if(contraseña.length() < 10){
+            System.out.println("Error de tamaño" + contraseña.length());
+
+            return false;
+        }
+
+        boolean minuscula= false;
+        boolean mayuscula = false;
+        boolean numero = false;
+
+        for(char c: contraseña.toCharArray()){
+
+            if (Character.isUpperCase(c)){
+                mayuscula = true;
+            }
+
+            if (Character.isLowerCase(c)){
+                minuscula = true;
+            }
+            
+            if (Character.isDigit(c)){
+                numero = true;
+            }
+
+            if (!Character.isLetterOrDigit(c)){
+                return false;
+            }
+        }
+
+        if (!mayuscula || !minuscula || !numero){
+            return false;
+        }
+
+        return true;
+    }
+
+
+    /**
      * Registra un nuevo usuario en el sistema.
+     * Cambio de retorno de método a booleano. 
      * 
      * @param id El identificador del usuario.
      * @param nombre El nombre completo del usuario.
@@ -137,35 +206,34 @@ public class GuardarInformacion {
      * @param sexo El sexo del usuario.
      * @param tipoUsuario El tipo de usuario (doctor, administrador, etc.).
      */
-     public void registroUsuario(String id, String nombre, String nombreUsuario, String contraseña, int edad, String sexo, String tipoUsuario) {
+     public boolean registroUsuario(String id, String nombre, String nombreUsuario, String contraseña, int edad, String sexo, String tipoUsuario) {
         if (contraseña == null) {
-            System.out.println("Error: La contraseña no puede ser nula.");
-            return; // Salir del método si la contraseña es nula
+            return false;
         }
     
         try {
             contraseña = AESUtil.encrypt(contraseña); // Cifrar la contraseña
         } catch (Exception e) {
             e.printStackTrace(); // Manejo de excepciones
-            return; // Salir del método si hay un error
+            return false;
         }
 
         // Verificar si el usuario ya existe
         for (Usuario usuario : listaUsuarios) {
             if (usuario.getId().equals(id) || usuario.getNombreUsuario().equals(nombreUsuario)) {
-                System.out.println("El usuario ya existe. No se agregará nuevamente.");
-                return; // Salir si el usuario ya existe
+                return false; // Salir si el usuario ya existe
             }
         }
         
         // Si no existe, agregarlo a la lista
         Usuario usuario = new Usuario(id, nombre, nombreUsuario, contraseña, edad, sexo, tipoUsuario);
         listaUsuarios.add(usuario);
+        usuarioActual = usuario;
+        return true;
     }
     
     /**
      * Crea un nuevo paciente asociado a un usuario y lo agrega a la lista de pacientes.
-     * 
      * @param idUsuario El identificador del usuario dueño del paciente.
      * @param nombre El nombre del paciente.
      * @param edad La edad del paciente.
@@ -173,72 +241,37 @@ public class GuardarInformacion {
      */
     public void crearPaciente(String idUsuario, String nombre, int edad, String informacionAdicional) {
         Paciente nuevoPaciente = new Paciente(idUsuario, nombre, edad, informacionAdicional);
-        nuevoPaciente.generarId(); // Generar ID para el nuevo paciente
     
         for (Usuario usuario : listaUsuarios) {
             if (usuario.getId().equals(idUsuario)) {
                 usuario.agregarPaciente(nuevoPaciente); // Agregar paciente al usuario
-                break;
             }
         }
     
-        listaPacientes.add(nuevoPaciente); // Agregar paciente a la lista general
         //guardarPacientesCSV(); // Guardar el paciente en el archivo CSV
     }
 
-    /**
-     * Muestra los pacientes cuyo ID coincide con el ID proporcionado.
-     *
-     * @param idPaciente el ID del paciente que se desea buscar.
-     */
-    public void mostrarPacientesPorId(String idPaciente) {
-        for (Paciente paciente : listaPacientes) {
-            if (paciente.getId().equals(idPaciente)) {
-                System.out.println("ID: " + paciente.getId() + ", Nombre: " + paciente.getNombre());
-            }
-        }
-    }
-
-    /**
-     * Muestra los pacientes cuyo ID coincide con el ID proporcionado.
-     *
-     * @param idPaciente el ID del paciente que se desea buscar.
-     */
-    public void buscarPacientePorIDyNombre(String idPaciente, String nombrePaciente) { 
-        for (Paciente paciente : listaPacientes) {
-            if (paciente.getId().equals(idPaciente) && paciente.getNombre().equalsIgnoreCase(nombrePaciente)) {
-                System.out.println("Datos del Paciente:");
-                System.out.println("ID: " + paciente.getId());
-                System.out.println("Nombre: " + paciente.getNombre());
-                System.out.println("Edad: " + paciente.getEdad());
-                System.out.println("Información Adicional: " + paciente.getInformacionAdicional());
-                // Si el objeto Paciente tiene más atributos, se pueden agregar aquí.
-                return;
-            }
-        }
-        System.out.println("Paciente no encontrado. Verifique que el ID y el nombre sean correctos.");
-    }
-
-    /**
-     * Crea un nuevo medicamento asociado a un paciente y lo agrega a la lista de medicamentos del paciente.
-     * 
-     * @param idPaciente El identificador del paciente.
-     * @param nombreM El nombre del medicamento.
-     * @param descripcion La descripción del medicamento.
-     * @param dosis La dosis recomendada.
-     * @param inventario La cantidad disponible en inventario.
-     */
-    public void crearMedicamento(String idPaciente, String nombreM, String descripcion, int dosis, float inventario) {
-        Medicamento medicamento = new Medicamento(idPaciente, nombreM, descripcion, dosis, inventario);
-
-        for (Paciente paciente : listaPacientes) {
-            if (paciente.getId().equals(idPaciente)) {
-                paciente.agregarMedicamentos(medicamento);
-                break;
-            }
-        }
-        guardarMedicamentosCSV();
-    }
+    // /**
+    //  * Crea un nuevo medicamento asociado a un paciente y lo agrega a la lista de medicamentos del paciente.
+    //  * 
+    //  * @param idPaciente El identificador del paciente.
+    //  * @param nombreM El nombre del medicamento.
+    //  * @param descripcion La descripción del medicamento.
+    //  * @param dosis La dosis recomendada.
+    //  * @param inventario La cantidad disponible en inventario.
+    //  */
+    // public void crearMedicamento(String idPaciente, String nombreM, String descripcion, int dosis, float inventario) {
+    //     Medicamento medicamento = new Medicamento(idPaciente, nombreM, descripcion, dosis, inventario);
+    //     for (Usuario usuario: listaUsuarios){
+    //         for (Paciente paciente : usuario.getPacientes()) {
+    //             if (paciente.getId().equals(idPaciente)) {
+    //                 paciente.agregarMedicamentos(medicamento);
+    //                 break;
+    //             }
+    //         }
+    //     }
+    //     guardarMedicamentosCSV();
+    // }
 
     /**
      * Elimina un medicamento del archivo CSV "Medicamentos.csv" basado en el ID proporcionado.
@@ -252,84 +285,65 @@ public class GuardarInformacion {
      * @throws IOException Si ocurre un error al leer o escribir en el archivo CSV.
      */
     public void eliminarMedicamento(String idPaciente, String nombreMedicamentoAEliminar) {
-        for (Paciente paciente : listaPacientes) {
-            if (paciente.getId().equals(idPaciente)) {
-                // Busca el medicamento a eliminar
-                Medicamento medicamentoAEliminar = null;
-                for (Medicamento medicamento : paciente.getMedicamentos()) {
-                    if (medicamento.getNombre().equals(nombreMedicamentoAEliminar)) {
-                        medicamentoAEliminar = medicamento;
-                        break;
+        for(Usuario usuario: listaUsuarios){
+            for (Paciente paciente : usuario.getPacientes()) {
+                if (paciente.getId().equals(idPaciente)) {
+                    // Busca el medicamento a eliminar
+                    Medicamento medicamentoAEliminar = null;
+                    for (Medicamento medicamento : paciente.getMedicamentos()) {
+                        if (medicamento.getNombre().equals(nombreMedicamentoAEliminar)) {
+                            medicamentoAEliminar = medicamento;
+                            break;
+                        }
                     }
+        
+                    // Si se encontró el medicamento, lo elimina
+                    if (medicamentoAEliminar != null) {
+                        paciente.getMedicamentos().remove(medicamentoAEliminar);
+                        System.out.println("Medicamento eliminado: " + nombreMedicamentoAEliminar);
+                    } else {
+                        System.out.println("Medicamento no encontrado: " + nombreMedicamentoAEliminar);
+                    }
+        
+                    // Guarda la lista actualizada en el archivo CSV
+                    guardarMedicamentosCSV();
+                    break; // Salimos del bucle una vez que hemos procesado el paciente
                 }
-    
-                // Si se encontró el medicamento, lo elimina
-                if (medicamentoAEliminar != null) {
-                    paciente.getMedicamentos().remove(medicamentoAEliminar);
-                    System.out.println("Medicamento eliminado: " + nombreMedicamentoAEliminar);
-                } else {
-                    System.out.println("Medicamento no encontrado: " + nombreMedicamentoAEliminar);
-                }
-    
-                // Guarda la lista actualizada en el archivo CSV
-                guardarMedicamentosCSV();
-                break; // Salimos del bucle una vez que hemos procesado el paciente
             }
         }
     }
 
     /**
-     * Muestra la lista de medicamentos asociados a un paciente especificado por su ID y nombre.
-     * Si el paciente es encontrado, se muestra el nombre del paciente seguido de los medicamentos registrados para él.
-     * Si no se encuentra el paciente, se muestra un mensaje de error.
-     *
-     * @param idPaciente el ID del paciente cuyo historial de medicamentos se desea visualizar.
-     * @param nombrePaciente el nombre del paciente cuyo historial de medicamentos se desea visualizar.
+     * Método para eliminar un paciente de un usuario especifico
+     * @param idUsuario
+     * @param nombrePacienteAEliminar
      */
-    public void mostrarMedicamentosPaciente(String idPaciente, String nombrePaciente) {
-        boolean encontrado = false;
-        for (Paciente paciente : listaPacientes) {
-            if (paciente.getId().equals(idPaciente) && paciente.getNombre().equalsIgnoreCase(nombrePaciente)) {
-                System.out.println("Medicamentos de " + nombrePaciente + ":");
-                for (Medicamento medicamento : paciente.getMedicamentos()) {
-                    System.out.println("- " + medicamento);
+    public void eliminarPaciente(String idUsuario, String nombrePacienteAEliminar) {
+        for (Usuario usuario : listaUsuarios) {
+            if (usuario.getId().equals(idUsuario)) {
+                // Busca el paciente a eliminar
+                Paciente pacienteAEliminar = null;
+                for (Paciente paciente : usuario.getPacientes()) {
+                    if (paciente.getNombre().equals(nombrePacienteAEliminar)) {
+                        pacienteAEliminar = paciente;
+                        break;
+                    }
                 }
-                encontrado = true;
-                break; // Rompemos el bucle una vez encontrado el paciente
+    
+                // Si se encontró el paciente, lo elimina
+                if (pacienteAEliminar != null) {
+                    usuario.getPacientes().remove(pacienteAEliminar);
+                } else {
+    
+                }
+    
+                // Guarda la lista actualizada en el archivo CSV
+                guardarPacientesCSV();
+                break; // Salimos del bucle una vez que hemos procesado el paciente
             }
-        }
-        
-        if (!encontrado) {
-            System.out.println("Paciente no encontrado. Verifique el ID y nombre.");
         }
     }
 
-    public boolean iniciarSesion(String nombreUsuario, String contrasenaIngresada) {
-        for (Usuario usuario : listaUsuarios) {
-            if (usuario.getNombreUsuario().equals(nombreUsuario)) {
-                try {
-                    // Descifrar la contraseña almacenada
-                    String contrasenaDescifrada = AESUtil.decrypt(usuario.getContrasena());
-                    
-                    // Verificar si la contraseña ingresada coincide con la descifrada
-                    if (contrasenaDescifrada.equals(contrasenaIngresada)) {
-                        System.out.println("Inicio de sesión exitoso para el usuario: " + nombreUsuario);
-                        return true;
-                    } else {
-                        System.out.println("Contraseña incorrecta para el usuario: " + nombreUsuario);
-                        return false;
-                    }
-                } catch (Exception e) {
-                    System.out.println("Error al descifrar la contraseña para el usuario: " + nombreUsuario);
-                    e.printStackTrace();
-                    return false;
-                }
-            }
-        }
-        System.out.println("El usuario no existe: " + nombreUsuario);
-        return false;
-    }
-    
 
     /**
      * Guarda los usuarios en un archivo CSV. Los datos se guardan en el formato:
@@ -374,7 +388,7 @@ public class GuardarInformacion {
      */
     public void guardarPacientesCSV() {
         try (FileWriter writer = new FileWriter("Pacientes.csv", false)) {
-            for (Usuario usuario : listaUsuarios) {
+            for (Usuario usuario : listaUsuarios){
                 for (Paciente paciente : usuario.getPacientes()) {
                     writer.append(usuario.getId())
                           .append(",")
@@ -400,50 +414,109 @@ public class GuardarInformacion {
      */
     public void guardarMedicamentosCSV() {
         try (FileWriter writer = new FileWriter("Medicamentos.csv", false)) {
-            for (Paciente paciente : listaPacientes) {
-                for (Medicamento medicamento : paciente.getMedicamentos()) {
-                    writer.append(paciente.getId())
-                          .append(",")
-                          .append(medicamento.getId())
-                          .append(",")
-                          .append(medicamento.getNombre())
-                          .append(",")
-                          .append(medicamento.getDescripcion())
-                          .append(",")
-                          .append(String.valueOf(medicamento.getDosis()))
-                          .append(",")
-                          .append(String.valueOf(medicamento.getInventario()))
-                          .append("\n");
+            for(Usuario usuario: listaUsuarios){
+                for (Paciente paciente : usuario.getPacientes()) {
+                    for (Medicamento medicamento : paciente.getMedicamentos()) {
+                        writer.append(paciente.getId())
+                            .append(",")
+                            .append(medicamento.getId())
+                            .append(",")
+                            .append(medicamento.getNombre())
+                            .append(",")
+                            .append(medicamento.getDescripcion())
+                            .append(",")
+                            .append(String.valueOf(medicamento.getDosis()))
+                            .append(",")
+                            .append(medicamento.getHorarioDeSuministro().toString())
+                            .append(",")
+                            .append(String.valueOf(medicamento.getInventario()))
+                            .append("\n");
+                    }
                 }
             }
             writer.flush();
         } catch (IOException e) {
-            System.out.println(e);
+            System.out.println("Error al guardar el medicamento en el archivo" + e.getMessage());
         }
+
+    }
+    
+    /**
+     * Método que autentica a un usuario verificando su nombre de usuario y contraseña
+     * en la lista de usuarios cargados desde el archivo CSV.
+     *
+     * @param nombreUsuario El nombre de usuario que se desea autenticar.
+     * @param contrasena La contraseña correspondiente al usuario.
+     * @return true si las credenciales coinciden con las almacenadas en la lista de usuarios, 
+     *         false en caso contrario.
+     */
+    public boolean autenticar(String nombreUsuario, String contrasena) {
+        for (Usuario usuario : listaUsuarios) {
+            String contrasenaDescifrada;
+            
+            try {
+                contrasenaDescifrada = AESUtil.decrypt(usuario.getContrasena());
+            } catch (Exception e) {
+                continue;
+            }
+
+            // Verificamos si el nombre de usuario y la contraseña coinciden
+            if (usuario.getNombreUsuario().equals(nombreUsuario) && contrasenaDescifrada.equals(contrasena)) {
+                this.usuarioActual = usuario;
+                return true;
+            }
+        }
+
+        // Si no se encuentran coincidencias, se indica que las credenciales son incorrectas
+        System.out.println("Usuario o contraseña incorrectos.");
+        return false;
+    }
+
+    public Usuario devolverUsuario(){
+        return usuarioActual;
+    }
+
+    public ArrayList<Paciente> devolverPacientes() {
+        if (usuarioActual == null) {
+            System.out.println("Error: usuarioActual es null. No se pueden devolver pacientes.");
+            return new ArrayList<>(); // Devuelve una lista vacía para evitar errores
+        }
+        return usuarioActual.getPacientes();
     }
 
     /**
      * Genera un reporte con estadísticas generales del sistema.
      * Muestra el número total de usuarios, pacientes, medicamentos registrados y el promedio de meciamentos por pacientes.
      */
-    public Map<String, Object> generarEstadisticas() {
-        Map<String, Object> estadisticas = new HashMap<>();
-        
-        // Calcular las estadísticas
-        estadisticas.put("totalUsuarios", listaUsuarios.size());
-        estadisticas.put("totalPacientes", listaPacientes.size());
-        estadisticas.put("totalMedicamentos", listaMedicamentos.size());
-        
-        if (!listaPacientes.isEmpty()) {
-            int totalMedicamentosAsociados = listaPacientes.stream()
-                .mapToInt(paciente -> paciente.getMedicamentos().size())
-                .sum();
-            double promedioMedicamentos = (double) totalMedicamentosAsociados / listaPacientes.size();
-            estadisticas.put("promedioMedicamentosPorPaciente", promedioMedicamentos);
-        } else {
-            estadisticas.put("promedioMedicamentosPorPaciente", "No hay pacientes registrados para calcular promedios.");
+    public Object[] generarEstadisticas() {
+        int totalUsuarios = listaUsuarios.size();
+        int totalPacientes = 0;
+        int totalMedicamentos = 0;
+    
+        // Iterar sobre cada usuario y calcular el total de pacientes y medicamentos
+        for (Usuario usuario : listaUsuarios) {
+            List<Paciente> pacientes = usuario.getPacientes(); // Obtener pacientes del usuario
+            totalPacientes += pacientes.size();
+    
+            for (Paciente paciente : pacientes) {
+                totalMedicamentos += paciente.getMedicamentos().size(); // Contar medicamentos
+            }
         }
-        
-        return estadisticas;
+    
+        // Calcular el promedio de medicamentos por paciente
+        Object promedioMedicamentosPorPaciente = (totalPacientes > 0) 
+                ? (double) totalMedicamentos / totalPacientes 
+                : "No hay pacientes registrados para calcular el promedio.";
+    
+        // Retornar las estadísticas como un arreglo de objetos
+        return new Object[] {
+            "Total de usuarios registrados", totalUsuarios,
+            "Total de pacientes registrados", totalPacientes,
+            "Total de medicamentos registrados", totalMedicamentos,
+            "Promedio de medicamentos por paciente", promedioMedicamentosPorPaciente
+        };
     }
+    
+    
+
 }

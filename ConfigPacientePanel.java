@@ -9,7 +9,13 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Panel de configuración para editar la información de un paciente.
+ * Proporciona una interfaz gráfica para modificar atributos como nombre,
+ * edad, condiciones, medicamentos e información adicional.
+ */
 public class ConfigPacientePanel extends JPanel {
+
     private JTextField txtNombre;
     private JTextField txtEdad;
     private JTextArea txtCondiciones;
@@ -21,6 +27,13 @@ public class ConfigPacientePanel extends JPanel {
     private App app;
     private Paciente paciente;
 
+    /**
+     * Constructor de la clase ConfigPacientePanel.
+     * Configura el panel y sus componentes para editar la información de un paciente.
+     *
+     * @param app1     La instancia principal de la aplicación.
+     * @param paciente El paciente cuya información se va a editar.
+     */
     public ConfigPacientePanel(App app1, Paciente paciente) {
         this.app = app1;
         this.paciente = paciente;
@@ -119,7 +132,12 @@ public class ConfigPacientePanel extends JPanel {
         add(btnRegresar, gbc);
     }
 
-private void guardarCambios() {
+     /**
+     * Guarda los cambios realizados en el paciente.
+     * Actualiza los datos del paciente con los valores ingresados por el usuario.
+     * Valida que la edad sea un número válido y muestra mensajes de error en caso de excepciones.
+     */
+    private void guardarCambios() {
         try {
             paciente.setNombre(txtNombre.getText());
             paciente.setEdad(Integer.parseInt(txtEdad.getText()));

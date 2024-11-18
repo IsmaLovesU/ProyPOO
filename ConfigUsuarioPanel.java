@@ -9,6 +9,11 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Panel de configuración para editar la información de un usuario.
+ * Proporciona una interfaz gráfica para modificar atributos como nombre,
+ * nombre de usuario, contraseña, edad, género y tipo de usuario.
+ */
 public class ConfigUsuarioPanel extends JPanel {
     private JTextField txtNombre;
     private JTextField txtUsername;
@@ -22,8 +27,13 @@ public class ConfigUsuarioPanel extends JPanel {
     private Usuario usuario;
     private GuardarInformacion gestion;
 
-
-
+    /**
+     * Constructor de la clase ConfigUsuarioPanel.
+     * Configura el panel y sus componentes para editar la información del usuario actual.
+     *
+     * @param app     La instancia principal de la aplicación.
+     * @param gestion La clase encargada de gestionar la información de usuarios.
+     */
     public ConfigUsuarioPanel(App app, GuardarInformacion gestion) {
         this.app = app;
         this.gestion = gestion;
@@ -121,6 +131,14 @@ public class ConfigUsuarioPanel extends JPanel {
         add(btnCancelar, gbc);
     }
 
+    /**
+     * Guarda los cambios realizados en la información del usuario.
+     * Actualiza los datos del usuario con los valores ingresados por el usuario en el formulario.
+     *
+     * @param usuario  El usuario cuya información será actualizada.
+     * @param app      La instancia principal de la aplicación.
+     * @param gestion  La clase encargada de gestionar la información de usuarios.
+     */
     private void guardarCambios(Usuario usuario, App app, GuardarInformacion gestion) {
         usuario.setNombre(txtNombre.getText());
         usuario.setNombreUsuario(txtUsername.getText());

@@ -10,6 +10,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.LocalTime;
 
+/**
+ * Panel de configuración para editar la información de un medicamento.
+ * Proporciona una interfaz gráfica para modificar atributos como nombre,
+ * descripción, dosis, horario de suministro, si es recetado y el inventario.
+ */
 public class ConfigMedicamentoPanel extends JPanel {
     private JTextField txtNombre;
     private JTextArea txtDescripcion;
@@ -23,6 +28,13 @@ public class ConfigMedicamentoPanel extends JPanel {
     private App app;
     private Medicamento medicamento;
 
+    /**
+     * Constructor de la clase ConfigMedicamentoPanel.
+     * Configura el panel y sus componentes para editar la información de un medicamento.
+     *
+     * @param app1        La instancia principal de la aplicación.
+     * @param medicamento El medicamento cuya información se va a editar.
+     */
     public ConfigMedicamentoPanel(App app1, Medicamento medicamento) {
         this.app = app1;
         this.medicamento = medicamento;
@@ -114,7 +126,7 @@ public class ConfigMedicamentoPanel extends JPanel {
         gbc.gridy = 7;
         add(btnGuardar, gbc);
 
-        // Botón Cancelar
+        // Botón Regresar
         btnRegresar = new JButton("Regresar");
         btnRegresar.setBackground(Color.RED);
         btnRegresar.setForeground(Color.WHITE);
@@ -123,6 +135,12 @@ public class ConfigMedicamentoPanel extends JPanel {
         add(btnRegresar, gbc);
     }
 
+     /**
+     * Guarda los cambios realizados en el medicamento.
+     * Valida y actualiza los datos del medicamento con los valores ingresados por el usuario.
+     * Muestra un mensaje de éxito si los cambios son guardados correctamente,
+     * o un mensaje de error si ocurre una excepción.
+     */
     private void guardarCambios() {
         try {
             medicamento.setNombre(txtNombre.getText());

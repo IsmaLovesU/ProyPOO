@@ -242,28 +242,6 @@ public class GuardarInformacion {
         //guardarPacientesCSV(); // Guardar el paciente en el archivo CSV
     }
 
-    // /**
-    //  * Crea un nuevo medicamento asociado a un paciente y lo agrega a la lista de medicamentos del paciente.
-    //  * 
-    //  * @param idPaciente El identificador del paciente.
-    //  * @param nombreM El nombre del medicamento.
-    //  * @param descripcion La descripción del medicamento.
-    //  * @param dosis La dosis recomendada.
-    //  * @param inventario La cantidad disponible en inventario.
-    //  */
-    // public void crearMedicamento(String idPaciente, String nombreM, String descripcion, int dosis, float inventario) {
-    //     Medicamento medicamento = new Medicamento(idPaciente, nombreM, descripcion, dosis, inventario);
-    //     for (Usuario usuario: listaUsuarios){
-    //         for (Paciente paciente : usuario.getPacientes()) {
-    //             if (paciente.getId().equals(idPaciente)) {
-    //                 paciente.agregarMedicamentos(medicamento);
-    //                 break;
-    //             }
-    //         }
-    //     }
-    //     guardarMedicamentosCSV();
-    // }
-
     /**
      * Elimina un medicamento del archivo CSV "Medicamentos.csv" basado en el ID proporcionado.
      * 

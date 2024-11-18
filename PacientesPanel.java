@@ -1,5 +1,5 @@
 /**
- * Universidad del Valle de Gutemala
+ * Universidad del Valle de Guatemala
  * Programación Orinetada a Objetos 
  * Sección: 10
  * Ing. Kimberly Barrera

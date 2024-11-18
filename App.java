@@ -1,5 +1,5 @@
 /**
- * Universidad del Valle de Gutemala
+ * Universidad del Valle de Guatemala
  * Programación Orinetada a Objetos 
  * Sección: 10
  * Ing. Kimberly Barrera
@@ -10,7 +10,6 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.Image;
-import javax.swing.ImageIcon;
 
 /**
  * Clase principal de la aplicación de gestión de medicamentos.
@@ -190,23 +189,35 @@ public class App {
         frame.setVisible(true);
     }
 
-    /*
-     * Para guardar la infromación. 
+    /**
+     * Obtiene la instancia de la clase GuardarInformacion.
+     *
+     * @return La instancia de la clase GuardarInformacion utilizada para gestionar
+     *         la información del sistema.
      */
     public GuardarInformacion getGuardarInformacion() {
         return gestion;
     }
-    
-    private void iniciarNotificador(){
-        if(notificador == null){
+
+    /**
+     * Inicia el notificador de medicamentos asociado al usuario actual.
+     * Si el notificador no ha sido creado previamente, se instancia y se inicia.
+     */
+    private void iniciarNotificador() {
+        if (notificador == null) {
             notificador = new NotificadorMedicamento(gestion.devolverUsuario());
             notificador.iniciar();
         }
     }
 
-    private void detenerNotificador(){
-        if(notificador != null){
+    /**
+     * Detiene el notificador de medicamentos si está en funcionamiento.
+     * Si el notificador no es nulo, se invoca su método detener.
+     */
+    private void detenerNotificador() {
+        if (notificador != null) {
             notificador.detener();
         }
     }
+
 }

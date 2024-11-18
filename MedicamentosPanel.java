@@ -158,6 +158,12 @@ public class MedicamentosPanel extends JPanel {
         boton.setPreferredSize(new Dimension(200, 40)); // Tamaño fijo del botón.
     }
 
+    /**
+     * Genera el suministro de un medicamento.
+     * Verifica si hay suficiente inventario para realizar el suministro.
+     *
+     * @param medicamento El medicamento para el cual se realizará el suministro.
+     */
     private void generarSuministro(Medicamento medicamento){
         boolean suministrar = medicamento.suministro();
 

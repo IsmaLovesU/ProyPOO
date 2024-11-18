@@ -105,7 +105,7 @@ public class MedicamentosPanel extends JPanel {
      * @param medicamento Medicamento del cual se mostrarán las opciones.
      */
     private void mostrarOpcionesMedicamento(Medicamento medicamento) {
-        String[] opciones = {"Ver Información", "Eliminar Medicamento", "Editar Medicamento"};
+        String[] opciones = {"Ver Información", "Registro de suministro", "Eliminar Medicamento", "Editar Medicamento"};
         int seleccion = JOptionPane.showOptionDialog(
                 this,
                 "Seleccione una opción para: " + medicamento.getNombre(),
@@ -120,8 +120,9 @@ public class MedicamentosPanel extends JPanel {
         // Ejecuta la acción según la opción seleccionada.
         switch (seleccion) {
             case 0 -> JOptionPane.showMessageDialog(this, medicamento.toString()); // Muestra información del medicamento.
-            case 1 -> eliminarMedicamento(medicamento); // Elimina el medicamento.
-            case 2 -> app.mostrarConfigMedicamentosPanel(medicamento);
+            case 1 -> generarSuministro(medicamento);
+            case 2 -> eliminarMedicamento(medicamento); // Elimina el medicamento.
+            case 3 -> app.mostrarConfigMedicamentosPanel(medicamento);
         }
     }
 
@@ -155,5 +156,15 @@ public class MedicamentosPanel extends JPanel {
         boton.setFocusPainted(false); // Desactiva el efecto de foco.
         boton.setFont(new Font("Arial", Font.BOLD, 14)); // Establece la fuente del texto.
         boton.setPreferredSize(new Dimension(200, 40)); // Tamaño fijo del botón.
+    }
+
+    private void generarSuministro(Medicamento medicamento){
+        boolean suministrar = medicamento.suministro();
+
+        if(suministrar){
+            JOptionPane.showMessageDialog(this, "Suministro de " + medicamento.getNombre() + " registrado.");
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay suficiente cantidad de medicamento para suministar el medicamento, debe comprar " + medicamento.getNombre(), "Atención", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

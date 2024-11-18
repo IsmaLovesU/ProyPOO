@@ -85,6 +85,15 @@ public class Medicamento {
         this.inventario = inventario;
     }
 
+    public boolean suministro(){
+        if(inventario == 0 || inventario < dosis){
+            return false;
+        }
+
+        inventario = inventario -dosis;
+        return true;
+    }
+
     @Override
     public String toString() {
         return "Medicamento{" +

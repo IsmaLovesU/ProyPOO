@@ -1,5 +1,5 @@
 /**
- * Universidad del Valle de Gutemala
+ * Universidad del Valle de Guatemala
  * Programación Orinetada a Objetos 
  * Sección: 10
  * Ing. Kimberly Barrera
@@ -17,8 +17,6 @@ import java.awt.*;
  * El panel incluye campos de texto para editar el nombre, nombre de usuario,
  * edad, sexo y contraseña, así como botones para guardar o cancelar los cambios.
  * 
- * @author Universidad del Valle de Guatemala
- * @version 1.0
  */
 public class ModificarUsuarioPanel extends JPanel {
     private JTextField txtNombre, txtNombreUsuario, txtEdad, txtSexo;
@@ -65,7 +63,6 @@ public class ModificarUsuarioPanel extends JPanel {
     * Obtiene el campo de texto para el nombre.
     * @return JTextField correspondiente al campo de nombre.
     */
-
     public JTextField getTxtNombre() { return txtNombre; }
 
     /**
@@ -73,27 +70,32 @@ public class ModificarUsuarioPanel extends JPanel {
      * @return JTextField correspondiente al campo de nombre de usuario.
      */
     public JTextField getTxtNombreUsuario() { return txtNombreUsuario; }
+
     /**
      * Obtiene el campo de texto para la edad.
      * @return JTextField correspondiente al campo de edad.
      */
     public JTextField getTxtEdad() { return txtEdad; }
-        /**
+    
+    /**
      * Obtiene el campo de texto para el sexo.
      * @return JTextField correspondiente al campo de sexo.
      */
     public JTextField getTxtSexo() { return txtSexo; }
-        /**
+
+    /**
      * Obtiene el campo de texto para la contraseña.
      * @return JPasswordField correspondiente al campo de contraseña.
      */
     public JPasswordField getTxtContrasena() { return txtContrasena; }
-        /**
+
+    /**
      * Obtiene el botón de guardar.
      * @return JButton correspondiente al botón de guardar.
      */
     public JButton getBtnGuardar() { return btnGuardar; }
-        /**
+
+    /**
      * Obtiene el botón de cancelar.
      * @return JButton correspondiente al botón de cancelar.
      */

@@ -1,3 +1,11 @@
+/**
+ * Universidad del Valle de Guatemala
+ * Programación Orinetada a Objetos 
+ * Sección: 10
+ * Ing. Kimberly Barrera
+ * Proyecto - Pillas
+*/
+
 import java.time.LocalTime;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -12,8 +20,6 @@ import javax.swing.SwingUtilities;
  * Utiliza un scheduler para verificar periódicamente si hay medicamentos
  * que deben tomarse en el momento actual.
  * 
- * @author Universidad del Valle de Guatemala
- * @version 1.0
  */
 public class NotificadorMedicamento {
     private Usuario usuario;
@@ -56,23 +62,23 @@ public class NotificadorMedicamento {
         }
     }
 
-/**
- * Envía una notificación al usuario para recordar un medicamento.
- * Muestra un cuadro de diálogo con el nombre del paciente y el medicamento.
- * 
- * @param paciente El paciente asociado al medicamento.
- * @param medicamento El medicamento que debe tomarse.
- */
-private void enviarNotificacion(Paciente paciente, Medicamento medicamento) {
-    SwingUtilities.invokeLater(() -> {
-        JOptionPane.showMessageDialog(null, 
-            "Es hora de que el paciente " + paciente.getNombre() +
-            " tome el medicamento: " + medicamento.getNombre() +
-            " a las " + medicamento.getHorarioDeSuministro(),
-            "Recordatorio de Medicamento",
-            JOptionPane.INFORMATION_MESSAGE);
-    });
-}
+    /**
+     * Envía una notificación al usuario para recordar un medicamento.
+     * Muestra un cuadro de diálogo con el nombre del paciente y el medicamento.
+     * 
+     * @param paciente El paciente asociado al medicamento.
+     * @param medicamento El medicamento que debe tomarse.
+     */
+    private void enviarNotificacion(Paciente paciente, Medicamento medicamento) {
+        SwingUtilities.invokeLater(() -> {
+            JOptionPane.showMessageDialog(null, 
+                "Es hora de que el paciente " + paciente.getNombre() +
+                " tome el medicamento: " + medicamento.getNombre() +
+                " a las " + medicamento.getHorarioDeSuministro(),
+                "Recordatorio de Medicamento",
+                JOptionPane.INFORMATION_MESSAGE);
+        });
+    }
 
     /**
      * Detiene el proceso de notificación.

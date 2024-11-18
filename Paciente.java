@@ -9,6 +9,15 @@
 import java.util.ArrayList;
 import java.util.UUID;
 
+/**
+ * Clase Paciente.
+ * Representa a un paciente que incluye información como su nombre, edad, condiciones médicas, 
+ * medicamentos asociados y datos adicionales relevantes. Proporciona métodos para gestionar 
+ * esta información, incluyendo la generación de un identificador único.
+ * 
+ * @author Universidad del Valle
+ * @version 1.0
+ */
 public class Paciente {
     
     private String id;
@@ -18,6 +27,14 @@ public class Paciente {
     private ArrayList<Medicamento> medicamentos;
     private String informacionAdicional;
 
+    /**
+     * Constructor de la clase Paciente.
+     * 
+     * @param id Identificador único del paciente.
+     * @param nombre Nombre del paciente.
+     * @param edad Edad del paciente.
+     * @param informacionAdicional Información adicional relevante sobre el paciente.
+     */
     public Paciente(String id, String nombre, int edad, String informacionAdicional) {
         this.id = id;
         this.nombre = nombre;
